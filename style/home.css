@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&family=Rubik:wght@500&display=swap');
+
+body {
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: rgb(205, 132, 173);
+    border-width: 2px;
+    width: inherit;
+}
+
+.container_title {
+    font-family: 'Rubik', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(205, 132, 173);
+    text-shadow: 1px 1px 1px rgb(255, 182, 193);
+}
+
+header {
+    width: inherit;
+}
+
+main {
+    width: inherit;
+}
+
+footer {
+    background-color: rgb(255, 182, 193);
+    font-family: 'Roboto', sans-serif;
+    align-items: center;
+    display: block;
+    width: inherit;
+}
+
+#menu {
+    background-color: rgb(255, 182, 193);
+    text-align: center;
+}
+
+#menu .menu-item {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#main_title {
+    flex: 1;
+    font-size: 50px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(205, 132, 173);
+    text-shadow: 1px 1px 1px rgb(255, 182, 193);                   
+}
+
+.main-img {
+    width: 1040px;
+    margin: auto;
+    height: 750px;
+    padding: 0px;
+}
+
+
+.scaling-link:link {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-style: bold;
+    text-decoration: none;
+    transform: scale(1);
+    display: inline-block;
+    color: white;
+    /* Add a smooth transition effect for a smoother scaling animation */
+    transition: transform 0.3s ease-in-out;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.scaling-link:visited {
+    color: white;
+    border: rgb(205, 132, 173);
+}
+
+.scaling-link:hover {
+    transform: scale(1.1);
+    color: #8093f1;
+}
+
+.textbox {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(205, 132, 173);
+    padding: 5px;
+}
+
+.textbox:hover {
+    border-color: #8093f1;
+}
+
+footer .footer-element {
+    align-self: center;
+}
+
+#contact-card {
+    align-items: center;
+    display: grid;
+}
+
+footer a {
+    color: white;
+    text-transform: uppercase;
+}
+
+footer ul {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(205, 132, 173);
+    padding: 5px;
+    background-color: white;
+    list-style-type: none;
+}
+
+footer ul li .important-info{
+    color: cornflowerblue;
+}
