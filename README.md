@@ -30,13 +30,9 @@ ClassBuddy è una piattaforma online che facilita il collegamento tra studenti e
 4. **Prenotare Lezioni:**
    - Una volta connessi, gli studenti possono prenotare lezioni direttamente attraverso la piattaforma.
 
-## Contributi
-
-Siamo aperti a contributi e miglioramenti. Se hai suggerimenti, segnalazioni di bug o vuoi contribuire direttamente allo sviluppo, leggi la nostra [guida di contribuzione](CONTRIBUTING.md).
-
 ## Contatti
 
-Per domande, problemi o feedback, contattaci all'indirizzo email support@tutorlink.com.
+Per domande, problemi o feedback, contattaci all'indirizzo email davide_pasero@icloud.com e sara.rosselli02@gmail.com
 
 Grazie per aver scelto TutorLink per le tue esigenze di apprendimento!
 
