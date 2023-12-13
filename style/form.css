@@ -1,0 +1,133 @@
+/* CSS Document for Form Styling */
+.error-message {
+  margin: auto;
+  text-align: center;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ff5c5c;
+  background-color: #f99898;
+  border-radius: 5px;
+  width: 300px;
+  padding: 20px;
+  font-family: sans-serif;
+  color: white;
+  margin-top: 20px;
+}
+
+.form-element {
+  width: calc(100% - 23px);
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.small-error-message {
+  text-align: center;
+  color: white;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ff5c5c;
+  background-color: #f99898;
+  font-size: 12px;
+}
+
+.registration-form {
+  width: 300px;
+  margin: auto;
+  margin-top: 20px;
+  padding: 20px;
+  border: 2px solid rgb(205, 132, 173);
+  border-radius: 10px;
+}
+  
+.registration-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.registration-form .input-neutral {
+  border: 1px solid #ddd;
+}
+
+.registration-form .input-error {
+  border: 2px solid #ff5c5c;
+}
+
+.registration-form input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+.registration-form input[type="submit"]:hover {
+  background-color: #45A049;
+}
+  
+/* Remember me checkbox in login form */
+/* Hide the default checkbox */
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Style the custom checkbox container */
+.checkbox-container {
+  position: relative;
+  padding-left: 30px; /* Adjust as needed */
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1.5;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+/* Style the custom checkmark */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px; /* Adjust as needed */
+  width: 20px; /* Adjust as needed */
+  background-color: #eee; /* Background color when unchecked */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 5px;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* Style the custom checkmark when checked */
+.checkbox-container input:checked + .checkmark {
+  background-color: #2196F3; /* Background color when checked */
+  border: 1px solid #2196F3; /* Border color when checked */
+}
+
+/* Style the checkmark inside the container */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked + .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark icon */
+.checkbox-container .checkmark:after {
+  left: 7px; /* Adjust as needed */
+  top: 3px; /* Adjust as needed */
+  width: 5px; /* Adjust as needed */
+  height: 10px; /* Adjust as needed */
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
