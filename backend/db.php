@@ -1,5 +1,5 @@
 <?php
-    function connect_to_db ($hostname='localhost', $user='my_user', $password='pass', $database='db') {
+    function connect_to_db ($hostname='saw21.dibris.unige.it', $user='root', $password='c4c4p1p1', $database='S5204959') {
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         $db = new mysqli($hostname, $user, $password, $database);
 
@@ -16,10 +16,6 @@
         }
 
         return $db;
-    }
-
-    function connect_to_utenti () {
-        return connect_to_db ("localhost", "root", "cinquanta50cinque5", "esercizi_saw");
     }
 
     // Executes on $db and returns the result of the specified parametrized query

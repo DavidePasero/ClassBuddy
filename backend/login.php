@@ -4,7 +4,7 @@
 	session_start ();
 
 	require 'db.php';
-	$db = connect_to_utenti ();
+	$db = connect_to_db ();
 
 	$_SESSION = array ();
 

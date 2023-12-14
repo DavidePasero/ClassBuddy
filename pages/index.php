@@ -6,7 +6,7 @@
     require 'page.php';
     require __DIR__ . '/../backend/db.php';
 
-    $db = connect_to_utenti ();
+    $db = connect_to_db ();
     cookie_check ($db);
     $db->close ();
 ?>
