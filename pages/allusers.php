@@ -30,7 +30,7 @@
     <main>
         <?php 
             $users = prepared_query ($db,
-            "SELECT firstname, lastname, email FROM esercizi_saw.utenti",
+            "SELECT firstname, lastname, email FROM S5204959.utente",
             array());
             while ($row = $users->fetch_assoc ()) {
                 echo $row ["firstname"] . " | " . $row ["lastname"] . " | " . $row ["email"] . "<br>";

@@ -27,15 +27,15 @@
 	function insert_rememberme ($db) {
 		// Inserisce rememberme nel database
 		$res = select_user_email ($db, $_SESSION["email"]);
-		$login_code = hash ("sha256", $res ["pass"] . time ());
-		$hash_login_code = hash ("sha256", $login_code);
-		check_login_code ($db, $hash_login_code);
+		$cookie_id = hash ("sha256", $res ["pass"] . time ());
+		$hash_cookie_id = hash ("sha256", $cookie_id);
+		check_login_code ($db, $hash_cookie_id);
 
 		// Scade in 15 giorni
 		$expiration = time()+60*60*24*15;
 
-		prepared_query ($db, "UPDATE esercizi_saw.utenti SET login_code=?, cookie_expiration=? WHERE email=?", [$hash_login_code, date ('Y-m-d H:i:s', $expiration), $_SESSION ["email"]]);
+		prepared_query ($db, "UPDATE S5204959.utente SET cookie_id=?, cookie_expiren=? WHERE email=?", [$hash_cookie_id, date ('Y-m-d H:i:s', $expiration), $_SESSION ["email"]]);
 		// Set cookie rememberme
-		setcookie ("rememberme", $login_code, $expires=$expiration);
+		setcookie ("rememberme", $cookie_id, $expiration);
 	}
 ?>

@@ -1,5 +1,5 @@
 <?php
-    function connect_to_db ($hostname='saw21.dibris.unige.it', $user='root', $password='c4c4p1p1', $database='S5204959') {
+    function connect_to_db ($hostname='localhost', $user='S5204959', $password='c4c4p1p1', $database='S5204959') {
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         $db = new mysqli($hostname, $user, $password, $database);
 
@@ -28,7 +28,7 @@
     # Restituisce tutte le informazioni di un utente data la sua email
     function select_user_email ($db, $email) {
         return prepared_query ($db,
-            "SELECT * FROM esercizi_saw.utenti WHERE email=?",
+            "SELECT * FROM S5204959.utente WHERE email=?",
             [$email])->fetch_assoc ();
     }
 
@@ -50,7 +50,7 @@
     function check_login_code ($db, $hash_login_code) {
         $login_hash = hash ("sha256", $hash_login_code);
         $res = prepared_query ($db,
-            "SELECT * FROM esercizi_saw.utenti WHERE login_code=?",
+            "SELECT * FROM S5204959.utente WHERE login_code=?",
             [$login_hash]);
         if ($res->num_rows > 0) {throw new Exception ("Login code already used");}
     }

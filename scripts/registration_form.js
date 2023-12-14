@@ -50,7 +50,7 @@ function check_text_fields () {
     text_fields_ok = divs[0].children[0].value != "" && divs[1].children[0].value != "";
 }
 
-let email_ok = false
+let email_ok = false;
 
 function check_email () {
     let email_div = document.getElementById ("email_div");
@@ -63,7 +63,7 @@ function check_email () {
 
     if (email_ok) {
         // Checks if email is already in the database
-        fetch ("email_exists.php",
+        fetch ("../backend/email_exists.php",
         {
             method: "POST",
             body: "email=" + email_div.children[0].value,
@@ -110,6 +110,7 @@ function check_pass () {
 function check_submit (event) {
     let div = document.getElementById ("submit_div");
     if (!text_fields_ok || !email_ok || !pass_ok) {
+        console.log ("text fields: " + text_fields_ok + "; email_ok: " + email_ok + "; pass_ok: " + pass_ok);
         event.preventDefault();
         if (div.children.length == 1)
             div.appendChild (small_error_messages["submit"]);            

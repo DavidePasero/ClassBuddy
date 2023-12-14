@@ -37,7 +37,7 @@
 
 	if ($valid_data) {
 		prepared_query ($db,
-			"INSERT INTO esercizi_saw.utenti (firstname, lastname, email, pass) VALUES (?, ?, ?, ?)",
+			"INSERT INTO S5204959.utente (firstname, lastname, email, pass) VALUES (?, ?, ?, ?)",
 			[$_POST ["firstname"], $_POST ["lastname"], $_POST ["email"], password_hash ($_POST ["pass"], PASSWORD_DEFAULT)]);
 		header ("Location: ../pages/login_form.php");
 	}
