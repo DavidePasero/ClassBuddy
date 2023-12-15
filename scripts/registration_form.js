@@ -15,6 +15,8 @@ form.addEventListener ("input", function (event) {
     }
 });
 
+submit.addEventListener ("click", check_submit);
+
 let small_error_messages = {
     "firstname": create_small_error_message ("Un nome vuoto non è valido"),
     "lastname": create_small_error_message ("Un cognome vuoto non è valido"),
@@ -24,9 +26,6 @@ let small_error_messages = {
     "confirm": create_small_error_message ("Le due password devono essere uguali"),
     "submit": create_small_error_message ("Tutti i campi devono essere validi per completare la registrazione")
 };
-
-submit.addEventListener ("click", check_submit);
-
 
 function create_small_error_message (text) {
     let p = document.createElement("p");
@@ -55,11 +54,13 @@ let email_ok = false;
 function check_email () {
     let email_div = document.getElementById ("email_div");
     let re = /\S+@\S+\.\S+/;
-    let email_ok = re.test(email_div.children[0].value);
+    email_ok = re.test(email_div.children[0].value);
     if (!email_ok && email_div.children.length == 1)
         email_div.appendChild (small_error_messages["email"]);
     else if (email_ok && email_div.children.length > 1)
         email_div.removeChild (email_div.children [1]);
+
+    console.log ("Email ok in check_email prima: " + email_ok);
 
     if (email_ok) {
         // Checks if email is already in the database
@@ -79,6 +80,8 @@ function check_email () {
             }
             else if (data == "false" && email_div.children.length > 1)
                 email_div.removeChild (email_div.children [1]);
+
+            console.log ("Email ok in check_email dopo: " + email_ok);
         })
         .catch(error => {
             console.error("Error:", error);
@@ -111,6 +114,7 @@ function check_submit (event) {
     let div = document.getElementById ("submit_div");
     if (!text_fields_ok || !email_ok || !pass_ok) {
         console.log ("text fields: " + text_fields_ok + "; email_ok: " + email_ok + "; pass_ok: " + pass_ok);
+        console.log ("CACCAPUPU");
         event.preventDefault();
         if (div.children.length == 1)
             div.appendChild (small_error_messages["submit"]);            

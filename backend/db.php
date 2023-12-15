@@ -18,7 +18,7 @@
         return $db;
     }
 
-    // Executes on $db and returns the result of the specified parametrized query
+    // Esegue la query parametrica specificata
     function prepared_query ($db, $parametrized_query, $parameters) {
         $query = $db->prepare ($parametrized_query);
         $query->execute ($parameters);
@@ -47,10 +47,10 @@
         return (select_user_email ($db, $email)["role"] == "admin");
     }
 
-    function check_login_code ($db, $hash_login_code) {
-        $login_hash = hash ("sha256", $hash_login_code);
+    function check_login_code ($db, $hash_cookie_id) {
+        $login_hash = hash ("sha256", $hash_cookie_id);
         $res = prepared_query ($db,
-            "SELECT * FROM S5204959.utente WHERE login_code=?",
+            "SELECT * FROM S5204959.utente WHERE cookie_id=?",
             [$login_hash]);
         if ($res->num_rows > 0) {throw new Exception ("Login code already used");}
     }
