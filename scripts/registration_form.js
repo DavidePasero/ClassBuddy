@@ -158,8 +158,6 @@ function check_email () {
     else if (email_ok && email_div.children.length > 1)
         email_div.removeChild (email_div.children [1]);
 
-    console.log ("Email ok in check_email prima: " + email_ok);
-
     if (email_ok) {
         // Checks if email is already in the database
         fetch ("../backend/email_exists.php",
@@ -178,8 +176,6 @@ function check_email () {
             }
             else if (data == "false" && email_div.children.length > 1)
                 email_div.removeChild (email_div.children [1]);
-
-            console.log ("Email ok in check_email dopo: " + email_ok);
         })
         .catch(error => {
             console.error("Error:", error);
@@ -208,11 +204,11 @@ function check_pass () {
     pass_ok = pass.value.length >= 8 && confirm.value == pass.value;
 }
 
+// Checks the entire form to see if it's ready to be submitted
+// ! missing: check if role and city are valid
 function check_submit (event) {
     let div = document.getElementById ("submit_div");
     if (!text_fields_ok || !email_ok || !pass_ok) {
-        console.log ("text fields: " + text_fields_ok + "; email_ok: " + email_ok + "; pass_ok: " + pass_ok);
-        console.log ("CACCAPUPU");
         event.preventDefault();
         if (div.children.length == 1)
             div.appendChild (small_error_messages["submit"]);            

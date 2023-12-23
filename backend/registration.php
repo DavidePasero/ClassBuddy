@@ -13,7 +13,7 @@
 	$_SESSION = array ();
 
 	// Se anche una sola variabile non è settata, allora non è valida
-	if (!isset ($_POST ["firstname"]) or !isset ($_POST ["lastname"]) or !isset ($_POST ["email"]) or !isset ($_POST ["pass"]) or !isset ($_POST ["confirm"]) or !isset ($_POST ["role"])) {
+	if (!isset ($_POST ["firstname"]) or !isset ($_POST ["lastname"]) or !isset ($_POST ["email"]) or !isset ($_POST ["pass"]) or !isset ($_POST ["confirm"]) or !isset ($_POST ["role"]) or !isset ($_POST ["citta"])) {
 		$valid_data = FALSE;
 	}
 	else {
@@ -24,6 +24,7 @@
 		$_POST["pass"] = trim($_POST["pass"]);
 		$_POST["confirm"] = trim($_POST["confirm"]);
 		$_POST["role"] = trim($_POST["role"]);
+		$citta = trim($_POST["citta"]);
 
 		if (strlen ($_POST["firstname"]) <= 0) {
 			$_SESSION["firstname"] = true; // true = errore
@@ -50,7 +51,24 @@
 			$_SESSION["role"] = true;
 			$valid_data = FALSE;
 		}
-		
+
+		// Checks if $_POST["citta"] is a city in the file ../res/citta.txt
+		$valid_citta = FALSE;
+		if ($valid_data) {
+			$file = fopen("../res/citta.txt", "r");
+			while (!feof($file)) {
+				$line = fgets($file);
+				if (trim(strtolower($line)) == strtolower($citta)) {
+					$valid_citta = TRUE;
+					break;
+				}
+			}
+		}
+		// If city isn't valid, form isn't valid
+		if (!$valid_citta) {
+			$_SESSION["citta"] = true;
+			$valid_data = FALSE;
+		}
 	}
 
 	if ($valid_data) {

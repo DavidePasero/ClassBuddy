@@ -33,7 +33,7 @@
 		<div class = "container">
 			<?php
 				if (isset($_SESSION["firstname"]) or isset($_SESSION["lastname"]) or isset($_SESSION["email"]) or
-				isset($_SESSION["pass"]) or isset($_SESSION["confirm"])) {
+				isset($_SESSION["pass"]) or isset($_SESSION["confirm"]) or isset($_SESSION["role"]) or isset($_SESSION["citta"]))  {
 				echo "<div class=\"error-message\">I campi contrassegnati in rosso sono invalidi</div>";
 			}
 			?>
@@ -69,7 +69,7 @@
 				<!-- Create a div with a button named getCurrentLocation-->
 				<div id="location_div">
 					<!-- Text input for typing -->
-					<input list="cittaDropdown" id="cittaInput" placeholder="Type or select a city">
+					<input list="cittaDropdown" id="cittaInput" name="citta" placeholder="Type or select a city">
 
 					<!-- Datalist (list of all the cities in italy) -->
 					<datalist id="cittaDropdown">
