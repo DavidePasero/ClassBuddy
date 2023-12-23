@@ -66,6 +66,11 @@
 					<label for="tutor">Tutor</label>
 				</div>
 
+				<!-- Create a div with a button named getCurrentLocation-->
+				<div id="location_div">
+					<button type="button" id="getCurrentLocation" name="getCurrentLocation" class="form-element">Get current location</button>
+				</div>
+
 				<div id="submit_div">
 					<input type="submit" id="submit" name="Submit" value="Invia">
 				</div>

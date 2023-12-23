@@ -54,4 +54,15 @@
             [$login_hash]);
         if ($res->num_rows > 0) {throw new Exception ("Login code already used");}
     }
+
+    /*
+        Function that filters the table "tutor" which contains the following columns: (email, citta)
+        joined with table "insegnamento" which contains the following columns: (tutor, materia)
+        through the parameters citta and materia
+    */
+    function filter_tutor ($db, $citta, $materia) {
+        $query = "SELECT DISTINCT tutor.email FROM S5204959.tutor JOIN S5204959.insegnamento ON tutor.email = insegnamento.tutor WHERE tutor.citta = ? AND insegnamento.materia = ?";
+        $result = prepared_query ($db, $query, [$citta, $materia]);
+        return $result->fetch_all (MYSQLI_ASSOC);
+    }
 ?>

@@ -1,5 +1,6 @@
 let form = document.getElementById ("form");
 let sumbit = document.getElementById ("submit");
+let getCurrentLocationButton = document.getElementById ("getCurrentLocation");
 
 form.addEventListener ("input", function (event) {
     switch (event.target.type) {
@@ -16,6 +17,56 @@ form.addEventListener ("input", function (event) {
 });
 
 submit.addEventListener ("click", check_submit);
+
+/* getCurrentLocationButton listens to the click event and uses the geolocation API 
+    to get current location of the user and console.logs the name of the city
+*/
+
+getCurrentLocationButton.addEventListener ("click", function (event) {
+    // Check if the Geolocation API is supported
+    if (navigator.geolocation) {
+        // Get the current position
+        navigator.geolocation.getCurrentPosition(function(position) {
+        // Use the latitude and longitude to get the city name
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        var url = "https://nominatim.openstreetmap.org/reverse?lat=" + lat + "&lon=" + lon + "&format=json";
+        fetch(url)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                let city;
+                // Check if city is defined, if not checks if town is defined, if not checks if village is defined, then extracts the name
+                if (data.address.city != undefined) {
+                    city = data.address.city;
+                }
+                else if (data.address.town != undefined) {
+                    city = data.address.town;
+                }
+                else {
+                    city = data.address.village;
+                }
+
+                //city = (data.address.city != undefined) ? data.address.city : (data.address.town != undefined) ? data.address.town : data.address.village;
+                
+                // Extract the city name from the data
+                console.log(city);
+            });
+        },
+        function(error) {
+            console.log ("Error during geolocation: " + error.message);
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: Infinity
+        });
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+});
+
 
 let small_error_messages = {
     "firstname": create_small_error_message ("Un nome vuoto non è valido"),
