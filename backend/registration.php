@@ -34,11 +34,15 @@
 		$_SESSION["confirm"] = true;
 		$valid_data = FALSE;
 	}
+	if (strtolower($_POST ["role"]) != "studente" and strtolower($_POST ["role"]) != "tutor") {
+		$_SESSION["role"] = true;
+		$valid_data = FALSE;
+	}
 
 	if ($valid_data) {
 		prepared_query ($db,
-			"INSERT INTO S5204959.utente (firstname, lastname, email, pass) VALUES (?, ?, ?, ?)",
-			[$_POST ["firstname"], $_POST ["lastname"], $_POST ["email"], password_hash ($_POST ["pass"], PASSWORD_DEFAULT)]);
+			"INSERT INTO S5204959.utente (firstname, lastname, email, pass, role) VALUES (?, ?, ?, ?, ?)",
+			[$_POST ["firstname"], $_POST ["lastname"], $_POST ["email"], password_hash ($_POST ["pass"], PASSWORD_DEFAULT), $_POST ["role"]]);
 		header ("Location: ../pages/login_form.php");
 	}
 	else {

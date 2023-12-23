@@ -58,6 +58,14 @@
 					<input type="password"id="confirm" name="confirm" autocomplete="new-password" placeholder="Re-inserisci la password" class=<?php if (isset($_SESSION["confirm"])) {echo "\"input-error form-element\"";} else {echo "\"input-neutral form-element\"";}?> required>
 				</div>
 
+				<!-- Create a div for two radio buttons with the options "Studente" and "Tutor" on the same row-->
+				<div id="role_div">
+					<input type="radio" id="student" name="role" value="studente" checked>
+					<label for="student">Studente</label>
+					<input type="radio" id="tutor" name="role" value="tutor">
+					<label for="tutor">Tutor</label>
+				</div>
+
 				<div id="submit_div">
 					<input type="submit" id="submit" name="Submit" value="Invia">
 				</div>

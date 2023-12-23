@@ -34,7 +34,7 @@
 		// Scade in 15 giorni
 		$expiration = time()+60*60*24*15;
 
-		prepared_query ($db, "UPDATE S5204959.utente SET cookie_id=?, cookie_expiren=? WHERE email=?", [$hash_cookie_id, date ('Y-m-d H:i:s', $expiration), $_SESSION ["email"]]);
+		prepared_query ($db, "UPDATE S5204959.utente SET cookie_id=?, cookie_expire=? WHERE email=?", [$hash_cookie_id, date ('Y-m-d H:i:s', $expiration), $_SESSION ["email"]]);
 		// Set cookie rememberme
 		setcookie ("rememberme", $cookie_id, $expiration);
 	}
