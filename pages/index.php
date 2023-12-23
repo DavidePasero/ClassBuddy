@@ -12,14 +12,16 @@
 ?>
 <html lang="it">
 <head>
-    <title>VR space</title>
+    <title>
+        ClassBuddy
+    </title>
     <link rel="icon" href="../img/image.x" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="../style/home.css">
     <meta charset="utf-8">
 </head>
 <body>
     <header>
-        <h1 id="main_title">VR space</h1>
+        <h1 id="main_title">ClassBuddy</h1>
         <?php echo navbar();?>
     </header>
     <main>

@@ -25,7 +25,7 @@
 
 <body>
 	<header>
-        <h1 id="main_title">VR space</h1>
+        <h1 id="main_title">ClassBuddy</h1>
         <?php echo navbar();?>
     </header>
 	<main>
