@@ -1,7 +1,7 @@
 <?php
     // Controlla il cookie rememberme e esegue il login automaticamente
     function cookie_check ($db) {
-        require __DIR__ . '/../backend/login_rememberme.php';
+        require __DIR__ . 'login_rememberme.php';
 
         if (!(isset ($_SESSION ["authenticated"])) and isset ($_COOKIE ["rememberme"]))
             login_with_rememberme ($db);
