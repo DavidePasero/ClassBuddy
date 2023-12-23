@@ -5,7 +5,7 @@
 
 	require 'db.php';
 
-	$db = connect_to_db ("localhost", "root", "cinquanta50cinque5", "esercizi_saw");
+	$db = connect_to_db ();
 
 	$valid_data = TRUE;
 
