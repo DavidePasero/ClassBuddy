@@ -1,6 +1,27 @@
 let form = document.getElementById ("form");
 let sumbit = document.getElementById ("submit");
 let getCurrentLocationButton = document.getElementById ("getCurrentLocation");
+let selectCity = document.getElementById("cittaDropdown");
+let cittaInput = document.getElementById("cittaInput");
+
+
+// Get the list of cities from the file
+// reads the file cities.txt which is a list of all the cities in Italy separated by a newline an puts them in an array
+let cities = [];
+fetch('../res/citta.txt')
+  .then(response => response.text())
+  .then(data => {
+    cities = data.split('\n');
+    // Insert the list of cities into the dropdown menu
+    cities.forEach(function(city) {
+        var option = document.createElement("option");
+        option.text = city;
+        option.value = city;
+        selectCity.appendChild(option);
+    });
+})
+.catch(err => console.error(err));
+
 
 form.addEventListener ("input", function (event) {
     switch (event.target.type) {
@@ -18,10 +39,36 @@ form.addEventListener ("input", function (event) {
 
 submit.addEventListener ("click", check_submit);
 
-/* getCurrentLocationButton listens to the click event and uses the geolocation API 
+
+// Add an event listener for the data list
+cittaInput.addEventListener("input", function(event) {
+    // Get the user's input
+    var input = event.target.value;
+
+    // Filter the list of cities based on the user's input
+    var filteredCities = cities.filter(function(city) {
+        return city.toLowerCase().indexOf(input.toLowerCase()) !== -1;
+    });
+
+    // Clear the dropdown menu
+    while (selectCity.firstChild) {
+        selectCity.removeChild(selectCity.firstChild);
+    }
+
+    // Insert the filtered list of cities into the dropdown menu
+    filteredCities.forEach(function(city) {
+        var option = document.createElement("option");
+        option.text = city;
+        option.value = city;
+        selectCity.appendChild(option);
+    });
+});
+
+
+/* 
+    getCurrentLocationButton listens to the click event and uses the geolocation API 
     to get current location of the user and console.logs the name of the city
 */
-
 getCurrentLocationButton.addEventListener ("click", function (event) {
     // Check if the Geolocation API is supported
     if (navigator.geolocation) {
@@ -50,8 +97,8 @@ getCurrentLocationButton.addEventListener ("click", function (event) {
 
                 //city = (data.address.city != undefined) ? data.address.city : (data.address.town != undefined) ? data.address.town : data.address.village;
                 
-                // Extract the city name from the data
-                console.log(city);
+                // Set the value of the input field
+                cittaInput.value = city;
             });
         },
         function(error) {
