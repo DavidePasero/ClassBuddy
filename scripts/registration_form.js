@@ -32,6 +32,7 @@ let small_error_messages = {
     "confirm": create_small_error_message ("Le due password devono essere uguali"),
     "role": create_small_error_message ("Il ruolo non è valido"),
     "city": create_small_error_message ("La città non è valida"),
+    "online_presenza": create_small_error_message ("Devi scegliere se vuoi fare lezioni online o in presenza"),
     "submit": create_small_error_message ("Tutti i campi devono essere validi per completare la registrazione")
 };
 
@@ -66,6 +67,12 @@ form.addEventListener ("input", function (event) {
             break;
         case "tutor":
             check_role ();
+            break;
+        case "online":
+            check_online_presenza ();
+            break;
+        case "presenza":
+            check_online_presenza ();
             break;
         case "cittaInput":
             check_city ();
@@ -103,7 +110,7 @@ cittaInput.addEventListener("input", function(event) {
 
 /* 
     getCurrentLocationButton listens to the click event and uses the geolocation API 
-    to get current location of the user and console.logs the name of the city
+    to get current location of the user
 */
 getCurrentLocationButton.addEventListener ("click", function (event) {
     // Check if the Geolocation API is supported
@@ -261,6 +268,26 @@ function check_role () {
 }
 
 
+// Check if at least one of the two checkboxes is checked
+function check_online_presenza () {
+    let online = document.getElementById ("online");
+    let presenza = document.getElementById ("presenza");
+    let online_presenza_div = document.getElementById ("online_presenza_div");
+    let last_div_elem = online_presenza_div.lastElementChild;
+
+    if (!online.checked && !presenza.checked) {
+        if (last_div_elem.className.indexOf ("small-error-message") === -1)
+            online_presenza_div.appendChild (small_error_messages["online_presenza"]);
+        return false;
+    }
+    else {
+        if (last_div_elem.className.indexOf ("small-error-message") !== -1)
+            online_presenza_div.removeChild (last_div_elem);
+        return true;
+    }
+}
+
+
 // Check città
 function check_city () {
     let city = document.getElementById ("cittaInput");
@@ -283,9 +310,10 @@ function check_city () {
 // Checks the entire form to see if it's ready to be submitted
 function check_submit (event) {
     let div = document.getElementById ("submit_div");
-    console.log ("firstname: " + check_firstname () + "\nlastname: " + check_lastname () + "\nemail: " + email_ok + "\npass: " + check_pass () + "\nrole: " + check_role () + "\ncity: " + check_city ());
-    // Doesnt work. firstname and lastname are undefined for some reason, role_ok and city_ok are always false
-    if (!(check_firstname () && check_lastname () && email_ok && check_pass () && check_role () && check_city ())) {
+    let tutor = document.getElementById ("tutor");
+    // Check everything if the tutor checkbox is checked, else check only the student fields (no online/presenza and no citta)
+    if (!(check_firstname () && check_lastname () && email_ok && check_pass () && check_role () &&
+        (!tutor.checked || (check_online_presenza () && check_city ())))) {
         event.preventDefault();
         if (div.children.length == 1)
             div.appendChild (small_error_messages["submit"]);            
