@@ -69,7 +69,7 @@
 				<!-- Create a div with a button named getCurrentLocation-->
 				<div id="location_div">
 					<!-- Text input for typing -->
-					<input list="cittaDropdown" id="cittaInput" name="citta" placeholder="Type or select a city">
+					<input list="cittaDropdown" id="cittaInput" name="citta" placeholder="Digita o seleziona una città">
 
 					<!-- Datalist (list of all the cities in italy) -->
 					<datalist id="cittaDropdown">

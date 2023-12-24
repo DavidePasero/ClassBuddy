@@ -23,16 +23,52 @@ fetch('../res/citta.txt')
 .catch(err => console.error(err));
 
 
+let small_error_messages = {
+    "firstname": create_small_error_message ("Un nome vuoto non è valido"),
+    "lastname": create_small_error_message ("Un cognome vuoto non è valido"),
+    "email": create_small_error_message ("L'email non è valida"),
+    "existing_email": create_small_error_message ("Questa email è già stata usata"),
+    "pass": create_small_error_message ("La password deve avere almeno 8 caratteri"),
+    "confirm": create_small_error_message ("Le due password devono essere uguali"),
+    "role": create_small_error_message ("Il ruolo non è valido"),
+    "city": create_small_error_message ("La città non è valida"),
+    "submit": create_small_error_message ("Tutti i campi devono essere validi per completare la registrazione")
+};
+
+function create_small_error_message (text) {
+    let p = document.createElement("p");
+    let textnode = document.createTextNode(text);
+    p.appendChild (textnode);
+    p.setAttribute ("class", "form-element small-error-message");
+    return p;
+}
+
+
 form.addEventListener ("input", function (event) {
-    switch (event.target.type) {
-        case "text":
-            check_text_fields (event.target);
+    switch (event.target.id) {
+        case "firstname":
+            check_firstname ();
+            break;
+        case "lastname":
+            check_lastname ();
             break;
         case "email":
             check_email ();
             break;
-        case "password":
+        case "pass":
             check_pass ();
+            break;
+        case "confirm":
+            check_pass ();
+            break;
+        case "student":
+            check_role ();
+            break;
+        case "tutor":
+            check_role ();
+            break;
+        case "cittaInput":
+            check_city ();
             break;
     }
 });
@@ -107,7 +143,7 @@ getCurrentLocationButton.addEventListener ("click", function (event) {
         {
             enableHighAccuracy: true,
             timeout: 5000,
-            maximumAge: Infinity
+            maximumAge: 10000
         });
     } else {
         console.log("Geolocation is not supported by this browser.");
@@ -115,67 +151,66 @@ getCurrentLocationButton.addEventListener ("click", function (event) {
 });
 
 
-let small_error_messages = {
-    "firstname": create_small_error_message ("Un nome vuoto non è valido"),
-    "lastname": create_small_error_message ("Un cognome vuoto non è valido"),
-    "email": create_small_error_message ("L'email non è valida"),
-    "existing_email": create_small_error_message ("Questa email è già stata usata"),
-    "pass": create_small_error_message ("La password deve avere almeno 8 caratteri"),
-    "confirm": create_small_error_message ("Le due password devono essere uguali"),
-    "submit": create_small_error_message ("Tutti i campi devono essere validi per completare la registrazione")
-};
+// Check nome e cognome
+function check_text_field (div, text_field) {
+    let last_div_elem = div.lastElementChild;
+    // Se il campo è vuoto e non c'è già un messaggio di errore, lo aggiunge
+    if (text_field.value.length == 0 && last_div_elem.className.indexOf ("small-error-message") === -1)
+        div.appendChild (small_error_messages[text_field.id]);
+    // Se il campo non è vuoto e c'è un messaggio di errore, lo rimuove
+    else if (text_field.value.length != 0 && last_div_elem.className.indexOf ("small-error-message") !== -1) 
+        div.removeChild (last_div_elem);
 
-function create_small_error_message (text) {
-    let p = document.createElement("p");
-    let textnode = document.createTextNode(text);
-    p.appendChild (textnode);
-    p.setAttribute ("class", "form-element small-error-message");
-    return p;
+    return text_field.value.length != 0;
 }
 
-let text_fields_ok = false;
 
-function check_text_fields () {
-    let divs = [document.getElementById ("firstname_div"), document.getElementById ("lastname_div")];
-    for (let div of divs) {
-        if (div.children[0].value == "" && div.children.length == 1)
-            div.appendChild (small_error_messages[div.children[0].id]);
-        else if (div.children[0].value != "" && div.children.length > 1)
-            div.removeChild (div.children[1]);
-    }
-
-    text_fields_ok = divs[0].children[0].value != "" && divs[1].children[0].value != "";
+function check_firstname () {
+    return check_text_field (document.getElementById ("firstname_div"), document.getElementById ("firstname"));
 }
 
+function check_lastname () {
+    return check_text_field (document.getElementById ("lastname_div"), document.getElementById ("lastname"));
+}
+
+
+// Check email
+// I need the global variable for the fetch function
 let email_ok = false;
 
 function check_email () {
     let email_div = document.getElementById ("email_div");
+    let email = document.getElementById ("email");
+    let last_div_elem = email_div.lastElementChild;
     let re = /\S+@\S+\.\S+/;
-    email_ok = re.test(email_div.children[0].value);
-    if (!email_ok && email_div.children.length == 1)
+    email_ok = re.test(email.value);
+
+    if (!email_ok && last_div_elem.className.indexOf ("small-error-message") === -1)
         email_div.appendChild (small_error_messages["email"]);
-    else if (email_ok && email_div.children.length > 1)
-        email_div.removeChild (email_div.children [1]);
+    else if (email_ok && last_div_elem.className.indexOf ("small-error-message") !== -1)
+        email_div.removeChild (last_div_elem);
+
+    // Update di last_div_elem
+    last_div_elem = email_div.lastElementChild;
 
     if (email_ok) {
         // Checks if email is already in the database
         fetch ("../backend/email_exists.php",
         {
             method: "POST",
-            body: "email=" + email_div.children[0].value,
+            body: "email=" + email.value,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
         }).then(response => response.text())
         .then(data => {
             // Mutuamente esclusivi: una email non valida non può essere già nel database
-            if (data == "true" && email_div.children.length == 1) {
+            if (data == "true" && last_div_elem.className.indexOf ("small-error-message") === -1) {
                 email_ok = false;
                 email_div.appendChild (small_error_messages["existing_email"]);
             }
-            else if (data == "false" && email_div.children.length > 1)
-                email_div.removeChild (email_div.children [1]);
+            else if (data == "false" && last_div_elem.className.indexOf ("small-error-message") !== -1)
+                email_div.removeChild (last_div_elem);
         })
         .catch(error => {
             console.error("Error:", error);
@@ -183,32 +218,74 @@ function check_email () {
     }
 }
 
-let pass_ok = false;
-
+// Check password e conferma password
 function check_pass () {
     let pass = document.getElementById ("pass");
     let confirm = document.getElementById ("confirm");
     let pass_div = document.getElementById ("pass_div");
+    let last_pass_div_elem = pass_div.lastElementChild;
     let confirm_div = document.getElementById ("confirm_div");
+    let last_confirm_div_elem = confirm_div.lastElementChild;
 
-    if (pass.value.length < 8 && pass_div.children.length == 1)
+    if (pass.value.length < 8 && last_pass_div_elem.className.indexOf ("small-error-message") === -1)
         pass_div.appendChild (small_error_messages["pass"]);
-    else if (pass.value.length >= 8 && pass_div.children.length > 1)
-        pass_div.removeChild (pass_div.children [1]);
+    else if (pass.value.length >= 8 && last_pass_div_elem.className.indexOf ("small-error-message") !== -1)
+        pass_div.removeChild (last_pass_div_elem);
 
-    if (confirm.value != pass.value && confirm_div.children.length == 1)
+    if (confirm.value != pass.value && last_confirm_div_elem.className.indexOf ("small-error-message") === -1)
         confirm_div.appendChild (small_error_messages["confirm"]);
-    else if (confirm.value == pass.value && confirm_div.children.length > 1)
-        confirm_div.removeChild (confirm_div.children [1]);
+    else if (confirm.value == pass.value && last_confirm_div_elem.className.indexOf ("small-error-message") !== -1)
+        confirm_div.removeChild (last_confirm_div_elem);
 
-    pass_ok = pass.value.length >= 8 && confirm.value == pass.value;
+    return pass.value.length >= 8 && confirm.value == pass.value;
 }
 
+
+// Check ruolo
+function check_role () {
+    let student = document.getElementById ("student");
+    let tutor = document.getElementById ("tutor");
+    let role_div = document.getElementById ("role_div");
+    let last_div_elem = role_div.lastElementChild;
+
+    if (!student.checked && !tutor.checked) {
+        if (last_div_elem.className.indexOf ("small-error-message") === -1)
+            role_div.appendChild (small_error_messages["role"]);
+        return false;
+    }
+    else {
+        if (last_div_elem.className.indexOf ("small-error-message") !== -1)
+            role_div.removeChild (last_div_elem);
+        return true;
+    }
+}
+
+
+// Check città
+function check_city () {
+    let city = document.getElementById ("cittaInput");
+    let location_div = document.getElementById ("location_div");
+    let last_div_elem = location_div.lastElementChild;
+
+    if (cities.includes (city.value)) {
+        // Remove the error message if it's there
+        if (last_div_elem.className.indexOf ("small-error-message") !== -1)
+            location_div.removeChild (last_div_elem);
+        return true;
+    } else {
+        if (last_div_elem.className.indexOf ("small-error-message") === -1)
+            location_div.appendChild (small_error_messages["city"]);
+        return false;
+    }
+}
+
+
 // Checks the entire form to see if it's ready to be submitted
-// ! missing: check if role and city are valid
 function check_submit (event) {
     let div = document.getElementById ("submit_div");
-    if (!text_fields_ok || !email_ok || !pass_ok) {
+    console.log ("firstname: " + check_firstname () + "\nlastname: " + check_lastname () + "\nemail: " + email_ok + "\npass: " + check_pass () + "\nrole: " + check_role () + "\ncity: " + check_city ());
+    // Doesnt work. firstname and lastname are undefined for some reason, role_ok and city_ok are always false
+    if (!(check_firstname () && check_lastname () && email_ok && check_pass () && check_role () && check_city ())) {
         event.preventDefault();
         if (div.children.length == 1)
             div.appendChild (small_error_messages["submit"]);            

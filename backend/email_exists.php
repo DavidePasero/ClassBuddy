@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require 'db.php';
     $db = connect_to_db ();
     $result = existing_email ($db, $email);
-    // For demonstration purposes, let's just echo the email value
     echo $result ? 'true' : 'false';
 } else {
     // If the request method is not POST, return an error
