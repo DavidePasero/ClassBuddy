@@ -55,6 +55,7 @@ main {
 }
 
 footer {
+    padding: 8px;
     background-color: #9f91a2;
     width: 100%;
     font-family: Arial, Helvetica, sans-serif;
