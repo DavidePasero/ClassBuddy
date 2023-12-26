@@ -29,8 +29,8 @@
         <?php echo navbar();?>
     </header>
 	<main>
-		<div class="container_title">Sign-in form</div>
-		<div class = "container">
+		<div class="container_title_2">Sign-in form</div>
+		<div>
 			<?php
 				if (isset($_SESSION["error"])) {
 					echo "<div class=\"error-message\">I dati inseriti non sono corretti</div> <br>";

@@ -25,8 +25,15 @@
         <?php echo navbar();?>
     </header>
     <main>
-        <p>VR</p>
-        <img src="../img/quest3.jpg" alt="Immagine che ritrae il nuovo visore di Meta: Quest 3" class="container main-img">
+        <div class="text">Trova il tutor più adatto a te!</div>
+        <div class="image-grid">
+                    <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
+                    <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
+                    <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
+                    <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
+                    <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
+                    <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
+        </div>
     </main> 
     <?php echo footer()?>
 </body>
