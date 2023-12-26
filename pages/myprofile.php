@@ -11,7 +11,7 @@
     
     if (!isset ($_SESSION ["authenticated"])) {
         $db->close ();
-        header ("Location: login.php");
+        header ("Location: login_form.php");
     }
 
 ?>
@@ -20,6 +20,8 @@
     <title>ClassBuddy</title>
     <link rel="icon" href="img/image.x" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="../style/home.css">
+    <link rel="stylesheet" type="text/css" href="../style/modify_propic.css">
+    <script src="../scripts/modify_propic.js" defer></script>
     <meta charset="utf-8">
 </head>
 <body>
@@ -29,6 +31,19 @@
     </header>
     <main>
         <p>Welcome <?php echo htmlentities (select_user_email ($db, $_SESSION["email"]) ["firstname"])?>!</p>
+        <form action = "../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
+            <div id="image_div">
+                <img id="image-preview" src="../img/defaultUser.jpg" alt="Preview">
+                <div id="edit-button">
+                    ✏️
+                </div>
+                <input type="file" id="propic" name="propic" accept="image/*">
+            </div>
+
+            <div id="submit_div">
+                <input type="submit" id="submit" name="Submit" value="Invia">
+			</div>
+        </form>
     </main>
     <?php echo footer();?>
 </body>

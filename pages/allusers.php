@@ -11,7 +11,7 @@
     
     if (!(isset ($_SESSION ["authenticated"]) and $_SESSION ["admin"])) {
         $db->close ();
-        header ("Location: login.php");
+        header ("Location: login_form.php");
     }
 
 ?>
