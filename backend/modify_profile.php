@@ -25,10 +25,10 @@ if (isset($_FILES["propic"]) and $_FILES["propic"]["error"] == UPLOAD_ERR_OK) {
     // Insert image content into database 
     $insert = prepared_query ($db, "UPDATE S5204959.utente SET propic=?, propic_type=? WHERE email=?;", [$propicContent, $fileExtension, $_SESSION["email"]]); 
         
-    echo $insert; 
-} else{
-    $statusMsg = 'Please select an image file to upload.'; 
-    echo $statusMsg;
-} 
-#header ("Location: ../pages/myprofile.php");
+    if ($insert)
+        header ("Location: ../pages/myprofile.php"); 
+    else
+        header ("Location: ../pages/error.php?error_type=upload_propic_failed");
+} else
+    header ("Location: ../pages/error.php?error_type=no_img_received");
 ?>

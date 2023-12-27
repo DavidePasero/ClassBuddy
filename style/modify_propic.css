@@ -16,10 +16,15 @@
     position: absolute;
     bottom: 5px;
     right: 5px;
-    background: #fff;
     padding: 5px;
-    cursor: pointer;
-    border-radius: 50%;
+    border-radius: 10px;
+    border: 2px solid rgb(138, 80, 113);
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    background-image: url('../res/icons/edit_icon.svg');
+    background-size: cover; /* Adjust as needed: contain, cover, or specific dimensions */
+    background-repeat: no-repeat;
 }
 
 #file-input {

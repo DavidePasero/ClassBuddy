@@ -46,9 +46,7 @@
         <form action = "../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
             <div id="image_div">
                 <img id="image-preview" src=<?php echo $dataUri;?> alt="Profile picture">
-                <div id="edit-button">
-                    ✏️
-                </div>
+                <div id="edit-button"></div>
                 <input type="file" id="propic" name="propic" accept="image/*">
             </div>
 
