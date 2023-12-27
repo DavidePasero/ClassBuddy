@@ -13,8 +13,8 @@
 
     $msg = "Errore sconosciuto.";
 
-    if (isset ($_GET ["error-type"])) {
-        $msg = $error_msgs[$_GET ["error-type"]];
+    if (isset ($_GET ["error_type"])) {
+        $msg = $error_msgs[$_GET ["error_type"]];
     }
 ?>
 <html lang="it">

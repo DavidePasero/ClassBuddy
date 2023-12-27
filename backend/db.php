@@ -21,8 +21,11 @@
     // Esegue la query parametrica specificata
     function prepared_query ($db, $parametrized_query, $parameters) {
         $query = $db->prepare ($parametrized_query);
-        $query->execute ($parameters);
-        return $query->get_result ();
+        $success = $query->execute ($parameters);
+        $result = $query->get_result ();
+        // Se la query era di tipo SELECT, SHOW, DESCRIBE o EXPLAIN, allora get_result restituisce un oggetto mysqli_result
+        // Altrimenti restituisce true se la query è andata a buon fine, false altrimenti
+        return $result === false ? $success : $result;
     }
 
     # Restituisce tutte le informazioni di un utente data la sua email

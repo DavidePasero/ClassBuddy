@@ -4,6 +4,7 @@
     height: 300px;
     overflow: hidden;
     border: 1px solid #ccc;
+    border-radius: 10px;
 }
 
 #image-preview {
