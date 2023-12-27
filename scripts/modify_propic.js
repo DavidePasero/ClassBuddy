@@ -27,7 +27,9 @@ function previewImage(event) {
 const imageDiv = document.getElementById('image_div');
 imageDiv.addEventListener('dragover', function (e) {
     e.preventDefault();
-    imageDiv.classList.add('dragover');
+    if (!imageDiv.classList.contains('dragover')) {
+        imageDiv.classList.add('dragover');
+    }
 });
 
 imageDiv.addEventListener('dragleave', function () {
@@ -37,23 +39,20 @@ imageDiv.addEventListener('dragleave', function () {
 imageDiv.addEventListener('drop', function (e) {
     e.preventDefault();
     imageDiv.classList.remove('dragover');
+    console.log ("NOOOOOO");
 
+    // Prendo il file
     const file = e.dataTransfer.files[0];
+    // Aggiorno anche il fileInput
+    fileInput.files = e.dataTransfer.files;
 
+    // Se c'è un file lo mostro
     if (file) {
-            const reader = new FileReader();
-            reader.onload = function (ev) {
+        const reader = new FileReader();
+        reader.onload = function (ev) {
             const imagePreview = document.getElementById('image-preview');
             imagePreview.src = ev.target.result;
-            // Aggiorno anche il fileInput
-            fileInput.value = ev.target.result;
         };
         reader.readAsDataURL(file);
     }
-});
-
-let submitButton = document.getElementById('submit');
-submitButton.addEventListener('click', function (event) {
-    event.preventDefault();
-    console.log (fileInput.value);
 });

@@ -14,6 +14,18 @@
         header ("Location: login_form.php");
     }
 
+    // Se sto visualizzando il mio profilo, allora $user_profile = $_SESSION ["email"], altrimenti $user_profile = $_GET ["email"]
+    $user_profile = isset($_GET ["email"]) ? $_GET ["email"] : $_SESSION ["email"];
+    $user_profile_info = select_user_email ($db, $user_profile);
+
+    if ($user_profile_info ["propic"] !== NULL) {
+        // Create a data URI for the image
+        $imageData = base64_encode($user_profile_info["propic"]);
+        $imageType = $user_profile_info["propic_type"];
+        $dataUri = "data:image/{$imageType};base64,{$imageData}";
+    } else {
+        $dataUri = "../img/defaultUser.jpg";
+    }
 ?>
 <html lang="it">
 <head>
@@ -33,7 +45,7 @@
         <p>Welcome <?php echo htmlentities (select_user_email ($db, $_SESSION["email"]) ["firstname"])?>!</p>
         <form action = "../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
             <div id="image_div">
-                <img id="image-preview" src="../img/defaultUser.jpg" alt="Preview">
+                <img id="image-preview" src=<?php echo $dataUri;?> alt="Profile picture">
                 <div id="edit-button">
                     ✏️
                 </div>

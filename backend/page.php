@@ -11,7 +11,7 @@
         $navbar = "<nav class=\"container\" id=\"menu\"><a href=\"index.php\" class=\"scaling-link menu-item\">Home</a>";
         if (isset($_SESSION ["authenticated"])) {
             $navbar .= <<<NAVBAR
-            <a href="myprofile.php" class="scaling-link menu-item">Show profile</a>
+            <a href="profile.php" class="scaling-link menu-item">Show profile</a>
             <a href="../backend/logout.php" class="scaling-link menu-item">Log out</a>
             NAVBAR;
             if (isset ($_SESSION ["admin"]) and $_SESSION ["admin"]) {

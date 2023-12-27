@@ -25,3 +25,8 @@
 #file-input {
     display: none;
 }
+
+.dragover {
+    /* !important serve per facilitare l'override del border che è definito anche in #image_div*/
+    border: 1px dashed #563440 !important;
+}

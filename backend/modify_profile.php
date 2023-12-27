@@ -18,10 +18,12 @@ if (isset($_FILES["propic"]) and $_FILES["propic"]["error"] == UPLOAD_ERR_OK) {
     $propicTmpName = $propic["tmp_name"];
     // Read the file content
     $propicContent = file_get_contents($propicTmpName);
+    // Get the file extension
+    $fileExtension = pathinfo($propic["name"], PATHINFO_EXTENSION);
     
     $db = connect_to_db ();
     // Insert image content into database 
-    $insert = prepared_query ($db, "UPDATE S5204959.utente SET propic=? WHERE email=?;", [$propicContent, $_SESSION["email"]]); 
+    $insert = prepared_query ($db, "UPDATE S5204959.utente SET propic=?, propic_type=? WHERE email=?;", [$propicContent, $fileExtension, $_SESSION["email"]]); 
         
     echo $insert; 
 } else{
