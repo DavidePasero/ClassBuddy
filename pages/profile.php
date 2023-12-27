@@ -26,6 +26,8 @@
     } else {
         $dataUri = "../img/defaultUser.jpg";
     }
+
+    $myprofile = $user_profile_info ["email"] === $_SESSION ["email"];
 ?>
 <html lang="it">
 <head>
@@ -33,7 +35,9 @@
     <link rel="icon" href="img/image.x" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="../style/home.css">
     <link rel="stylesheet" type="text/css" href="../style/modify_propic.css">
-    <script src="../scripts/modify_propic.js" defer></script>
+    <?php if ($myprofile)
+        echo "<script src=\"../scripts/modify_propic.js\" defer></script>"
+    ?>
     <meta charset="utf-8">
 </head>
 <body>
@@ -42,17 +46,28 @@
         <?php echo navbar();?>
     </header>
     <main>
-        <p>Welcome <?php echo htmlentities (select_user_email ($db, $_SESSION["email"]) ["firstname"])?>!</p>
+        <p>Profilo di: <?php echo htmlentities ($user_profile_info ["firstname"] . " " . $user_profile_info ["lastname"])?></p>
         <form action = "../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
             <div id="image_div">
                 <img id="image-preview" src=<?php echo $dataUri;?> alt="Profile picture">
-                <div id="edit-button"></div>
-                <input type="file" id="propic" name="propic" accept="image/*">
+                <?php
+                    if ($myprofile) {
+                        echo <<<MODIFY_PIC
+                            <div id="edit-button"></div>
+                            <input type="file" id="propic" name="propic" accept="image/*">
+                        MODIFY_PIC;
+                    }
+                ?>
             </div>
 
-            <div id="submit_div">
-                <input type="submit" id="submit" name="Submit" value="Invia">
-			</div>
+            <?php 
+                if ($myprofile) {
+                    echo <<<SUBMIT_FORM
+                        <div id="submit_div">
+                            <input type="submit" id="submit" name="Submit" value="Invia">
+                        </div>
+                        SUBMIT_FORM;
+                }?>
         </form>
     </main>
     <?php echo footer();?>
