@@ -208,7 +208,7 @@ function check_email () {
             body: "email=" + email.value,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-            },
+            }
         }).then(response => response.text())
         .then(data => {
             // Mutuamente esclusivi: una email non valida non può essere già nel database

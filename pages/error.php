@@ -8,7 +8,10 @@
     // array associativo che mappa il tipo di errore con il messaggio da mostrare
     $error_msgs = array(
         "upload_propic_failed" => "Upload della propic fallito. Prova più tardi.",
-        "no_img_received" => "Please select an image file to upload."
+        "no_img_received" => "Nessuna immagine è stata selezionata per l'update.",
+        "missing_recipient" => "Nessun destinatario è stato specificato per la chat.",
+        "invalid_chat" => "La chat è ammessa tra studenti e tutor, non tra studenti o tra tutor.",
+        "invalid_request" => "La richiesta non è soddisfacibile dal server."
     );
 
     $msg = "Errore sconosciuto.";

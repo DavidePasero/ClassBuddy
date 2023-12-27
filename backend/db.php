@@ -46,10 +46,6 @@
         return password_verify ($pass, $result_assoc ["pass"]);
     }
 
-    function is_admin ($db, $email) {
-        return (select_user_email ($db, $email)["role"] == "admin");
-    }
-
     function check_login_code ($db, $hash_cookie_id) {
         $login_hash = hash ("sha256", $hash_cookie_id);
         $res = prepared_query ($db,

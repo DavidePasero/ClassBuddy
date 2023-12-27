@@ -11,7 +11,7 @@
 	if (isset ($_POST["email"]) and isset ($_POST["pass"]) and verify_login ($db, $_POST["email"], $_POST["pass"])) {
 		$_SESSION ["authenticated"] = true;
 		$_SESSION ["email"] = $_POST ["email"];
-		$_SESSION ["admin"] = is_admin ($db, $_POST ["email"]);
+		$_SESSION ["role"] = select_user_email ($db, $_POST ["email"]) ["role"];
 
 		if (isset ($_POST ["rememberme"])) {
 			insert_rememberme ($db);

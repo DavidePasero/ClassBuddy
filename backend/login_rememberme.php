@@ -16,7 +16,7 @@
 				// Se il login code esiste e non è scaduto effettuo il login
 				$_SESSION ["authenticated"] = true;
 				$_SESSION ["email"] = $res_assoc ["email"];
-				$_SESSION ["admin"] = is_admin ($db, $res_assoc ["email"]);
+				$_SESSION ["role"] = select_user_email ($db, $res_assoc ["email"]) ["role"];
 			}
 		}
 	}
