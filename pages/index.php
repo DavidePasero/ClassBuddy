@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="../style/tutor.css">
     <link rel="stylesheet" type="text/css" href="../style/home.css">
     <meta charset="utf-8" name="viewport" content="width=device-width", initial-scale="1.0">
-<script src="../scripts/loadTutors.js"></script>
+<script src="../scripts/loadTutors.js" defer></script>
 </head>
 <body>
     <header>
