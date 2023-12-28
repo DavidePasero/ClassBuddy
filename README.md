@@ -34,5 +34,5 @@ ClassBuddy è una piattaforma online che facilita il collegamento tra studenti e
 
 Per domande, problemi o feedback, contattaci all'indirizzo email davide_pasero@icloud.com e sara.rosselli02@gmail.com
 
-Grazie per aver scelto TutorLink per le tue esigenze di apprendimento!
+Grazie per aver scelto ClassBuddy per le tue esigenze di apprendimento!
 
