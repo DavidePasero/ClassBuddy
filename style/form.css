@@ -88,6 +88,27 @@
   margin-bottom: 5px;
 }
 
+.radiobutton {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
+  position: relative;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+/* Per le checkbox */
+input[type="checkbox"] + label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Per i radio button */
+input[type="radio"] + label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
 /* Style the custom checkmark */
 .checkmark {
   position: absolute;
