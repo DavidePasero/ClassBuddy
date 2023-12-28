@@ -1,0 +1,15 @@
+#chat_button {
+    background-color: white;
+    background-image: url('../res/icons/chat.svg');
+    background-size: cover; /* Adjust as needed: contain, cover, or specific dimensions */
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    border-width: 0px;
+    padding: 5px;
+}
+
+#chat_button:hover {
+    background-color: #bebebe;
+    border-radius: 10px;
+}

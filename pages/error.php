@@ -11,7 +11,9 @@
         "no_img_received" => "Nessuna immagine è stata selezionata per l'update.",
         "missing_recipient" => "Nessun destinatario è stato specificato per la chat.",
         "invalid_chat" => "La chat è ammessa tra studenti e tutor, non tra studenti o tra tutor.",
-        "invalid_request" => "La richiesta non è soddisfacibile dal server."
+        "invalid_request" => "La richiesta non è soddisfacibile dal server.",
+        "invalid_file_extension" => "Estensione del file non valida. Sono ammessi solo file .jpg, .jpeg, .png e .gif.",
+        "generic_modify_profile_error" => "Errore generico durante la modifica del profilo."
     );
 
     $msg = "Errore sconosciuto.";

@@ -1,0 +1,14 @@
+Italiano
+Inglese
+Francese
+Spagnolo
+Tedesco
+Matematica
+Informatica
+Fisica
+Chimica
+Biologia
+Elettronica
+Latino
+Greco
+Filosofia
