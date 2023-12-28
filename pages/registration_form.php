@@ -16,7 +16,7 @@
 
 <html lang="it">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" name="viewport" content="width=device-width", initial-scale="1.0">
     <title>Sign-up</title>
 	<link rel="stylesheet" type="text/css" href="../style/form.css">
 	<link rel="stylesheet" type="text/css" href="../style/home.css">
@@ -59,7 +59,7 @@
 				</div>
 
 				<!-- Create a div for two radio buttons with the options "Studente" and "Tutor"-->
-				<div id="role_div">
+				<div id="role_div" class="radiobutton">
 					<input type="radio" id="student" name="role" value="studente" checked>
 					<label for="student">Studente</label>
 					<input type="radio" id="tutor" name="role" value="tutor">
@@ -67,7 +67,7 @@
 				</div>
 				
 				<!-- Create a div for two checkboxes with the options "Online" and "In presenza"-->
-				<div id="online_presenza_div">
+				<div id="online_presenza_div" class="radiobutton">
 					<input type="checkbox" id="online" name="online" value="online" checked>
 					<label for="online">Online</label>
 					<input type="checkbox" id="presenza" name="presenza" value="presenza">
