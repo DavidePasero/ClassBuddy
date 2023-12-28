@@ -17,7 +17,7 @@
     </title>
     <link rel="icon" href="../img/image.x" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="../style/home.css">
-    <meta charset="utf-8">
+    <meta charset="utf-8" name="viewport" content="width=device-width", initial-scale="1.0">
 </head>
 <body>
     <header>
