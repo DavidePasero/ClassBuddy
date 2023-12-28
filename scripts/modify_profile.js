@@ -140,8 +140,8 @@ if (submitButton != null) {
         if (is_tutor) {
             // Make materia e tarriffa elements to be <span> elements
             // Get all the input elements
-            let materie = insegnamenti_list.querySelectorAll('[name="materia[]"]');
-            let tariffe = insegnamenti_list.querySelectorAll('[name="tariffa[]"]');
+            let materie = insegnamenti_list.querySelectorAll('[name="materia[]"][type="select"]');
+            let tariffe = insegnamenti_list.querySelectorAll('[name="tariffa[]"][type="number"]');
 
             function replaceWithSpan(elems) {
                 for (let i = 0; i < elems.length; i++) {
