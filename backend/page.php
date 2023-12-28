@@ -14,9 +14,6 @@
             <a href="profile.php" class="scaling-link menu-item">Show profile</a>
             <a href="../backend/logout.php" class="scaling-link menu-item">Log out</a>
             NAVBAR;
-            if (isset ($_SESSION ["admin"]) and $_SESSION ["admin"]) {
-                $navbar .= "<a href=\"allusers.php\" class=\"scaling-link menu-item\">All users</a>";
-            }
         }
         else {
             $navbar .= <<<NAVBAR

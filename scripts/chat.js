@@ -1,4 +1,6 @@
 let chat = document.getElementById("chat-container");
+// Scrollo automaticamente la chat fino all'ultimo messaggio
+chat.scrollTop = chat.scrollHeight;
 
 let msg = document.getElementById("message");
 let submit = document.getElementById("submit");
@@ -7,14 +9,16 @@ submit.addEventListener("click", send_msg);
 
 function send_msg (event) {
     event.preventDefault();
-
+    var testo_msg = msg.value;
+    msg.value = "";
     // Inserisco immediatamente il messaggio inviato dall'utente nella chat
     var new_msg = document.createElement("div");
     new_msg.classList.add("message");
     new_msg.classList.add("sent");
-    var txt = document.createTextNode(msg.value);
+    var txt = document.createTextNode(testo_msg);
     new_msg.appendChild(txt);
     chat.appendChild(new_msg);
+    chat.scrollTop = chat.scrollHeight;
 
     // Invio il messaggio al server che lo inserisce nel database in modo asincrono
     fetch("../backend/send_message.php", {
@@ -22,7 +26,7 @@ function send_msg (event) {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: "message=" + msg.value + "&recipient=" + document.getElementById("recipient").value
+        body: "message=" + testo_msg + "&recipient=" + document.getElementById("recipient").value
     });
 }
 
@@ -54,8 +58,10 @@ function fetchNewMessages() {
         });
 
         // Update the latest timestamp for the next fetch
-        if (data.length > 0)
+        if (data.length > 0) {
             latestTimestamp = data[data.length - 1]["timestamp"];
+            chat.scrollTop = chat.scrollHeight;
+        }
     })
     .catch(error => console.error("Error fetching new messages:", error));
 }
