@@ -48,7 +48,7 @@
     </header>
     <main>
         <p>Profilo di: <?php echo htmlentities ($user_profile_info ["firstname"] . " " . $user_profile_info ["lastname"])?></p>
-        <form action = "../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
+        <form id="form" action = "../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
             <div id="image_div">
                 <img id="image-preview" src=<?php echo $dataUri;?> alt="Profile picture">
                 <?php
@@ -80,7 +80,7 @@
                             nella gestione delle eliminazioni*/
                             echo <<<INSEGNAMENTI_PRESENTI
                                     <li class="insegnamento">
-                                        <span>{$insegnamento ["materia"]}</span>
+                                        <span name="materia[]">{$insegnamento ["materia"]}</span>
                                         <span>{$insegnamento ["tariffa"]}€/h</span>
                                         <button type="button" class="remove_insegnamento"></button>
                                     </li>
