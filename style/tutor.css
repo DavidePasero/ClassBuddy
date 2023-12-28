@@ -1,0 +1,54 @@
+.tutor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 60px;
+    padding: 20px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(205, 132, 173);
+    border-radius: 10px;
+    width: 200px;
+}
+
+.tutor .profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-style: solid;
+    border-color: rgb(205, 132, 173);
+    border-width: 2px;
+    overflow: hidden; /* Hide the overflow to prevent unwanted scrollbars during the zoom effect */
+    transition: transform 0.3s ease-in-out;
+}
+
+.tutor .profile-image:hover {
+    transform: scale(1.1);
+}
+
+.tutor div {
+    margin-bottom: 5px;
+}
+
+.name {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+.city {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.online, .presence {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #555;
+}

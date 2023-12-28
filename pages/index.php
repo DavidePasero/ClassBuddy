@@ -16,8 +16,10 @@
         ClassBuddy
     </title>
     <link rel="icon" href="../img/image.x" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../style/tutor.css">
     <link rel="stylesheet" type="text/css" href="../style/home.css">
     <meta charset="utf-8" name="viewport" content="width=device-width", initial-scale="1.0">
+<script src="../scripts/loadTutors.js"></script>
 </head>
 <body>
     <header>
@@ -27,12 +29,6 @@
     <main>
         <div class="text">Trova il tutor più adatto a te!</div>
         <div class="image-grid">
-            <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
-            <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
-            <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
-            <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
-            <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
-            <img src="../img/defaultUser.jpg" alt="Immagine di default" class="image">
         </div>
     </main> 
     <?php echo footer()?>
