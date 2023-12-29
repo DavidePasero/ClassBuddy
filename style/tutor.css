@@ -20,7 +20,7 @@
     border-style: solid;
     border-color: rgb(205, 132, 173);
     border-width: 2px;
-    overflow: hidden; /* Hide the overflow to prevent unwanted scrollbars during the zoom effect */
+    overflow: hidden;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -35,20 +35,36 @@
 .name {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: bolder;
     color: #000000;
     margin-bottom: 5px;
 }
 
 .city {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    color: #333;
+    font-size: 13px;
+    color: #555;
     margin-bottom: 5px;
 }
 
 .online, .presence {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
-    color: #555;
+    color: #333;
+}
+
+.subject {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #580f50;
+    margin-bottom: 5px;
+}
+
+.rate {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #580f50;
+    margin-bottom: 5px;
 }
