@@ -22,22 +22,25 @@ h3 {
 .message {
     margin-bottom: 10px;
     padding: 10px;
-    border-radius: 10px;
-    max-width: 80%;
+    max-width: 50%;
+    word-wrap: break-word; /* Permette a del testo troppo lungo di spezzarsi e andare a capo */
+    overflow-wrap: break-word; /* Compatibilità con browser vecchi */
 }
 
 .sent {
     background-color: #DCF8C6;
     align-self: flex-end;
+    border-radius: 10px 10px 0px 10px;
 }
 
 .received {
     background-color: #ECE5DD;
     align-self: flex-start;
+    border-radius: 10px 10px 10px 0px;
 }
 
 #search-container {
-    position: relative;
+    position: sticky;
     top: 0px;
     left: 0px;
     z-index: 1; /* Ensure the button appears on top of the chat */
