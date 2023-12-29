@@ -30,6 +30,7 @@
         <div class="text">Trova il tutor più adatto a te!</div>
         <div class="image-grid">
         </div>
+        <div class="push"></div>
     </main> 
     <?php echo footer()?>
 </body>

@@ -1,11 +1,10 @@
 fetch('../backend/tutor.php')
   .then(response => response.json())
   .then(tutors => {
-    
     const tutorGrid = document.querySelector('.image-grid');
     tutorGrid.innerHTML = '';
 
-    tutors.forEach(tutor => {
+    for (const [_, tutor] of Object.entries(tutors)) {
       const div = document.createElement('div');
       div.className = 'tutor';
 
@@ -24,21 +23,20 @@ fetch('../backend/tutor.php')
       const onlineDiv = createInfoDiv('online', tutor["online"] ? 'Disponibile online' : ' ');
       const presenceDiv = createInfoDiv('presence', tutor["presenza"] ? 'Disponibile in presenza' : ' ');
 
-      // Access the array of insegnamento directly
-      const subjectDiv = createInfoDiv('subject', tutor["insegnamento"] ? tutor["insegnamento"].map(item => item["materia"]).join(', ') : ' ');
-      const rateDiv = createInfoDiv('rate', tutor["insegnamento"] ? tutor["insegnamento"].map(item => item["tariffa"]).join(', ') : ' ');
-
       link.appendChild(img);
       div.appendChild(link);
       div.appendChild(nameDiv);
       div.appendChild(cityDiv);
-      div.appendChild(subjectDiv);
-      div.appendChild(rateDiv);
+      // For each (materia, tariffa) create a div
+      for (i = 0; i < tutor["materia"].length; i++) {
+        let insegnamentoDiv = createInfoDiv ("insegnamento", `${tutor["materia"][i]}: ${tutor["tariffa"][i]}€/ora`);
+        div.appendChild(insegnamentoDiv);
+      }
       div.appendChild(onlineDiv);
       div.appendChild(presenceDiv);
 
       tutorGrid.appendChild(div);
-    });
+    };
   })
   .catch(error => {
     console.error('Error loading tutors:', error);
@@ -48,12 +46,6 @@ fetch('../backend/tutor.php')
 function createInfoDiv(className, textContent) {
     const infoDiv = document.createElement('div');
     infoDiv.className = className;
-  
-    // Check if the className is 'rate' and the textContent is not empty
-    if (className === 'rate' && textContent.trim() !== '') {
-      textContent += '€/ora';
-    }
-  
     const textNode = document.createTextNode(textContent);
     infoDiv.appendChild(textNode);
     return infoDiv;
