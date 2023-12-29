@@ -81,7 +81,7 @@
                             echo <<<INSEGNAMENTI_PRESENTI
                                     <li class="insegnamento">
                                         <span name="materia[]">{$insegnamento ["materia"]}</span>
-                                        <span>{$insegnamento ["tariffa"]}€/h</span>
+                                        <span>{$insegnamento ["tariffa"]}€/ora</span>
                                         <button type="button" class="remove_insegnamento"></button>
                                     </li>
                                 INSEGNAMENTI_PRESENTI;
