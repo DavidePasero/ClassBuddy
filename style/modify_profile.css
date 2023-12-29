@@ -42,7 +42,7 @@
 }
 
 #add_insegnamento {
-    background-color: white;
+    background-color: #c9bcc3;
     background-image: url('../res/icons/add.svg');
     background-size: cover; /* Adjust as needed: contain, cover, or specific dimensions */
     background-repeat: no-repeat;
@@ -53,12 +53,12 @@
 }
 
 #add_insegnamento:hover {
-    background-color: #bebebe;
+    background-color: #828080;
     border-radius: 10px;
 }
 
 .remove_insegnamento {
-    background-color: white;
+    background-color: #c9bcc3;
     background-image: url('../res/icons/remove.svg');
     background-size: cover; /* Adjust as needed: contain, cover, or specific dimensions */
     background-repeat: no-repeat;
@@ -69,6 +69,52 @@
 }
 
 .remove_insegnamento:hover {
-    background-color: #bebebe;
+    background-color: #828080;
     border-radius: 10px;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #c9bcc3;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+} 
+
+main p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #040404; /* Colore del testo */
+}
+
+#submit_div {
+    margin-top: 10px;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#submit_button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#insegnamenti_list {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #580f50;
+}
+
+#insegnamenti_container {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
 }

@@ -1,5 +1,6 @@
 #chat_button {
-    background-color: white;
+    margin-top: 5px;
+    background-color: #c9bcc3;
     background-image: url('../res/icons/chat.svg');
     background-size: cover; /* Adjust as needed: contain, cover, or specific dimensions */
     background-repeat: no-repeat;
@@ -10,6 +11,13 @@
 }
 
 #chat_button:hover {
-    background-color: #bebebe;
+    background-color: #828080;
     border-radius: 10px;
+}
+
+#chat_button label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #040404;
 }
