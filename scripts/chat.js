@@ -1,9 +1,10 @@
 let chat = document.getElementById("chat-container");
+let chatMessages = document.getElementById("chat-messages");
 // Scrollo automaticamente la chat fino all'ultimo messaggio
 chat.scrollTop = chat.scrollHeight;
 
 let msg = document.getElementById("message");
-let submit = document.getElementById("submit");
+let submit = document.getElementById("send-button");
 
 submit.addEventListener("click", send_msg);
 
@@ -17,8 +18,8 @@ function send_msg (event) {
     new_msg.classList.add("sent");
     var txt = document.createTextNode(testo_msg);
     new_msg.appendChild(txt);
-    chat.appendChild(new_msg);
     chat.scrollTop = chat.scrollHeight;
+    chatMessages.appendChild(new_msg);
 
     // Invio il messaggio al server che lo inserisce nel database in modo asincrono
     fetch("../backend/send_message.php", {
@@ -54,7 +55,7 @@ function fetchNewMessages() {
             newMessage.classList.add("received");
             var textNode = document.createTextNode(message["testo"]);
             newMessage.appendChild(textNode);
-            chat.appendChild(newMessage);
+            chatMessages.appendChild(newMessage);
         });
 
         // Update the latest timestamp for the next fetch
@@ -86,3 +87,44 @@ function getFormattedTimestamp() {
 
     return formattedTimestamp;
 }
+
+// Search box
+const searchButton = document.getElementById('search-button');
+const searchBoxContainer = document.getElementById('search-box-container');
+
+searchButton.addEventListener('click', function () {
+    searchBoxContainer.style.display = searchBoxContainer.style.display === "block" ? "none" : "block";
+});
+
+let sendSearch = document.getElementById("send-search");
+
+sendSearch.addEventListener("click", function () {
+    let search = document.getElementById("search-box").value;
+    fetch("../backend/search_messages.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "ricerca=" + search + "&recipient=" + document.getElementById("recipient").value
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Rimuovo tutti i messaggi dalla chat
+        while (chatMessages.firstChild) {
+            chatMessages.removeChild(chatMessages.firstChild);
+        }
+        // Inserisco i messaggi che rispondono alla query dell'utente nella chat
+        data.forEach(message => {
+            var newMessage = document.createElement("div");
+            newMessage.classList.add("message");
+            if (message["mittente"] == document.getElementById("recipient").value)
+                newMessage.classList.add("received");
+            else
+                newMessage.classList.add("sent");
+            var textNode = document.createTextNode(message["testo"]);
+            newMessage.appendChild(textNode);
+            chatMessages.appendChild(newMessage);
+        });
+    })
+    .catch(error => console.error("Error fetching new messages:", error));
+});

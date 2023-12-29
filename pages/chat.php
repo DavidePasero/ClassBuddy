@@ -50,24 +50,32 @@
     <header>
         <h1 id="main_title">ClassBuddy</h1>
         <?php echo navbar();?>
-        <h3>Chat with <?php echo $recipient; ?></h3>
+        <div class="container_title">Chat con <?php echo $recipient; ?></div>
     </header>
 
     <div id="chat-container">
-        <?php foreach ($chatMessages as $message): ?>
-            <div class="message <?php echo ($message["mittente"] === $sender) ? 'sent' : 'received'; ?>">
-                <?php echo $message["testo"]; ?>
+        <div id="search-container">
+            <button id="search-button"></button>
+            <div id="search-box-container">
+                <input type="text" id="search-box" placeholder="Scrivi la tua ricerca">
+                <button id="send-search" class="send">Cerca</button>
             </div>
-        <?php endforeach; ?>
+        </div>
+        <div id="chat-messages">
+            <?php foreach ($chatMessages as $message): ?>
+                <div class="message <?php echo ($message["mittente"] === $sender) ? 'sent' : 'received'; ?>">
+                    <?php echo $message["testo"]; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 
-    <form method="post" action="../backend/send_message.php">
-        <label for="message">Your Message:</label>
-        <input type="text" id="message" name="message" required>
+    <form id="scrivi_messaggio" method="post" action="../backend/send_message.php">
+        <input type="text" id="message" name="message" placeholder="Scrivi un messaggio..." required>
         <!-- Uso il valore del sender nel js-->
         <input type="hidden" name="sender" id="sender" value=<?php echo $sender?>>
         <input type="hidden" name="recipient" id="recipient" value=<?php echo $recipient?>>
-        <button type="submit" id="submit">Send</button>
+        <button type="submit" id="send-button" class="send">Invia</button>
     </form>
 
     <?php echo footer();?>

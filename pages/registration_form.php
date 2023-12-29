@@ -20,7 +20,7 @@
     <title>Sign-up</title>
 	<link rel="stylesheet" type="text/css" href="../style/form.css">
 	<link rel="stylesheet" type="text/css" href="../style/home.css">
-	<script defer src="../scripts/registration_form.js"></script>
+	<script type="module" defer src="../scripts/registration_form.js"></script>
 </head>
 
 <body>

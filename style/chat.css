@@ -5,13 +5,18 @@ h3 {
 #chat-container {
     width: 600px;
     margin: auto;
+    margin-top: 30px;
     padding: 20px;
     overflow-y: auto;
     height: 60vh;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#chat-messages {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .message {
@@ -31,36 +36,77 @@ h3 {
     align-self: flex-start;
 }
 
-form {
+#search-container {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 1; /* Ensure the button appears on top of the chat */
+    display: flex;
+    align-items: center;
+}
+
+#search-button {
+    background-image: url('../res/icons/search.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+    border: 1px solid rgb(138, 80, 113);
+    width: 25px;
+    height: 25px;
+}
+
+#search-button:hover {
+    background-color: #c9bcc3;
+}
+
+#search-box-container {
+    display: none;
+    position: relative;
+}
+
+#search-box {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 400px;
+}
+
+/*
+#scrivi_messaggio is a form that contains two visible input:
+the textbox on which the user writes the message and the send
+button. I want these two elements to be on the same line
+*/
+#scrivi_messaggio {
     width: 600px;
     margin: auto;
     padding: 20px;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-label {
-    display: block;
-    margin-bottom: 10px;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline; /* Align items along the baseline */
 }
 
 input[type="text"] {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
-    margin-bottom: 10px;
+    margin: 10px;
     border-radius: 10px;
 }
 
-button {
+.send {
     background-color: #128C7E;
     color: #ffffff;
     padding: 10px;
     border: none;
     border-radius: 5px;
+    height: 40px;
     cursor: pointer;
 }
 
-button:hover {
+
+send-button:hover {
     background-color: #0D695A;
 }

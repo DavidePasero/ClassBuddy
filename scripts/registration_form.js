@@ -4,25 +4,6 @@ let getCurrentLocationButton = document.getElementById ("getCurrentLocation");
 let selectCity = document.getElementById("cittaDropdown");
 let cittaInput = document.getElementById("cittaInput");
 
-
-// Get the list of cities from the file
-// reads the file cities.txt which is a list of all the cities in Italy separated by a newline an puts them in an array
-let cities = [];
-fetch('../res/citta.txt')
-  .then(response => response.text())
-  .then(data => {
-    cities = data.split('\n');
-    // Insert the list of cities into the dropdown menu
-    cities.forEach(function(city) {
-        var option = document.createElement("option");
-        option.text = city;
-        option.value = city;
-        selectCity.appendChild(option);
-    });
-})
-.catch(err => console.error(err));
-
-
 let small_error_messages = {
     "firstname": create_small_error_message ("Un nome vuoto non è valido"),
     "lastname": create_small_error_message ("Un cognome vuoto non è valido"),
@@ -44,6 +25,22 @@ function create_small_error_message (text) {
     return p;
 }
 
+// Get the list of cities from the file
+// reads the file cities.txt which is a list of all the cities in Italy separated by a newline an puts them in an array
+let cities = [];
+fetch('../res/citta.txt')
+  .then(response => response.text())
+  .then(data => {
+    cities = data.split('\n');
+    // Insert the list of cities into the dropdown menu
+    cities.forEach(function(city) {
+        var option = document.createElement("option");
+        option.text = city;
+        option.value = city;
+        selectCity.appendChild(option);
+    });
+})
+.catch(err => console.error(err));
 
 form.addEventListener ("input", function (event) {
     switch (event.target.id) {

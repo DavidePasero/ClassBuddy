@@ -37,7 +37,7 @@
     <link rel="stylesheet" type="text/css" href="../style/profile.css">
     <link rel="stylesheet" type="text/css" href="../style/modify_profile.css">
     <?php if ($myprofile)
-        echo "<script src=\"../scripts/modify_profile.js\" defer></script>"
+        echo "<script type=\"module\" src=\"../scripts/modify_profile.js\" defer></script>";
     ?>
     <meta charset="utf-8">
 </head>

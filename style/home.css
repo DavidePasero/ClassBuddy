@@ -17,8 +17,6 @@ body {
 .container {
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 400px;
-    margin-right: 400px;
     font-family: Arial, Helvetica, sans-serif;
     padding: 10px;
     border-radius: 10px;
@@ -26,18 +24,10 @@ body {
     border-color: rgb(138, 80, 113);
     border-width: 1px;
     width: inherit;
+    display: inline-block;
 }
 
 .container_title {
-    font-family: 'Rubik', sans-serif;
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
-    color: #F8F8F8;
-    text-shadow: 1px 1px 1px rgb(138, 80, 113);
-}
-
-.container_title_2 {
     margin-top: 25px;
     font-family: 'Rubik', sans-serif;
     font-size: 30px;
@@ -48,10 +38,12 @@ body {
 
 header {
     background: linear-gradient(#563440, #9A879D, #CFCFCD, #ffffff);
+    text-align: center;
 }
 
 main {
     width: inherit;
+    min-height: 100%;
 }
 
 footer {
@@ -89,7 +81,6 @@ footer {
 }
 
 .image-grid {
-    
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;

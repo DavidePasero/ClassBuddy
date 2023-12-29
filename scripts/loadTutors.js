@@ -1,7 +1,6 @@
 fetch('../backend/tutor.php')
   .then(response => response.json())
   .then(tutors => {
-    console.log('Tutors data:', tutors); // Log the data to the console for inspection
     
     const tutorGrid = document.querySelector('.image-grid');
     tutorGrid.innerHTML = '';
