@@ -28,6 +28,7 @@
 	}
 
     $recipient = $_GET["recipient"];
+    $recipient_info = select_user_email ($db, $recipient);
     $sender = $_SESSION["email"];
 
     // Retrieve all messages between the sender and the recipient from databse
@@ -42,23 +43,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatBuddy</title>
-    <link rel="stylesheet" type="text/css" href="../style/home.css">
+    <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/chat.css">
     <script src="../scripts/chat.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1 id="main_title">ClassBuddy</h1>
-        <?php echo navbar();?>
-        <div class="container_title">Chat con <?php echo $recipient; ?></div>
-    </header>
+    <?php echo print_header();?>
+    <div id="page_title">Chat con <?php echo $recipient_info["firstname"] . " " . $recipient_info ["lastname"]; ?></div>
 
     <div id="chat-container">
         <div id="search-container">
             <button id="search-button"></button>
             <div id="search-box-container">
-                <input type="text" id="search-box" placeholder="Scrivi la tua ricerca">
-                <button id="send-search" class="send">Cerca</button>
+                <input type="search" id="search-box" placeholder="Scrivi la tua ricerca">
+                <button id="send-search" class="submit">Cerca</button>
             </div>
         </div>
         <div id="chat-messages">
@@ -75,9 +73,9 @@
         <!-- Uso il valore del sender nel js-->
         <input type="hidden" name="sender" id="sender" value=<?php echo $sender?>>
         <input type="hidden" name="recipient" id="recipient" value=<?php echo $recipient?>>
-        <button type="submit" id="send-button" class="send">Invia</button>
+        <button type="submit" id="send-button" class="submit">Invia</button>
     </form>
 
-    <?php echo footer();?>
+    <?php echo print_footer();?>
 </body>
 </html>

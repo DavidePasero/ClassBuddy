@@ -252,6 +252,17 @@ function check_role () {
     let role_div = document.getElementById ("role_div");
     let last_div_elem = role_div.lastElementChild;
 
+    let online_presenza_div = document.getElementById ("online_presenza_div");
+    let location_div = document.getElementById ("location_div");
+
+    if (tutor.checked) {
+        online_presenza_div.style.display = "flex";
+        location_div.style.display = "flex";
+    } else {
+        online_presenza_div.style.display = "none";
+        location_div.style.display = "none";
+    }
+
     if (!student.checked && !tutor.checked) {
         if (last_div_elem.className.indexOf ("small-error-message") === -1)
             role_div.appendChild (small_error_messages["role"]);

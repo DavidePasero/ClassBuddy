@@ -26,18 +26,15 @@
 <head>
     <title>ClassBuddy</title>
     <link rel="icon" href="img/image.x" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="../style/home.css">
+    <link rel="stylesheet" type="text/css" href="../style/page.css">
     <meta charset="utf-8">
 </head>
 <body>
-    <header>
-        <h1 id="main_title">ClassBuddy</h1>
-        <?php echo navbar();?>
-    </header>
+    <?php echo print_header();?>
     <main>
         <div>OOOPS! Qualcosa è andato storto. Riprova più tardi.</div>
         <div>Messaggio di errore: <?php echo $msg;?></div>
     </main>
-    <?php echo footer();?>
+    <?php echo print_footer();?>
 </body>
 </html>

@@ -1,13 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&family=Rubik:wght@500&display=swap');
-
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
+@import url('palette.css');
 
 .text {
     text-align: left;
@@ -16,70 +9,15 @@ body {
     font-weight: bold;
 }
 
-.container {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 10px;
-    border-radius: 10px;
-    border-style: solid;
-    border-color: rgb(138, 80, 113);
-    border-width: 1px;
-    width: inherit;
-    display: inline-block;
-}
-
-.container_title {
-    margin-top: 25px;
-    font-family: 'Rubik', sans-serif;
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
-    color: rgb(138, 80, 113);
-}
-
-header {
-    background: linear-gradient(#563440, #9A879D, #CFCFCD, #ffffff);
-    text-align: center;
-}
-
 main {
     width: inherit;
     flex: 1;
 }
 
-footer {
-    padding: 8px;
-    background-color: #9f91a2;
-    width: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: smaller;
-    font-weight: lighter;
+#image-grid-container {
+    display: flex;
     align-items: center;
-    display: block;
-    margin-top: auto;
-}
-
-#menu {
-    background-color: #9f91a2;
-    text-align: center;
-}
-
-#menu .menu-item {
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-#main_title {
-    flex: 1;
-    font-size: 50px;
-    font-family: 'Rubik', sans-serif;
-    font-weight: bold;
-    text-align: center;
-    color: #F8F8F8;
-    text-shadow: 1px 1px 1px rgb(138, 80, 113);                 
+    justify-content: center; /* Center the grid container horizontally */
 }
 
 .image-grid {
@@ -87,80 +25,18 @@ footer {
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     justify-content: center;
-    align-items: center;
     margin-top: 30px;
 }
 
-
-.scaling-link:link {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-    font-style: bold;
-    text-decoration: none;
-    transform: scale(1);
-    display: inline-block;
-    color: white;
-    /* Add a smooth transition effect for a smoother scaling animation */
-    transition: transform 0.3s ease-in-out;
-    border-radius: 5px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: white;
-    padding-left: 10px;
-    padding-right: 10px;
+/* Responsive adjustments */
+@media screen and (max-width: 1000px) {
+    .image-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-.scaling-link:visited {
-    color: white;
-    border: rgb(205, 132, 173);
-}
-
-.scaling-link:hover {
-    transform: scale(1.1);
-    color: #000000;
-}
-
-.textbox {
-    border-radius: 10px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: rgb(205, 132, 173);
-    padding: 5px;
-}
-
-.textbox:hover {
-    border-color: #8093f1;
-}
-
-footer .footer-element {
-   /* align-self: center;*/
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-#contact-card {
-    align-items: center;
-    display: grid;
-}
-
-footer a {
-    color: white;
-    text-transform: uppercase;
-}
-
-footer ul {
-    border-radius: 10px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: rgb(205, 132, 173);
-    padding: 5px;
-    background-color: #9f91a2;
-    list-style-type: none;
-}
-
-footer ul li .important-info{
-    color: rgb(255, 255, 255);
+@media screen and (max-width: 650px) {
+    .image-grid {
+        grid-template-columns: 1fr;
+    }
 }

@@ -1,0 +1,159 @@
+@import url('palette.css');
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--color4); /* Blue color, you can change it */
+    color: #fff;
+    padding: 15px 0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Subtle box shadow for depth */
+    border-radius: 0px 0px 20px 20px; /* Rounded corners on the top */
+}
+
+#header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#main_title {
+    font-size: 50px; /* Larger font size for the title */
+    font-weight: bold;
+    margin-bottom: 20px; /* Spacing between title and menu */
+}
+
+#menu {
+    display: flex;
+    justify-content: center;
+}
+
+#menu a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 20px; /* Adjust the spacing between menu items */
+    font-size: 18px; /* Adjust the font size of menu items */
+    transition: color 0.3s ease-in-out; /* Smooth color transition on hover */
+    font-weight: bold;
+}
+
+#menu a:hover {
+    color: var(--color5); /* Orange color, you can change it */
+}
+
+#page_title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: center;
+    color: var(--color1);
+}
+
+footer {
+    background-color: var(--color4); /* Blue color, same as header */
+    color: #fff;
+    padding: 20px;
+    margin-top: auto;
+    border-radius: 20px 20px 0 0; /* Rounded corners on the bottom */
+}
+
+/* Add the following styles to center the columns in the footer */
+
+#footer-container {
+    display: flex;
+    justify-content: center; /* Center the columns horizontally */
+    flex-wrap: wrap; /* Allow columns to wrap to the next line if needed */
+}
+
+.footer-column {
+    flex: 1;
+    margin: 0 10px; /* Adjust spacing between columns */
+    max-width: 300px; /* Set a maximum width for each column */
+    text-align: center; /* Center the content within each column */
+}
+
+.footer-column ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 5px;
+}
+
+.footer-column a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out; /* Smooth color transition on hover */
+}
+
+.footer-column a:hover {
+    color: var(--color5); /* Orange color, you can change it */
+}
+
+/* End of additional styles for centering columns in the footer */
+
+#copyright-row {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"] {
+    outline: 1px solid var(--light-color1);
+    border-width: 0px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus {
+    outline: solid 2px var(--color4);
+}
+
+/*Submit button*/
+.submit {
+    align-items: center;
+    background-color: var(--color2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    justify-content: center;
+    margin: 0;
+    padding: 10px;
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+  }
+  
+  .submit:hover,
+  .submit:focus {
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  }
+  
+  .submit:hover {
+    transform: translateY(-1px);
+  }
+  
+  .submit:active {
+    background-color: var(--dark-color2);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    transform: translateY(0);
+  }

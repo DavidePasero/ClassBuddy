@@ -34,6 +34,7 @@
     <title>ClassBuddy</title>
     <link rel="icon" href="img/image.x" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="../style/home.css">
+    <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/profile.css">
     <link rel="stylesheet" type="text/css" href="../style/modify_profile.css">
     <?php if ($myprofile)
@@ -42,83 +43,82 @@
     <meta charset="utf-8">
 </head>
 <body>
-    <header>
-        <h1 id="main_title">ClassBuddy</h1>
-        <?php echo navbar();?>
-    </header>
+    <?php echo print_header();?>
     <main>
-        <p>Profilo di: <?php echo htmlentities ($user_profile_info ["firstname"] . " " . $user_profile_info ["lastname"])?></p>
-        <form id="form" action = "../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
-            <div id="image_div">
-                <img id="image-preview" src=<?php echo $dataUri;?> alt="Profile picture">
+        <div id="contact-card">
+            <p><?php echo htmlentities ($user_profile_info ["firstname"] . " " . $user_profile_info ["lastname"])?></p>
+            <form id="form" action = "../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
+                <div id="image_div">
+                    <img id="image-preview" src=<?php echo $dataUri;?> alt="Profile picture">
+                    <?php
+                        if ($myprofile) {
+                            echo <<<MODIFY_PIC
+                                <div id="edit-button"></div>
+                                <input type="file" id="propic" name="propic" accept="image/*">
+                            MODIFY_PIC;
+                        }
+                    ?>
+                </div>
+                
                 <?php
-                    if ($myprofile) {
-                        echo <<<MODIFY_PIC
-                            <div id="edit-button"></div>
-                            <input type="file" id="propic" name="propic" accept="image/*">
-                        MODIFY_PIC;
+                    if ($_SESSION ["role"] === "tutor" and $myprofile) {
+                        echo <<<INSEGNAMENTI
+                                <div id="insegnamenti_container">
+                                    <ul id="insegnamenti_list">
+                        INSEGNAMENTI;
+                            // Recupero gli insegnamenti del tutor
+                            $insegnamenti = prepared_query (
+                                $db,
+                                "SELECT materia, tariffa FROM S5204959.insegnamento WHERE tutor=?;",
+                                [$user_profile_info ["email"]]
+                            )->fetch_all (MYSQLI_ASSOC);
+
+                            foreach ($insegnamenti as $insegnamento) {
+                                /*! Molto importante che il primo elemento di <li class="insegnamento" sia
+                                la span che contiene la materia, se si cambia qusto, bisogna cambiare anche il js
+                                nella gestione delle eliminazioni*/
+                                echo <<<INSEGNAMENTI_PRESENTI
+                                        <li class="insegnamento">
+                                            <span name="materia[]">{$insegnamento ["materia"]}</span>
+                                            <span>{$insegnamento ["tariffa"]}€/ora</span>
+                                            <button type="button" class="remove_insegnamento"></button>
+                                        </li>
+                                    INSEGNAMENTI_PRESENTI;
+                            }
+                        echo <<<INSEGNAMENTI
+                                    </ul>
+                                    <label for="add_insegnamento">Aggiungi insegnamento</label>
+                                    <button id="add_insegnamento" type="button"></button>
+                                </div>
+                        INSEGNAMENTI;
                     }
                 ?>
-            </div>
-            
-            <?php
-                if ($_SESSION ["role"] === "tutor" and $myprofile) {
-                    echo <<<INSEGNAMENTI
-                            <div id="insegnamenti_container">
-                                <ul id="insegnamenti_list">
-                    INSEGNAMENTI;
-                        // Recupero gli insegnamenti del tutor
-                        $insegnamenti = prepared_query (
-                            $db,
-                            "SELECT materia, tariffa FROM S5204959.insegnamento WHERE tutor=?;",
-                            [$user_profile_info ["email"]]
-                        )->fetch_all (MYSQLI_ASSOC);
 
-                        foreach ($insegnamenti as $insegnamento) {
-                            /*! Molto importante che il primo elemento di <li class="insegnamento" sia
-                            la span che contiene la materia, se si cambia qusto, bisogna cambiare anche il js
-                            nella gestione delle eliminazioni*/
-                            echo <<<INSEGNAMENTI_PRESENTI
-                                    <li class="insegnamento">
-                                        <span name="materia[]">{$insegnamento ["materia"]}</span>
-                                        <span>{$insegnamento ["tariffa"]}€/ora</span>
-                                        <button type="button" class="remove_insegnamento"></button>
-                                    </li>
-                                INSEGNAMENTI_PRESENTI;
-                        }
-                    echo <<<INSEGNAMENTI
-                                </ul>
-                                <label for="add_insegnamento">Aggiungi insegnamento</label>
-                                <button id="add_insegnamento" type="button"></button>
+                <?php 
+                    if ($myprofile) {
+                        echo <<<SUBMIT_FORM
+                            <div id="submit_div">
+                                <input type="submit" id="submit_button" name="Submit" value="Salva modifiche">
                             </div>
-                    INSEGNAMENTI;
+                            SUBMIT_FORM;
+                    }?>
+            </form>
+
+            <!-- Chat button that calls chat.php with the recipient's email as GET parameter only if
+                recipient is a tutor and I am a student-->
+            <?php
+                if ($user_profile_info ["role"] === "tutor" and $_SESSION ["role"] === "studente") {
+                    echo <<<CHAT_BUTTON
+                        <form action="chat.php" method="GET">
+                            <input type="hidden" name="recipient" value="{$user_profile_info ["email"]}">
+                            <label for="chat_button">Contatta</label>
+                            <input id="chat_button" type="submit" value="">
+                        </form>
+                    CHAT_BUTTON;
                 }
             ?>
-
-            <?php 
-                if ($myprofile) {
-                    echo <<<SUBMIT_FORM
-                        <div id="submit_div">
-                            <input type="submit" id="submit" name="Submit" value="Salva modifiche">
-                        </div>
-                        SUBMIT_FORM;
-                }?>
-        </form>
-
-        <!-- Chat button that calls chat.php with the recipient's email as GET parameter only if
-             recipient is a tutor and I am a student-->
-        <?php
-            if ($user_profile_info ["role"] === "tutor" and $_SESSION ["role"] === "studente") {
-                echo <<<CHAT_BUTTON
-                    <form action="chat.php" method="GET">
-                        <input type="hidden" name="recipient" value="{$user_profile_info ["email"]}">
-                        <label for="chat_button">Contatta</label>
-                        <input id="chat_button" type="submit" value="">
-                    </form>
-                CHAT_BUTTON;
-            }
-        ?>
+        </div>
     </main>
-    <?php echo footer();?>
+    <?php echo print_footer();?>
 </body>
 </html>

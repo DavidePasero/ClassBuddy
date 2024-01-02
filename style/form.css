@@ -1,11 +1,13 @@
+@import url('palette.css');
+
 /* CSS Document for Form Styling */
 .error-message {
   margin: auto;
   text-align: center;
   border-style: solid;
   border-width: 2px;
-  border-color: #ff5c5c;
-  background-color: #f99898;
+  border-color: var(--error-color);
+  background-color: var(--bg-error-color);
   border-radius: 5px;
   width: 300px;
   padding: 20px;
@@ -14,21 +16,13 @@
   margin-top: 20px;
 }
 
-.form-element {
-  width: calc(100% - 23px);
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border-radius: 5px;
-}
-
 .small-error-message {
   text-align: center;
   color: white;
   border-style: solid;
   border-width: 2px;
-  border-color: #ff5c5c;
-  background-color: #f99898;
+  border-color: var(--error-color);
+  background-color: var(--bg-error-color);
   font-size: 12px;
 }
 
@@ -37,8 +31,17 @@
   margin: auto;
   margin-top: 20px;
   padding: 20px;
-  border: 2px solid rgb(205, 132, 173);
+  border: 2px solid var(--color4);
   border-radius: 10px;
+}
+
+.form-element {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
   
 .registration-form label {
@@ -51,24 +54,9 @@
 }
 
 .registration-form .input-error {
-  border: 2px solid #ff5c5c;
-}
-
-.registration-form input[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-}
-
-.registration-form input[type="submit"]:hover {
-  background-color: #45A049;
+  border: 2px solid var(--error-color);
 }
   
-/* Remember me checkbox in login form */
 /* Hide the default checkbox */
 .checkbox-container input {
   position: absolute;
@@ -94,6 +82,7 @@
   position: relative;
   margin-top: 5px;
   margin-bottom: 5px;
+  text-align: center;
 }
 
 /* Per le checkbox */
@@ -114,10 +103,10 @@ input[type="radio"] + label {
   position: absolute;
   top: 0;
   left: 0;
-  height: 20px; /* Adjust as needed */
-  width: 20px; /* Adjust as needed */
+  height: 20px;
+  width: 20px;
   background-color: #eee; /* Background color when unchecked */
-  border: 1px solid #ccc; /* Border color */
+  border: 1px solid #ccc;
   border-radius: 5px;
 }
 
@@ -128,8 +117,8 @@ input[type="radio"] + label {
 
 /* Style the custom checkmark when checked */
 .checkbox-container input:checked + .checkmark {
-  background-color: #2196F3; /* Background color when checked */
-  border: 1px solid #2196F3; /* Border color when checked */
+  background-color: var(--color3); /* Background color when checked */
+  border: 1px solid var(--dark-color3); /* Border color when checked */
 }
 
 /* Style the checkmark inside the container */
@@ -146,11 +135,53 @@ input[type="radio"] + label {
 
 /* Style the checkmark icon */
 .checkbox-container .checkmark:after {
-  left: 7px; /* Adjust as needed */
-  top: 3px; /* Adjust as needed */
-  width: 5px; /* Adjust as needed */
-  height: 10px; /* Adjust as needed */
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
+}
+
+#online_presenza_div {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#location_div {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-container {
+  position: relative;
+  width: 300px;
+}
+
+#cittaInput {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid var(--color3); /* Blue color, you can change it */
+  border-radius: 5px;
+}
+
+#cittaDropdown {
+  display: none; /* Hide the default dropdown arrow */
+}
+
+#getCurrentLocation {
+  background-color: var(--color3); /* Blue color, you can change it */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out; /* Smooth background color transition */
+}
+
+#getCurrentLocation:hover {
+  background-color: var(--dark-color3); /* Darker shade on hover */
 }

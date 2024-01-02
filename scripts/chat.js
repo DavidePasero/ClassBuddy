@@ -28,6 +28,9 @@ function send_msg (event) {
             "Content-Type": "application/x-www-form-urlencoded"
         },
         body: "message=" + testo_msg + "&recipient=" + document.getElementById("recipient").value
+    }).then (response => response.text ())
+    .then (response_txt => {
+        console.log (response_txt);
     });
 }
 

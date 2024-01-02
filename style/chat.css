@@ -1,3 +1,5 @@
+@import url('palette.css');
+
 h3 {
     margin-bottom: 20px;
 }
@@ -25,16 +27,19 @@ h3 {
     max-width: 50%;
     word-wrap: break-word; /* Permette a del testo troppo lungo di spezzarsi e andare a capo */
     overflow-wrap: break-word; /* Compatibilità con browser vecchi */
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 14px;
+    color: white;
 }
 
 .sent {
-    background-color: #DCF8C6;
+    background-color: #99c876;
     align-self: flex-end;
     border-radius: 10px 10px 0px 10px;
 }
 
 .received {
-    background-color: #ECE5DD;
+    background-color: #c89776;
     align-self: flex-start;
     border-radius: 10px 10px 10px 0px;
 }
@@ -56,6 +61,7 @@ h3 {
     border: 1px solid rgb(138, 80, 113);
     width: 25px;
     height: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #search-button:hover {
@@ -65,6 +71,7 @@ h3 {
 #search-box-container {
     display: none;
     position: relative;
+    margin-left: 10px;
 }
 
 #search-box {
@@ -72,6 +79,7 @@ h3 {
     border: 1px solid #ccc;
     border-radius: 10px;
     width: 400px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /*
@@ -97,19 +105,4 @@ input[type="text"] {
     box-sizing: border-box;
     margin: 10px;
     border-radius: 10px;
-}
-
-.send {
-    background-color: #128C7E;
-    color: #ffffff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    height: 40px;
-    cursor: pointer;
-}
-
-
-send-button:hover {
-    background-color: #0D695A;
 }

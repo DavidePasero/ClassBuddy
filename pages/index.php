@@ -18,20 +18,18 @@
     <link rel="icon" href="../img/image.x" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="../style/tutor.css">
     <link rel="stylesheet" type="text/css" href="../style/home.css">
+    <link rel="stylesheet" type="text/css" href="../style/page.css">
     <meta charset="utf-8" name="viewport" content="width=device-width", initial-scale="1.0">
 <script src="../scripts/loadTutors.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1 id="main_title">ClassBuddy</h1>
-        <?php echo navbar();?>
-    </header>
+    <?php echo print_header();?>
     <main>
-        <div class="text">Trova il tutor più adatto a te!</div>
-        <div class="image-grid">
+        <div id="page_title">Trova il tutor più adatto a te!</div>
+        <div id="image-grid-container">
+            <div class="image-grid"></div>
         </div>
-        <div class="push"></div>
     </main> 
-    <?php echo footer()?>
+    <?php echo print_footer()?>
 </body>
 </html>

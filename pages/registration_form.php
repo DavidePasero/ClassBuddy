@@ -19,17 +19,14 @@
     <meta charset="utf-8" name="viewport" content="width=device-width", initial-scale="1.0">
     <title>Sign-up</title>
 	<link rel="stylesheet" type="text/css" href="../style/form.css">
-	<link rel="stylesheet" type="text/css" href="../style/home.css">
+    <link rel="stylesheet" type="text/css" href="../style/page.css">
 	<script type="module" defer src="../scripts/registration_form.js"></script>
 </head>
 
 <body>
-	<header>
-        <h1 id="main_title">ClassBuddy</h1>
-        <?php echo navbar();?>
-    </header>
+	<?php echo print_header();?>
 	<main>
-		<div class="container_title_2">Sign-up form</div>
+		<div id="page_title">Registration form</div>
 		<div>
 			<?php
 				if (isset($_SESSION["firstname"]) or isset($_SESSION["lastname"]) or isset($_SESSION["email"]) or
@@ -38,8 +35,8 @@
 			}
 			?>
 			<form id="form" action="../backend/registration.php" method="POST" name="registration" class="registration-form">
-				<div id="firstname_div">
-					<input type="text" id="firstname" name="firstname" autocomplete="given-name" placeholder="Nome" class=<?php if (isset($_SESSION["firstname"])) {echo "\"input-error form-element\"";} else {echo "\"input-neutral form-element\"";}?> required>
+				<div id="firstname_div form-element">
+					<input type="text" id="firstname" name="firstname" autocomplete="given-name" placeholder="Nome" class=<?php if (isset($_SESSION["firstname"])) {echo "\"input-error\"";} else {echo "\"input-neutral form-element\"";}?> required>
 				</div>
 
 				<div id="lastname_div">
@@ -55,7 +52,7 @@
 				</div>
 
 				<div id="confirm_div">
-					<input type="password"id="confirm" name="confirm" autocomplete="new-password" placeholder="Re-inserisci la password" class=<?php if (isset($_SESSION["confirm"])) {echo "\"input-error form-element\"";} else {echo "\"input-neutral form-element\"";}?> required>
+					<input type="password" id="confirm" name="confirm" autocomplete="new-password" placeholder="Re-inserisci la password" class=<?php if (isset($_SESSION["confirm"])) {echo "\"input-error form-element\"";} else {echo "\"input-neutral form-element\"";}?> required>
 				</div>
 
 				<!-- Create a div for two radio buttons with the options "Studente" and "Tutor"-->
@@ -77,17 +74,17 @@
 				<!-- Create a div with a button named getCurrentLocation-->
 				<div id="location_div">
 					<!-- Text input for typing -->
-					<input list="cittaDropdown" id="cittaInput" name="citta" placeholder="Digita o seleziona una città">
+					<input list="cittaDropdown" class="form-element" id="cittaInput" name="citta" placeholder="Digita o seleziona una città">
 
 					<!-- Datalist (list of all the cities in italy) -->
 					<datalist id="cittaDropdown">
 
 					</datalist>
-					<button type="button" id="getCurrentLocation" name="getCurrentLocation" class="form-element">Get current location</button>
+					<button type="button" class="form-element" id="getCurrentLocation" name="getCurrentLocation">Get current location</button>
 				</div>
 
 				<div id="submit_div">
-					<input type="submit" id="submit" name="Submit" value="Invia">
+					<input class="submit form-element" type="submit" id="submit" name="Submit" value="Invia">
 				</div>
 
 			</form>

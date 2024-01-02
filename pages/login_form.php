@@ -19,17 +19,14 @@
     <meta charset="utf-8" name="viewport" content="width=device-width", initial-scale="1.0">
     <title>Login</title>
 	<link rel="stylesheet" type="text/css" href="../style/form.css">
-	<link rel="stylesheet" type="text/css" href="../style/home.css">
+    <link rel="stylesheet" type="text/css" href="../style/page.css">
 	<script defer src="../scripts/login_form.js"></script>
 </head>
 
 <body>
-	<header>
-        <h1 id="main_title">ClassBuddy</h1>
-        <?php echo navbar();?>
-    </header>
+	<?php echo print_header();?>
 	<main>
-		<div class="container_title">Sign-in form</div>
+		<div id="page_title">Sign-in form</div>
 		<div>
 			<?php
 				if (isset($_SESSION["error"])) {
@@ -48,7 +45,7 @@
 					<span class="checkmark"></span>
 				</label>
 
-				<input type="submit" name="Submit" value="Invia">
+				<input class="submit form-element" type="submit" name="Submit" value="Invia">
 			</form>
 		</div>
 	</main>

@@ -28,10 +28,15 @@ fetch('../backend/tutor.php')
       div.appendChild(nameDiv);
       div.appendChild(cityDiv);
       // For each (materia, tariffa) create a div
-      for (i = 0; i < tutor["materia"].length; i++) {
+      for (i = 0; i < tutor["materia"].length && i < 3; i++) {
         let insegnamentoDiv = createInfoDiv ("insegnamento", `${tutor["materia"][i]}: ${tutor["tariffa"][i]}€/ora`);
         div.appendChild(insegnamentoDiv);
       }
+      if (i < tutor["materia"].length) {
+        let insegnamentoDiv = createInfoDiv ("insegnamento", "...");
+        div.appendChild(insegnamentoDiv);
+      }
+
       div.appendChild(onlineDiv);
       div.appendChild(presenceDiv);
 
