@@ -32,7 +32,8 @@ function send_msg (event) {
             body: "message=" + testo_msg + "&recipient=" + recipient
         }).then (response => response.text ())
         .then (response_txt => {
-            alert (response_txt);
+            if (response_txt !== "OK")
+                alert (response_txt);
         });
     } else {
         alert ("Inserisci un messaggio e seleziona un destinatario!");

@@ -37,6 +37,7 @@
 			echo "Invio fallito, aggiona la pagina e riprova";
 			exit();
 		}
+		echo "OK";
 	}
 	else {
 		echo "I messaggi possono essere inviati solo tra tutor e studenti";
