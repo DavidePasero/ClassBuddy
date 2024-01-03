@@ -93,35 +93,4 @@ foreach ($data as $tutor) {
 }
 
 echo json_encode($tutors_data);
-/*
-$email = $tutor["email"];
-    if (!in_array ($email, $tutors_data)) {
-        $tutors_data[$email][$email] = $email;
-        $tutors_data[$email]["citta"] = $tutor["citta"];
-        $tutors_data[$email]["online"] = $tutor["online"];
-        $tutors_data[$email]["presenza"] = $tutor["presenza"];
-        $tutors_data[$email]["firstname"] = $tutor["firstname"];
-        $tutors_data[$email]["lastname"] = $tutor["lastname"];
-
-        if ($tutor["propic"] !== NULL) {
-            // Create a data URI for the image
-            $imageData = base64_encode($tutor["propic"]);
-            $imageType = $tutor["propic_type"];
-            $dataUri = "data:image/{$imageType};base64,{$imageData}";
-            $tutor["propic"] = $dataUri;
-        } else {
-            // Use a default image if propic is NULL
-            $tutor["propic"] = "../img/defaultUser.jpg";
-        }
-
-        $tutors_data[$email]["propic"] = $tutor["propic"];
-        $tutors_data[$email]["insegnamento"] = array();
-        $tutors_data[$email]["tariffa"] = array();
-    }
-
-    if ($tutor["materia"] !== NULL) {
-        array_push($tutors_data[$email]["insegnamento"], $tutor["materia"]);
-        array_push($tutors_data[$email]["tariffa"], $tutor["tariffa"]);
-    }
-*/
 ?>

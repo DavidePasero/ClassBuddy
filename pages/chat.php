@@ -14,27 +14,26 @@
         exit();
     }
 
-    // Check if the recipient is specified in the GET parameters
-    if (!isset($_GET["recipient"])) {
-        header ("Location: error.php?error_type=missing_recipient");
-    }
+    $get_user = "";
 
-    // Check if the chat is valid (Tutor to Student or Student to Tutor)
-    $recipient_role = select_user_email ($db, $_GET ["recipient"]) ["role"];
+    if (isset($_GET["recipient"]))
+        $get_user = $_GET["recipient"];
 
-	// Check if the recipient has the same role as the sender
-	if ($recipient_role === $_SESSION ["role"]) {
-		header ("Location: ../pages/error.php?error_type=invalid_chat");
-	}
+    $this_user = select_user_email ($db, $_SESSION['email']);
 
-    $recipient = $_GET["recipient"];
-    $recipient_info = select_user_email ($db, $recipient);
-    $sender = $_SESSION["email"];
-
-    // Retrieve all messages between the sender and the recipient from databse
-    $chatMessages = prepared_query($db, 
-        "SELECT mittente, testo FROM S5204959.messaggio WHERE (mittente = ? AND destinatario = ?) OR (mittente = ? AND destinatario = ?) ORDER BY timestamp ASC",
-        [$sender, $recipient, $recipient, $sender])->fetch_all (MYSQLI_ASSOC);
+    // Query that retrieves the last message in all the conversations the user is involved in
+    $conversations = prepared_query($db,
+    "SELECT m1.mittente, m1.destinatario, m1.testo, m1.timestamp
+    FROM messaggio m1
+    INNER JOIN (
+        SELECT mittente, destinatario, MAX(timestamp) AS latest_timestamp
+        FROM messaggio
+        WHERE mittente = ? OR destinatario = ?
+        GROUP BY LEAST(mittente, destinatario), GREATEST(mittente, destinatario)
+    ) m2 ON (m1.mittente = m2.mittente AND m1.destinatario = m2.destinatario AND m1.timestamp = m2.latest_timestamp)
+    ORDER BY m1.timestamp DESC",
+    [$_SESSION['email'], $_SESSION['email']]
+    )->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -49,33 +48,57 @@
 </head>
 <body>
     <?php echo print_header();?>
-    <div id="page_title">Chat con <?php echo $recipient_info["firstname"] . " " . $recipient_info ["lastname"]; ?></div>
-
-    <div id="chat-container">
-        <div id="search-container">
-            <button id="search-button"></button>
-            <div id="search-box-container">
-                <input type="search" id="search-box" placeholder="Scrivi la tua ricerca">
-                <button id="send-search" class="submit">Cerca</button>
-            </div>
-        </div>
-        <div id="chat-messages">
-            <?php foreach ($chatMessages as $message): ?>
-                <div class="message <?php echo ($message["mittente"] === $sender) ? 'sent' : 'received'; ?>">
-                    <?php echo $message["testo"]; ?>
+    <main id="page-content">
+        <div id="sidebar">
+            <?php foreach ($conversations as $conv):
+                $recipient = ($conv['mittente'] == $_SESSION['email']) ? $conv['destinatario'] : $conv['mittente'];
+                $user = select_user_email($db, $recipient);
+                $dataUri = "";
+                if ($user["propic"] !== NULL) {
+                    // Create a data URI for the image
+                    $imageData = base64_encode($user["propic"]);
+                    $imageType = $user["propic_type"];
+                    $dataUri = "data:image/{$imageType};base64,{$imageData}";
+                } else {
+                    $dataUri = "../img/defaultUser.jpg";
+                }
+                ?>
+                <div class="user-item" data-recipient="<?php echo $user['email']; ?>">
+                    <div>
+                        <img class="profile-pic" src="<?php echo $dataUri?>" alt="Profile Picture">
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name"><?php echo $user['firstname'] . ' ' . $user['lastname']; ?></div>
+                        <div class="last-message">
+                            <?php echo strlen($conv["testo"]) < 13 ? $conv["testo"] : substr($conv["testo"], 0, 12) . "..."; ?>
+                        </div>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
-    </div>
+        
+        <div id="chat">
+            <div id="chat-container">
+                <div id="search-container">
+                    <button id="search-button"></button>
+                    <div id="search-box-container">
+                        <input type="search" id="search-box" placeholder="Scrivi la tua ricerca">
+                        <button id="send-search" class="submit">Cerca</button>
+                    </div>
+                </div>
+                <div id="chat-messages"></div>
+                
+            </div>
 
-    <form id="scrivi_messaggio" method="post" action="../backend/send_message.php">
-        <input type="text" id="message" name="message" placeholder="Scrivi un messaggio..." required>
-        <!-- Uso il valore del sender nel js-->
-        <input type="hidden" name="sender" id="sender" value=<?php echo $sender?>>
-        <input type="hidden" name="recipient" id="recipient" value=<?php echo $recipient?>>
-        <button type="submit" id="send-button" class="submit">Invia</button>
-    </form>
-
+            <form id="scrivi_messaggio" method="post" action="../backend/send_message.php">
+                <input type="text" id="message" name="message" placeholder="Scrivi un messaggio..." required>
+                <!-- Uso il valore del sender nel js-->
+                <input type="hidden" name="sender" id="sender" value="<?php $this_user["email"]?>">
+                <input type="hidden" name="recipient" id="recipient" value="<?php echo $get_user?>">
+                <button type="submit" id="send-button" class="submit">Invia</button>
+            </form>
+        </div>
+    </main>
     <?php echo print_footer();?>
 </body>
 </html>

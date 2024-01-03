@@ -18,8 +18,9 @@
         HEADER;
         if (isset($_SESSION ["authenticated"])) {
             $header .= <<<NAVBAR
-                        <a href="profile.php">My profile</a>
+                        <a href="profile.php">Account</a>
                         <a href="../backend/logout.php">Log out</a>
+                        <a href="chat.php">Chat</a>
             NAVBAR;
         }
         else {

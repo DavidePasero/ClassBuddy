@@ -11,27 +11,32 @@ submit.addEventListener("click", send_msg);
 function send_msg (event) {
     event.preventDefault();
     var testo_msg = msg.value;
-    msg.value = "";
-    // Inserisco immediatamente il messaggio inviato dall'utente nella chat
-    var new_msg = document.createElement("div");
-    new_msg.classList.add("message");
-    new_msg.classList.add("sent");
-    var txt = document.createTextNode(testo_msg);
-    new_msg.appendChild(txt);
-    chat.scrollTop = chat.scrollHeight;
-    chatMessages.appendChild(new_msg);
+    let recipient = document.getElementById("recipient").value;
+    if (testo_msg !== "" && recipient !== "") {
+        msg.value = "";
+        // Inserisco immediatamente il messaggio inviato dall'utente nella chat
+        var new_msg = document.createElement("div");
+        new_msg.classList.add("message");
+        new_msg.classList.add("sent");
+        var txt = document.createTextNode(testo_msg);
+        new_msg.appendChild(txt);
+        chat.scrollTop = chat.scrollHeight;
+        chatMessages.appendChild(new_msg);
 
-    // Invio il messaggio al server che lo inserisce nel database in modo asincrono
-    fetch("../backend/send_message.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: "message=" + testo_msg + "&recipient=" + document.getElementById("recipient").value
-    }).then (response => response.text ())
-    .then (response_txt => {
-        console.log (response_txt);
-    });
+        // Invio il messaggio al server che lo inserisce nel database in modo asincrono
+        fetch("../backend/send_message.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "message=" + testo_msg + "&recipient=" + recipient
+        }).then (response => response.text ())
+        .then (response_txt => {
+            alert (response_txt);
+        });
+    } else {
+        alert ("Inserisci un messaggio e seleziona un destinatario!");
+    }
 }
 
 var latestTimestamp = getFormattedTimestamp();
@@ -131,3 +136,45 @@ sendSearch.addEventListener("click", function () {
     })
     .catch(error => console.error("Error fetching new messages:", error));
 });
+
+// SIDEBAR
+const userItems = document.querySelectorAll(".user-item");
+
+userItems.forEach((item) => {
+    item.addEventListener("click", () => {
+        document.querySelectorAll(".selected").forEach((item) => {item.classList.remove("selected")});
+        item.classList.add("selected");
+        const recipient = item.getAttribute("data-recipient");
+        loadChat(recipient);
+    });
+});
+
+function loadChat(recipient) {
+    // Fetch chat messages based on the selected recipient
+    fetch("../backend/fetch_chat.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "timestamp=0&recipient=" + recipient
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Clear existing chat messages
+        chatMessages.innerHTML = "";
+        // Display the fetched chat messages
+        data.forEach(message => {
+            const newMessage = document.createElement("div");
+            newMessage.classList.add("message");
+            newMessage.classList.add(message.mittente === recipient ? "received" : "sent");
+            newMessage.textContent = message.testo;
+            chatMessages.appendChild(newMessage);
+        });
+    })
+    .catch(error => console.error("Error fetching chat:", error));
+
+    document.getElementById("recipient").value = recipient;
+}
+
+if (document.getElementById("recipient").value != "")
+    loadChat(document.getElementById("recipient").value);
