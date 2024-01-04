@@ -1,7 +1,5 @@
 let chat = document.getElementById("chat-container");
 let chatMessages = document.getElementById("chat-messages");
-// Scrollo automaticamente la chat fino all'ultimo messaggio
-chat.scrollTop = chat.scrollHeight;
 
 let msg = document.getElementById("message");
 let submit = document.getElementById("send-button");
@@ -177,11 +175,19 @@ function loadChat(recipient, item) {
     document.getElementById("recipient").value = recipient;
     document.getElementById("no-recipient-selected").style.display = "none";
     document.getElementById("chat").removeAttribute("hidden");
-    let propic = item.querySelectorAll(".profile-pic")[0].getAttribute("src");
-    let name = item.querySelectorAll(".user-name")[0].textContent;
-    document.getElementById("chat-propic").setAttribute("src", propic);
-    document.getElementById("chat-username").textContent = name;
+    // Aggiorno la foto profilo e il nome del destinatario, se è stato passato come GET a chat.php il caricamento
+    // di queste informazioni avvengono nel php
+    if (item) {
+        let propic = item.querySelectorAll(".profile-pic")[0].getAttribute("src");
+        let name = item.querySelectorAll(".user-name")[0].textContent;
+        document.getElementById("chat-propic").setAttribute("src", propic);
+        document.getElementById("chat-username").textContent = name;
+    }
+    // Scrollo automaticamente la chat fino all'ultimo messaggio
+    chat.scrollTop = chat.scrollHeight;
 }
 
-if (document.getElementById("recipient").value != "")
+if (document.getElementById("recipient").value !== "") {
+    
     loadChat(document.getElementById("recipient").value);
+}

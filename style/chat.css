@@ -115,14 +115,14 @@
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 5px;
-    border: 1px solid rgb(138, 80, 113);
+    border: 1px solid var(--color4);
     width: 25px;
     height: 25px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #search-button:hover {
-    background-color: #c9bcc3;
+    background-color: var(--color4);
 }
 
 #search-box-container {

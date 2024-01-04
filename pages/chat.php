@@ -14,10 +14,18 @@
         exit();
     }
 
-    $get_user = "";
+    $get_user = null;
 
-    if (isset($_GET["recipient"]))
-        $get_user = $_GET["recipient"];
+    // Check se c'è un destinatario passato come GET, se è valido bene altrimenti redirect a chat.php
+    if (isset($_GET["recipient"])) {
+        $get_user = select_user_email ($db, $_GET["recipient"]);
+        if (!$get_user or $get_user["email"] == $_SESSION["email"] or $get_user["role"] == $_SESSION["role"]) {
+            header("Location: chat.php");
+            exit();
+        }
+        else
+            $get_user ["propic"] = get_data_uri ($get_user["propic"], $get_user["propic_type"]);
+    }
 
     $this_user = select_user_email ($db, $_SESSION['email']);
 
@@ -59,15 +67,7 @@
             <?php foreach ($conversations as $conv):
                 $recipient = ($conv['mittente'] == $_SESSION['email']) ? $conv['destinatario'] : $conv['mittente'];
                 $user = select_user_email($db, $recipient);
-                $dataUri = "";
-                if ($user["propic"] !== NULL) {
-                    // Create a data URI for the image
-                    $imageData = base64_encode($user["propic"]);
-                    $imageType = $user["propic_type"];
-                    $dataUri = "data:image/{$imageType};base64,{$imageData}";
-                } else {
-                    $dataUri = "../img/defaultUser.jpg";
-                }
+                $dataUri = get_data_uri($user["propic"], $user["propic_type"]);
                 ?>
                 <div class="user-item" data-recipient="<?php echo $user['email']; ?>">
                     <div>
@@ -108,7 +108,7 @@
                 <input type="text" id="message" name="message" placeholder="Scrivi un messaggio..." required>
                 <!-- Uso il valore del sender nel js-->
                 <input type="hidden" name="sender" id="sender" value="<?php $this_user["email"]?>">
-                <input type="hidden" name="recipient" id="recipient" value="<?php echo $get_user?>">
+                <input type="hidden" name="recipient" id="recipient" value="<?php echo $get_user["email"]?>">
                 <button type="submit" id="send-button" class="submit">Invia</button>
             </form>
         </div>
