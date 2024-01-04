@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 20px;
+}
+
+h1 {
+    color: #007bff;
+}
+
+.review {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.review p {
+    margin: 5px 0;
+}

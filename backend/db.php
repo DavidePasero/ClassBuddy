@@ -64,4 +64,12 @@
         $result = prepared_query ($db, $query, [$citta, $materia]);
         return $result->fetch_all (MYSQLI_ASSOC);
     }
+
+    function getAverageRating($db, $userEmail) {
+        $avg = prepared_query ($db,
+        "SELECT AVG(valutaz) as average FROM recensione WHERE tutor = ?",
+        [$userEmail])->fetch_assoc() ["average"];
+
+        return $avg;
+    }
 ?>

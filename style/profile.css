@@ -55,7 +55,7 @@ main {
 
 #chat_button {
     margin-top: 5px;
-    background-color: #c9bcc3;
+    background-color: white;
     background-image: url('../res/icons/chat.svg');
     background-size: cover; /* Adjust as needed: contain, cover, or specific dimensions */
     background-repeat: no-repeat;
@@ -66,7 +66,7 @@ main {
 }
 
 #chat_button:hover {
-    background-color: #828080;
+    background-color: #c8c8c8;
     border-radius: 10px;
 }
 

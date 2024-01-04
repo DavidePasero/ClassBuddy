@@ -2,9 +2,12 @@
 <?php
     error_reporting(E_ALL);
     ini_set('display_errors',1);
-    session_start ();
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
     require __DIR__ . '/../backend/page.php';
     require __DIR__ . '/../backend/db.php';
+    require __DIR__ . '/../backend/review.php';
     
     $db = connect_to_db ();
     cookie_check ($db);
@@ -15,10 +18,10 @@
     }
 
     // Se sto visualizzando il mio profilo, allora $user_profile = $_SESSION ["email"], altrimenti $user_profile = $_GET ["email"]
-    $user_profile = isset($_GET ["email"]) ? $_GET ["email"] : $_SESSION ["email"];
-    $user_profile_info = select_user_email ($db, $user_profile);
+    $user_profile = isset($_GET["email"]) ? $_GET["email"] : $_SESSION["email"];
+    $user_profile_info = select_user_email($db, $user_profile);
 
-    if ($user_profile_info ["propic"] !== NULL) {
+    if ($user_profile_info["propic"] !== NULL) {
         // Create a data URI for the image
         $imageData = base64_encode($user_profile_info["propic"]);
         $imageType = $user_profile_info["propic_type"];
@@ -27,7 +30,10 @@
         $dataUri = "../img/defaultUser.jpg";
     }
 
-    $myprofile = $user_profile_info ["email"] === $_SESSION ["email"];
+    $myprofile = $user_profile_info["email"] === $_SESSION["email"];
+
+    // Aggiunta: ottieni la media delle recensioni se l'utente è un tutor
+    $averageRating = ($user_profile_info["role"] === "tutor") ? getAverageRating($db, $user_profile_info["email"]) : null;
 ?>
 <html lang="it">
 <head>
@@ -45,9 +51,16 @@
 <body>
     <?php echo print_header();?>
     <main>
-        <div id="contact-card">
-            <p><?php echo htmlentities ($user_profile_info ["firstname"] . " " . $user_profile_info ["lastname"])?></p>
-            <form id="form" action = "../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
+    <div id="contact-card">
+            <p><?php echo htmlentities($user_profile_info["firstname"] . " " . $user_profile_info["lastname"])?></p>
+
+            <!-- Aggiunta: mostra la media delle recensioni -->
+            <?php if ($user_profile_info["role"] === "tutor" && $averageRating !== null) : ?>
+                <p>Media recensioni: <?php echo number_format($averageRating, 2); ?></p>
+                <a href="../pages/tutor_reviews.php?tutor_email=<?php echo $user_profile_info["email"]; ?>" class="button">Visualizza tutte le recensioni</a>
+            <?php endif; ?>
+
+            <form id="form" action="../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
                 <div id="image_div">
                     <img id="image-preview" src=<?php echo $dataUri;?> alt="Profile picture">
                     <?php
@@ -116,6 +129,35 @@
                         </form>
                     CHAT_BUTTON;
                 }
+                
+            ?>
+
+            <?php
+            // Verifica se lo studente può scrivere una recensione
+            if ($_SESSION["role"] === "studente" && hasSentMessageToStudent($db, $user_profile_info["email"], $_SESSION["email"])) {
+                // Verifica se lo studente ha già inviato una recensione
+                $review = getStudentReview($db, $user_profile_info["email"], $_SESSION["email"]);
+
+                if ($review) {
+                    // Lo studente ha già inviato una recensione, quindi mostra la recensione invece del modulo
+                    echo "<p>Recensione già inviata:</p>";
+                    echo "<p>Valutazione: {$review['valutaz']}</p>";
+                    echo "<p>Commento: {$review['commento']}</p>";
+                } else {
+                    // Lo studente non ha ancora inviato una recensione, mostra il modulo di invio
+                    echo <<<REVIEW_FORM
+                        <form action="../backend/submit_review.php" method="POST">
+                            <label for="valutaz">Valutazione (da 1 a 5):</label>
+                            <input type="number" name="valutaz" min="1" max="5" required>
+                            <label for="commento">Commento:</label>
+                            <textarea name="commento" required></textarea>
+                            <input type="hidden" name="tutor" value="{$user_profile_info["email"]}">
+                            <input type="hidden" name="studente" value="{$_SESSION["email"]}">
+                            <input type="submit" value="Invia Recensione">
+                        </form>
+                    REVIEW_FORM;
+                }
+            }
             ?>
         </div>
     </main>

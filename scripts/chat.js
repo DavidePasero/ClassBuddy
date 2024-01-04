@@ -146,11 +146,11 @@ userItems.forEach((item) => {
         document.querySelectorAll(".selected").forEach((item) => {item.classList.remove("selected")});
         item.classList.add("selected");
         const recipient = item.getAttribute("data-recipient");
-        loadChat(recipient);
+        loadChat(recipient, item);
     });
 });
 
-function loadChat(recipient) {
+function loadChat(recipient, item) {
     // Fetch chat messages based on the selected recipient
     fetch("../backend/fetch_chat.php", {
         method: "POST",
@@ -175,6 +175,12 @@ function loadChat(recipient) {
     .catch(error => console.error("Error fetching chat:", error));
 
     document.getElementById("recipient").value = recipient;
+    document.getElementById("no-recipient-selected").style.display = "none";
+    document.getElementById("chat").removeAttribute("hidden");
+    let propic = item.querySelectorAll(".profile-pic")[0].getAttribute("src");
+    let name = item.querySelectorAll(".user-name")[0].textContent;
+    document.getElementById("chat-propic").setAttribute("src", propic);
+    document.getElementById("chat-username").textContent = name;
 }
 
 if (document.getElementById("recipient").value != "")

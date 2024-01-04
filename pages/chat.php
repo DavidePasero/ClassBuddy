@@ -26,12 +26,18 @@
     "SELECT m1.mittente, m1.destinatario, m1.testo, m1.timestamp
     FROM messaggio m1
     INNER JOIN (
-        SELECT mittente, destinatario, MAX(timestamp) AS latest_timestamp
+        SELECT
+            LEAST(mittente, destinatario) AS user1,
+            GREATEST(mittente, destinatario) AS user2,
+            MAX(timestamp) AS latest_timestamp
         FROM messaggio
         WHERE mittente = ? OR destinatario = ?
-        GROUP BY LEAST(mittente, destinatario), GREATEST(mittente, destinatario)
-    ) m2 ON (m1.mittente = m2.mittente AND m1.destinatario = m2.destinatario AND m1.timestamp = m2.latest_timestamp)
-    ORDER BY m1.timestamp DESC",
+        GROUP BY user1, user2
+    ) m2 ON
+        (m1.mittente = m2.user1 AND m1.destinatario = m2.user2 AND m1.timestamp = m2.latest_timestamp)
+        OR
+        (m1.mittente = m2.user2 AND m1.destinatario = m2.user1 AND m1.timestamp = m2.latest_timestamp)
+    ORDER BY m1.timestamp DESC;",
     [$_SESSION['email'], $_SESSION['email']]
     )->fetch_all(MYSQLI_ASSOC);
 ?>
@@ -77,8 +83,15 @@
             <?php endforeach; ?>
         </div>
         
-        <div id="chat">
-            <div id="chat-container">
+        <div id="no-recipient-selected" <?php if (!empty($get_user)) echo "hidden"?>>
+            <img src="../res/icons/chat.svg" alt="No recipient selected">
+            <p>Seleziona un utente per iniziare a scrivere</p>
+        </div>
+
+        <div id="chat" <?php if (empty($get_user)) echo "hidden"?>>
+            <div id="chat-user-info">
+                <img id="chat-propic" src="<?php if (!empty($get_user)) echo $get_user["propic"]?>" alt="Profile picture">
+                <h4 id="chat-username"><?php if (!empty($get_user)) echo $get_user["firstname"] . " " . $get_user["lastname"]?></h4>
                 <div id="search-container">
                     <button id="search-button"></button>
                     <div id="search-box-container">
@@ -86,8 +99,9 @@
                         <button id="send-search" class="submit">Cerca</button>
                     </div>
                 </div>
+            </div>
+            <div id="chat-container">
                 <div id="chat-messages"></div>
-                
             </div>
 
             <form id="scrivi_messaggio" method="post" action="../backend/send_message.php">

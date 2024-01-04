@@ -1,0 +1,7 @@
+Modificare codice submit_review.php (usare funzioni presenti in db.php)
+Cercare di evitare il più possibile i refresh e far fare tutto a js
+Inserire feedback negativi/positivi per gli utenti quando le chiamate al server hanno successo
+Migliorare CSS di profile e review 
+Refactoring del codice cercando di ridurre il numero di file presenti (soprattutto backend)
+Inserire più controlli nel backend
+Modificare query di retrieve delle chat in chat.php perchè non funge.
