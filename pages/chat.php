@@ -83,12 +83,12 @@
             <?php endforeach; ?>
         </div>
         
-        <div id="no-recipient-selected" <?php if (!empty($get_user)) echo "hidden"?>>
+        <div id="no-recipient-selected" <?php if (!is_null($get_user)) echo "hidden"?>>
             <img src="../res/icons/chat.svg" alt="No recipient selected">
             <p>Seleziona un utente per iniziare a scrivere</p>
         </div>
 
-        <div id="chat" <?php if (empty($get_user)) echo "hidden"?>>
+        <div id="chat" <?php if (is_null($get_user)) echo "hidden"?>>
             <div id="chat-user-info">
                 <img id="chat-propic" src="<?php if (!empty($get_user)) echo $get_user["propic"]?>" alt="Profile picture">
                 <h4 id="chat-username"><?php if (!empty($get_user)) echo $get_user["firstname"] . " " . $get_user["lastname"]?></h4>
@@ -107,8 +107,8 @@
             <form id="scrivi_messaggio" method="post" action="../backend/send_message.php">
                 <input type="text" id="message" name="message" placeholder="Scrivi un messaggio..." required>
                 <!-- Uso il valore del sender nel js-->
-                <input type="hidden" name="sender" id="sender" value="<?php $this_user["email"]?>">
-                <input type="hidden" name="recipient" id="recipient" value="<?php echo $get_user["email"]?>">
+                <input type="hidden" name="sender" id="sender" value="<?php echo $this_user["email"]?>">
+                <input type="hidden" name="recipient" id="recipient" value="<?php echo isset($_GET["recipient"]) ? $_GET["recipient"] : ""?>">
                 <button type="submit" id="send-button" class="btn submit">Invia</button>
             </form>
         </div>

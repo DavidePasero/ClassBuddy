@@ -187,7 +187,5 @@ function loadChat(recipient, item) {
     chat.scrollTop = chat.scrollHeight;
 }
 
-if (document.getElementById("recipient").value !== "") {
-    
+if (document.getElementById("recipient").value !== "")
     loadChat(document.getElementById("recipient").value);
-}
