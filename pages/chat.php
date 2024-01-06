@@ -96,7 +96,7 @@
                     <button id="search-button"></button>
                     <div id="search-box-container">
                         <input type="search" id="search-box" placeholder="Scrivi la tua ricerca">
-                        <button id="send-search" class="submit">Cerca</button>
+                        <button id="send-search" class="btn submit">Cerca</button>
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
                 <!-- Uso il valore del sender nel js-->
                 <input type="hidden" name="sender" id="sender" value="<?php $this_user["email"]?>">
                 <input type="hidden" name="recipient" id="recipient" value="<?php echo $get_user["email"]?>">
-                <button type="submit" id="send-button" class="submit">Invia</button>
+                <button type="submit" id="send-button" class="btn submit">Invia</button>
             </form>
         </div>
     </main>

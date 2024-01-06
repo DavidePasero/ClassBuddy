@@ -1,0 +1,23 @@
+.rating {
+    display: flex;
+    align-items: baseline;
+}
+
+.rating .text {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color1)
+}
+
+.star {
+    font-size: 24px;
+    cursor: pointer;
+    margin: 5px;
+    transition: color 0.2s;
+}
+
+.star.hovered,
+.star.active {
+    color: gold;
+}

@@ -39,10 +39,10 @@
 <head>
     <title>ClassBuddy</title>
     <link rel="icon" href="img/image.x" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="../style/home.css">
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/profile.css">
     <link rel="stylesheet" type="text/css" href="../style/modify_profile.css">
+    <link rel="stylesheet" type="text/css" href="../style/stelline.css">
     <?php if ($myprofile)
         echo "<script type=\"module\" src=\"../scripts/modify_profile.js\" defer></script>";
     ?>
@@ -52,13 +52,23 @@
     <?php echo print_header();?>
     <main>
     <div id="contact-card">
-            <p><?php echo htmlentities($user_profile_info["firstname"] . " " . $user_profile_info["lastname"])?></p>
+            <p id="name"><?php echo htmlentities($user_profile_info["firstname"] . " " . $user_profile_info["lastname"])?></p>
 
             <!-- Aggiunta: mostra la media delle recensioni -->
-            <?php if ($user_profile_info["role"] === "tutor" && $averageRating !== null) : ?>
-                <p>Media recensioni: <?php echo number_format($averageRating, 2); ?></p>
-                <a href="../pages/tutor_reviews.php?tutor_email=<?php echo $user_profile_info["email"]; ?>" class="button">Visualizza tutte le recensioni</a>
-            <?php endif; ?>
+            <?php 
+            if ($user_profile_info["role"] === "tutor" && $averageRating !== null) {
+                echo '<div class="rating" id="rating">';
+                for ($i = 0; $i < 5; $i++) {
+                    if ($i < round($averageRating))
+                        echo '<span class="star active">&#9733;</span>';
+                    else
+                        echo '<span class="star">&#9734;</span>';
+                }
+                $number = number_format($averageRating, 1, ",");
+                echo '<span class=text>' . $number . ' su 5</span>';
+                echo '</div>';
+            }
+            ?>
 
             <form id="form" action="../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
                 <div id="image_div">
@@ -74,7 +84,7 @@
                 </div>
                 
                 <?php
-                    if ($_SESSION ["role"] === "tutor" and $myprofile) {
+                    if ($user_profile_info ["role"] === "tutor") {
                         echo <<<INSEGNAMENTI
                                 <div id="insegnamenti_container">
                                     <ul id="insegnamenti_list">
@@ -94,16 +104,19 @@
                                         <li class="insegnamento">
                                             <span name="materia[]">{$insegnamento ["materia"]}</span>
                                             <span>{$insegnamento ["tariffa"]}€/ora</span>
-                                            <button type="button" class="remove_insegnamento"></button>
-                                        </li>
-                                    INSEGNAMENTI_PRESENTI;
+                                        INSEGNAMENTI_PRESENTI;
+                                    if ($myprofile) echo '<button type="button" class="remove_insegnamento"></button>';
+                                    echo '</li>';
                             }
-                        echo <<<INSEGNAMENTI
-                                    </ul>
-                                    <label for="add_insegnamento">Aggiungi insegnamento</label>
-                                    <button id="add_insegnamento" type="button"></button>
-                                </div>
-                        INSEGNAMENTI;
+                        
+                        echo "</ul>";
+                        if ($myprofile) {
+                            echo <<<ADD_INSEGNAMENTO
+                                <label for="add_insegnamento">Aggiungi insegnamento</label>
+                                <button id="add_insegnamento" type="button"></button>
+                            ADD_INSEGNAMENTO;
+                        }
+                        echo "</div>";
                     }
                 ?>
 
@@ -111,7 +124,7 @@
                     if ($myprofile) {
                         echo <<<SUBMIT_FORM
                             <div id="submit_div">
-                                <input type="submit" id="submit_button" name="Submit" value="Salva modifiche">
+                                <input class="btn submit" type="submit" id="submit_button" name="Submit" value="Salva modifiche">
                             </div>
                             SUBMIT_FORM;
                     }?>
@@ -119,22 +132,28 @@
 
             <!-- Chat button that calls chat.php with the recipient's email as GET parameter only if
                 recipient is a tutor and I am a student-->
-            <?php
-                if ($user_profile_info ["role"] === "tutor" and $_SESSION ["role"] === "studente") {
-                    echo <<<CHAT_BUTTON
-                        <form action="chat.php" method="GET">
-                            <input type="hidden" name="recipient" value="{$user_profile_info ["email"]}">
-                            <label for="chat_button">Contatta</label>
-                            <input id="chat_button" type="submit" value="">
-                        </form>
-                    CHAT_BUTTON;
-                }
-                
-            ?>
+            <div id="action-container">
+                <?php
+                    if ($user_profile_info ["role"] === "tutor" and $_SESSION ["role"] === "studente") {
+                        echo <<<CHAT_BUTTON
+                            <a href="chat.php?recipient={$user_profile_info["email"]}" id="chat_button" class="btn icon-button">
+                                Contatta
+                                <img src="../res/icons/mail.svg" alt="Chat icon">
+                            </a>
+                        CHAT_BUTTON;
+                    }
+                ?>
+                <?php if ($user_profile_info["role"] === "tutor"): ?>
+                <a href="tutor_reviews.php?tutor_email=<?php echo $user_profile_info["email"]?>" id="reviews_button" class="btn icon-button">
+                    Recensioni
+                    <img src="../res/icons/review.svg" alt="Chat icon">
+                </a>
+                <?php endif; ?>
+            </div>
 
             <?php
             // Verifica se lo studente può scrivere una recensione
-            if ($_SESSION["role"] === "studente" && hasSentMessageToStudent($db, $user_profile_info["email"], $_SESSION["email"])) {
+            /*if ($_SESSION["role"] === "studente" && hasSentMessageToStudent($db, $user_profile_info["email"], $_SESSION["email"])) {
                 // Verifica se lo studente ha già inviato una recensione
                 $review = getStudentReview($db, $user_profile_info["email"], $_SESSION["email"]);
 
@@ -157,7 +176,7 @@
                         </form>
                     REVIEW_FORM;
                 }
-            }
+            }*/
             ?>
         </div>
     </main>

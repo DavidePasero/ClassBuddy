@@ -25,7 +25,14 @@
 
 .dragover {
     /* !important serve per facilitare l'override del border che è definito anche in #image_div*/
-    border: 1px dashed #563440 !important;
+    border: 1px dashed var(--color3) !important;
+}
+
+.insegnamento {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Added to position the elements at each end of the container */
+    align-items: center;
 }
 
 #add_insegnamento {
@@ -64,7 +71,7 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     font-weight: bold;
-    color: #580f50;
+    color: var(--color3);
 }
 
 #insegnamenti_container {
@@ -79,14 +86,31 @@
     text-align: center;
 }
 
-#submit_button {
-    background-color: var(--color2); /* Green */
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
+/*! DA MODIFICARE*/
+select {
+    padding: 10px; /* Adjust padding as needed */
+    font-size: 16px; /* Adjust font size as needed */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 5px; /* Border radius for rounded corners */
+    appearance: none; /* Remove default arrow in some browsers */
+    background-color: white; /* Background color */
+    width: 200px; /* Set a specific width or adjust as needed */
+    outline: none; /* Remove the default focus outline */
+}
+
+/* Style for the dropdown arrow icon */
+select::after {
+    content: '\25BC'; /* Unicode character for a down arrow */
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust the distance from the right as needed */
+    transform: translateY(-50%);
+    pointer-events: none; /* Ensure the arrow doesn't interfere with clicking the select */
+}
+
+/* Style for option elements within the dropdown */
+select option {
+    background-color: white; /* Background color of each option */
+    color: #333; /* Text color of each option */
+    padding: 10px; /* Adjust padding as needed */
 }

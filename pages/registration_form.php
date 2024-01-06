@@ -84,7 +84,7 @@
 				</div>
 
 				<div id="submit_div">
-					<input class="submit form-element" type="submit" id="submit" name="Submit" value="Invia">
+					<input class="btn submit form-element" type="submit" id="submit" name="Submit" value="Invia">
 				</div>
 
 			</form>

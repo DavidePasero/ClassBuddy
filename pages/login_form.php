@@ -45,7 +45,7 @@
 					<span class="checkmark"></span>
 				</label>
 
-				<input class="submit form-element" type="submit" name="Submit" value="Invia">
+				<input class="btn submit form-element" type="submit" name="Submit" value="Invia">
 			</form>
 		</div>
 	</main>
