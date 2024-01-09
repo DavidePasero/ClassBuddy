@@ -68,9 +68,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     reviewsContainer.appendChild(newReviewElement);
 
-                    // Rimuovi l'intero form e l'elemento h2 dal DOM
+                    // Rimuovi l'intero form, l'elemento h2 dal DOM e il messaggio di nessuna recensione
                     form.remove();
                     document.querySelector('h2').remove();
+                    const no_rev = document.getElementById('no-rev');
+                    if (no_rev)
+                        no_rev.remove();
                 })
                 .catch(error => {
                     console.error('Errore durante la richiesta al server:', error);

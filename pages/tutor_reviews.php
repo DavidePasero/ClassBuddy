@@ -44,6 +44,7 @@ $tutor_info = select_user_email($db, $tutor_email);
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/stelline.css">
     <script src="../scripts/loadReview.js" defer></script>
+    <script src="../scripts/stelline.js" defer></script>
     <meta charset="utf-8">
 </head>
 <body>
@@ -55,20 +56,20 @@ $tutor_info = select_user_email($db, $tutor_email);
         foreach ($reviews as $review) {
             echo "<div class='review'>";
             echo "<div class='parameter'>Valutazione</div>";
-            echo '<div class';
+            echo "<div class='rating'>";
             for ($i = 0; $i < 5; $i++) {
                 if ($i < round($review['valutaz']))
                     echo '<span class="star active">&#9733;</span>';
                 else
-                    echo '<span class="star">&#9734;</span>';
+                    echo '<span class="star">&#9733;</span>';
             }
-            echo '</div>';
+            echo "</div>";
             echo "<div class='parameter'>Commento</div><p>" . htmlentities($review['commento']) . "</p>";
             echo "<div class='parameter'>Scritta da</div><p>" . $review['studente'] . "</p>";
             echo "</div>";
         }
     } else {
-        echo "<p>Nessuna recensione disponibile per questo tutor.</p>";
+        echo "<p id=\"no-rev\">Nessuna recensione disponibile per questo tutor.</p>";
     }
     ?>
     </div>
@@ -79,12 +80,17 @@ $tutor_info = select_user_email($db, $tutor_email);
         echo '<form action="../backend/submit_review.php" name="valutazione" method="post">';
         echo '<input type="hidden" name="tutor" value="' . htmlspecialchars($tutor_email) . '">';
         echo '<input type="hidden" name="studente" value="' . htmlspecialchars($_SESSION["email"]) . '">';
-        echo '<label for="valutaz">Valutazione: </label>';
-        echo '<select id="valutaz" name="valutaz" required>';
-        for ($i = 1; $i <= 5; $i++) {
-            echo "<option value=\"$i\">$i</option>";
-        }
-        echo '</select><br>';
+        echo <<<STELLINE
+        <div class="rating" id="rating">
+            <!-- Five stars for the rating system -->
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star" data-value="5">&#9733;</span>
+            <input type="hidden" name="valutaz" id="valutaz" value="0">
+        </div>
+        STELLINE;
         echo '<label for="commento">Commento: </label>';
         echo '<textarea id="commento" name="commento" required></textarea><br>';
         echo '<input type="submit" value="Invia">';

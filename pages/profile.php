@@ -62,7 +62,7 @@
                     if ($i < round($averageRating))
                         echo '<span class="star active">&#9733;</span>';
                     else
-                        echo '<span class="star">&#9734;</span>';
+                        echo '<span class="star">&#9733;</span>';
                 }
                 $number = number_format($averageRating, 1, ",");
                 echo '<span class=text>' . $number . ' su 5</span>';
@@ -160,34 +160,6 @@
                 </a>
                 <?php endif; ?>
             </div>
-
-            <?php
-            // Verifica se lo studente può scrivere una recensione
-            /*if ($_SESSION["role"] === "studente" && hasSentMessageToStudent($db, $user_profile_info["email"], $_SESSION["email"])) {
-                // Verifica se lo studente ha già inviato una recensione
-                $review = getStudentReview($db, $user_profile_info["email"], $_SESSION["email"]);
-
-                if ($review) {
-                    // Lo studente ha già inviato una recensione, quindi mostra la recensione invece del modulo
-                    echo "<p>Recensione già inviata:</p>";
-                    echo "<p>Valutazione: {$review['valutaz']}</p>";
-                    echo "<p>Commento: {$review['commento']}</p>";
-                } else {
-                    // Lo studente non ha ancora inviato una recensione, mostra il modulo di invio
-                    echo <<<REVIEW_FORM
-                        <form action="../backend/submit_review.php" method="POST">
-                            <label for="valutaz">Valutazione (da 1 a 5):</label>
-                            <input type="number" name="valutaz" min="1" max="5" required>
-                            <label for="commento">Commento:</label>
-                            <textarea name="commento" required></textarea>
-                            <input type="hidden" name="tutor" value="{$user_profile_info["email"]}">
-                            <input type="hidden" name="studente" value="{$_SESSION["email"]}">
-                            <input type="submit" value="Invia Recensione">
-                        </form>
-                    REVIEW_FORM;
-                }
-            }*/
-            ?>
         </div>
     </main>
     <?php echo print_footer();?>
