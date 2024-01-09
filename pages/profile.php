@@ -44,7 +44,7 @@
     <link rel="stylesheet" type="text/css" href="../style/modify_profile.css">
     <link rel="stylesheet" type="text/css" href="../style/stelline.css">
     <?php if ($myprofile)
-        echo "<script type=\"module\" src=\"../scripts/modify_profile.js\" defer></script>";
+        echo "<script src=\"../scripts/modify_profile.js\" defer></script>";
     ?>
     <meta charset="utf-8">
 </head>
@@ -70,7 +70,7 @@
             }
             ?>
 
-            <form id="form" action="../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
+            <form id="modify-profile" action="../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
                 <div id="image_div">
                     <img id="image-preview" src=<?php echo $dataUri;?> alt="Profile picture">
                     <?php

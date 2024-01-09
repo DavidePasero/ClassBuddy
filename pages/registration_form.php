@@ -74,13 +74,16 @@
 				<!-- Create a div with a button named getCurrentLocation-->
 				<div id="location_div">
 					<!-- Text input for typing -->
-					<input list="cittaDropdown" class="form-element" id="cittaInput" name="citta" placeholder="Digita o seleziona una città">
+					<input list="cittaDropdown" class="form-element input-list" id="cittaInput" name="citta" placeholder="Digita o seleziona una città">
 
 					<!-- Datalist (list of all the cities in italy) -->
-					<datalist id="cittaDropdown">
-
+					<datalist id="cittaDropdown" class="data-list">
 					</datalist>
-					<button type="button" class="form-element" id="getCurrentLocation" name="getCurrentLocation">Get current location</button>
+
+					<button type="button" class="btn icon-button form-element" id="getCurrentLocation" name="getCurrentLocation">
+						La tua posizione
+						<img src="../res/icons/location.svg" alt="Location icon">
+					</button>
 				</div>
 
 				<div id="submit_div">

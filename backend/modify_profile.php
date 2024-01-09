@@ -15,6 +15,8 @@ $status = true;
 
 $db->begin_transaction();
 
+$insegnamenti = explode ("\n", file_get_contents("../res/insegnamenti.txt"));
+
 try {
     if (isset ($_POST ["remove_insegnamento"])) {
         for ($i = 0; $i < count ($_POST ["remove_insegnamento"]); $i++) {
@@ -50,6 +52,11 @@ try {
         // and materia and tariffa are each elements of the arrays passed by POST
         $tutor = $_SESSION ["email"];
         for ($i = 0; $i < count ($_POST ["materia"]); $i++) {
+            // Check if materia is in $insegnamenti
+            if (!in_array ($_POST ["materia"][$i], $insegnamenti)) {
+                $status = false;
+                break;
+            }
             prepared_query ($db,
                 "INSERT INTO S5204959.insegnamento (tutor, materia, tariffa) VALUES (?, ?, ?);",
                 [$tutor, $_POST ["materia"][$i], $_POST ["tariffa"][$i]]);
@@ -65,7 +72,7 @@ try {
     2. materia passed but not tariffa or viceversa
     3. materia and tariffa passed but with different lengths
     4. image received but with error
-    5. Queries not successful ($status = false)
+    5. $status = false -> Queries not successful or materia not in $insegnamenti
 */
 $rule1 = (!isset($_FILES["propic"]) and !isset ($_POST ["materia"]) and !isset ($_POST ["tariffa"]));
 $rule2 = (isset ($_POST ["materia"]) xor (isset ($_POST ["tariffa"])));

@@ -157,31 +157,17 @@ input[type="radio"] + label {
   justify-content: center;
 }
 
-.dropdown-container {
-  position: relative;
-  width: 300px;
-}
-
-#cittaInput {
+.input-list {
   padding: 10px;
   font-size: 16px;
   border: 1px solid var(--color3); /* Blue color, you can change it */
   border-radius: 5px;
 }
 
-#cittaDropdown {
+.data-list {
   display: none; /* Hide the default dropdown arrow */
 }
 
 #getCurrentLocation {
-  background-color: var(--color3); /* Blue color, you can change it */
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out; /* Smooth background color transition */
-}
-
-#getCurrentLocation:hover {
-  background-color: var(--dark-color3); /* Darker shade on hover */
+  margin-bottom: 5px;
 }

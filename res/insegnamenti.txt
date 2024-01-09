@@ -12,3 +12,4 @@ Elettronica
 Latino
 Greco
 Filosofia
+Musica

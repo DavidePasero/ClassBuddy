@@ -4,13 +4,13 @@ let fileInput = document.getElementById('propic');
 editButton.addEventListener('click', openFileInput);
 fileInput.addEventListener('change', previewImage);
 
-function openFileInput() {
+function openFileInput(event) {
+    event.preventDefault(); // Prevents the form from submitting and avoids bugs with the file input
     fileInput.click();
 }
 
 // Preview image
-function previewImage(event) {
-    const fileInput = event.target;
+function previewImage() {
     const file = fileInput.files[0];
 
     if (file) {
@@ -73,6 +73,7 @@ if (is_tutor) {
     // Add event listener for the button that adds an insegnamento
     add_insegnamento.addEventListener('click', function (_) {
         let insegnamento = document.createElement('li');
+        insegnamento.classList.add('insegnamento');
 
         // Remove from insegnamenti the insegnamenti already present in the database
         let insegnamenti_presenti = Array.from(insegnamenti_list.querySelectorAll('[name="materia[]"]')).map(e => e.textContent);
@@ -82,6 +83,7 @@ if (is_tutor) {
         let input_materia = document.createElement('select');
         input_materia.name = 'materia[]';
         input_materia.setAttribute('required', 'true');
+        input_materia.classList.add('input-box');
         insegnamenti_disponibili.forEach(element => {
             let option = document.createElement('option');
             option.value = element;
@@ -96,7 +98,7 @@ if (is_tutor) {
         input_tariffa.name = 'tariffa[]';
         input_tariffa.placeholder = 'Tariffa oraria';
         input_tariffa.setAttribute('required', 'true');
-        input_tariffa.classList.add('number-input');
+        input_tariffa.classList.add('input-box');
 
         // Create a button to remove the insegnamento
         let removeButton = document.createElement('button');

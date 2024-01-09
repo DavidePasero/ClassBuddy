@@ -4,9 +4,11 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 #contact-card {
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,15 +26,21 @@ main {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-#contact-card #name {
+#name {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 36px;
     font-weight: bold;
     color: var(--color5); /* Colore del testo */
 }
 
-#image_div {
+#modify-profile {
+    display: flex;
+    flex-direction: column;
     text-align: center;
+}
+
+#image_div {
+    align-self: center;
     position: relative;
     width: 300px;
     height: 300px;
@@ -78,4 +86,12 @@ main {
 
 #action-container a {
     margin: 10px;
+}
+
+.input-box {
+    padding: 7px;
+    font-size: 16px;
+    border: 1px solid var(--color3); /* Blue color, you can change it */
+    border-radius: 5px;
+    margin-right: 5px;
 }

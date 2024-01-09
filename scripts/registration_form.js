@@ -117,7 +117,7 @@ getCurrentLocationButton.addEventListener ("click", function (event) {
         // Use the latitude and longitude to get the city name
         var lat = position.coords.latitude;
         var lon = position.coords.longitude;
-        var url = "https://nominatim.openstreetmap.org/reverse?lat=" + lat + "&lon=" + lon + "&format=json";
+        var url = "https://nominatim.openstreetmap.org/reverse?lat=" + lat + "&lon=" + lon + "&format=json&accept-language=it";
         fetch(url)
             .then(function(response) {
                 return response.json();
