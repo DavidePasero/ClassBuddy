@@ -42,4 +42,9 @@ function getStudentReview($db, $tutorEmail, $studentEmail) {
 
     return $row;
 }
+
+function hasStudentReviewedTutor($db, $student_email, $tutor_email) {
+    $review = getStudentReview($db, $tutor_email, $student_email);
+    return $review != null;
+}
 ?>
