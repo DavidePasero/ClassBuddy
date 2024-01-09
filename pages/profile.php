@@ -76,7 +76,9 @@
                     <?php
                         if ($myprofile) {
                             echo <<<MODIFY_PIC
-                                <div id="edit-button"></div>
+                                <button id="edit-button" class="btn only-icon-button">
+                                    <img src="../res/icons/edit.svg" alt="Edit icon">
+                                </button>
                                 <input type="file" id="propic" name="propic" accept="image/*">
                             MODIFY_PIC;
                         }
@@ -105,15 +107,23 @@
                                             <span name="materia[]">{$insegnamento ["materia"]}</span>
                                             <span>{$insegnamento ["tariffa"]}€/ora</span>
                                         INSEGNAMENTI_PRESENTI;
-                                    if ($myprofile) echo '<button type="button" class="remove_insegnamento"></button>';
+                                    if ($myprofile) {
+                                        echo <<<REMOVE_INSEGNAMENTO
+                                            <button type="button" class="remove_insegnamento btn only-icon-button">
+                                                <img src="../res/icons/remove.svg" alt="Remove icon">
+                                            </button>
+                                        REMOVE_INSEGNAMENTO;
+                                    }
                                     echo '</li>';
                             }
                         
                         echo "</ul>";
                         if ($myprofile) {
                             echo <<<ADD_INSEGNAMENTO
-                                <label for="add_insegnamento">Aggiungi insegnamento</label>
-                                <button id="add_insegnamento" type="button"></button>
+                                <button id="add_insegnamento" class="btn icon-button" type="button">
+                                    Aggiungi insegnamento
+                                    <img src="../res/icons/add.svg" alt="Add icon">
+                                </button>
                             ADD_INSEGNAMENTO;
                         }
                         echo "</div>";

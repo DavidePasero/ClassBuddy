@@ -96,10 +96,17 @@ if (is_tutor) {
         input_tariffa.name = 'tariffa[]';
         input_tariffa.placeholder = 'Tariffa oraria';
         input_tariffa.setAttribute('required', 'true');
+        input_tariffa.classList.add('number-input');
 
         // Create a button to remove the insegnamento
         let removeButton = document.createElement('button');
+        let removeIcon = document.createElement('img');
+        removeIcon.src = '../res/icons/remove.svg';
+        removeIcon.alt = 'Remove icon';
         removeButton.type = 'button'; // Ensure it doesn't submit the form
+        removeButton.appendChild(removeIcon);
+        removeButton.classList.add('only-icon-button');
+        removeButton.classList.add('btn');
         removeButton.classList.add('remove_insegnamento');
 
         // Add event listener to the remove button
@@ -117,15 +124,14 @@ if (is_tutor) {
     // Add event listener for the button that removes an insegnamento already present in the database
     let removeButtons = document.getElementsByClassName('remove_insegnamento');
     for (let i = 0; i < removeButtons.length; i++) {
-        removeButtons[i].addEventListener('click', function (event) {
+        removeButtons[i].addEventListener('click', function () {
             // Creates an hidden input with the value of the removed insegnamento and adds it to the form
             let input = document.createElement('input');
             input.type = 'hidden';
             input.name = 'remove_insegnamento[]';
-            input.value = event.target.parentElement.children[0].textContent;
+            input.value = removeButtons[i].parentElement.children[0].textContent;
             insegnamenti_list.parentElement.appendChild(input);
-            
-            insegnamenti_list.removeChild(event.target.parentElement);
+            insegnamenti_list.removeChild(removeButtons[i].parentElement);
         });
     }
 }

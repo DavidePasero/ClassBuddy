@@ -89,7 +89,7 @@
     /* Add a shadow on the bottom of chat-user-info*/
 }
 
-#chat-user-info img {
+#chat-user-info #chat-propic {
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -109,21 +109,10 @@
     display: flex;
     align-items: center;
 }
-
+/*
 #search-button {
     background-image: url('../res/icons/search.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 5px;
-    border: 1px solid var(--color4);
-    width: 25px;
-    height: 25px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#search-button:hover {
-    background-color: var(--color4);
-}
+}*/
 
 #search-box-container {
     display: none;

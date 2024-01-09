@@ -32,6 +32,7 @@ main {
 }
 
 #image_div {
+    text-align: center;
     position: relative;
     width: 300px;
     height: 300px;
@@ -48,6 +49,25 @@ main {
 
 #image-preview:hover {
     transform: scale(1.1);
+}
+
+#insegnamenti_container {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#insegnamenti_list {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--color3);
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+    margin-left: 0;
 }
 
 #action-container {

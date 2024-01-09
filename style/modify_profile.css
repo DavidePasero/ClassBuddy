@@ -4,19 +4,8 @@
     position: absolute;
     bottom: 5px;
     right: 5px;
-    padding: 5px;
-    border-radius: 10px;
-    border: 2px solid rgb(138, 80, 113);
-    width: 25px;
-    height: 25px;
-    background-color: white;
-    background-image: url('../res/icons/edit.svg');
-    background-size: cover; /* Adjust as needed: contain, cover, or specific dimensions */
-    background-repeat: no-repeat;
-}
-
-#edit-button:hover {
-    background-color: #bebebe;
+    width: 30px;
+    height: 30px;
 }
 
 #file-input {
@@ -33,50 +22,15 @@
     flex-direction: row;
     justify-content: space-between; /* Added to position the elements at each end of the container */
     align-items: center;
+    margin-bottom: 5px;
 }
 
 #add_insegnamento {
     background-image: url('../res/icons/add.svg');
-    background-size: cover; /* Adjust as needed: contain, cover, or specific dimensions */
-    background-repeat: no-repeat;
-    width: 25px;
-    height: 25px;
-    border-width: 0px;
-    padding: 5px;
-    background-color: white;
-}
-
-#add_insegnamento:hover {
-    background-color: #c8c8c8;
-    border-radius: 10px;
 }
 
 .remove_insegnamento {
     background-image: url('../res/icons/remove.svg');
-    background-size: cover; /* Adjust as needed: contain, cover, or specific dimensions */
-    background-repeat: no-repeat;
-    width: 25px;
-    height: 25px;
-    border-width: 0px;
-    padding: 5px;
-    background-color: white;
-}
-
-.remove_insegnamento:hover {
-    background-color: #c8c8c8;
-    border-radius: 10px;
-}
-
-#insegnamenti_list {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--color3);
-}
-
-#insegnamenti_container {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
 }
 
 #submit_div {
@@ -86,31 +40,4 @@
     text-align: center;
 }
 
-/*! DA MODIFICARE*/
-select {
-    padding: 10px; /* Adjust padding as needed */
-    font-size: 16px; /* Adjust font size as needed */
-    border: 1px solid #ccc; /* Border color */
-    border-radius: 5px; /* Border radius for rounded corners */
-    appearance: none; /* Remove default arrow in some browsers */
-    background-color: white; /* Background color */
-    width: 200px; /* Set a specific width or adjust as needed */
-    outline: none; /* Remove the default focus outline */
-}
-
-/* Style for the dropdown arrow icon */
-select::after {
-    content: '\25BC'; /* Unicode character for a down arrow */
-    position: absolute;
-    top: 50%;
-    right: 10px; /* Adjust the distance from the right as needed */
-    transform: translateY(-50%);
-    pointer-events: none; /* Ensure the arrow doesn't interfere with clicking the select */
-}
-
-/* Style for option elements within the dropdown */
-select option {
-    background-color: white; /* Background color of each option */
-    color: #333; /* Text color of each option */
-    padding: 10px; /* Adjust padding as needed */
-}
+/*! TUTTO DA MODIFICARE QUA SOTTO*/

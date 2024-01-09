@@ -179,3 +179,18 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     width: 25px;
     height: 25px;
 }
+
+.only-icon-button {
+    background-color: var(--color3);
+    width: 25px;
+    height: 25px;
+}
+
+.only-icon-button:active {
+    background-color: var(--dark-color3);
+}
+
+.only-icon-button img {
+    width: 20px;
+    height: 20px;
+}

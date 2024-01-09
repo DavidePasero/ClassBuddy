@@ -93,7 +93,9 @@
                 <img id="chat-propic" src="<?php if (!empty($get_user)) echo $get_user["propic"]?>" alt="Profile picture">
                 <h4 id="chat-username"><?php if (!empty($get_user)) echo $get_user["firstname"] . " " . $get_user["lastname"]?></h4>
                 <div id="search-container">
-                    <button id="search-button"></button>
+                    <button id="search-button" class="btn only-icon-button">
+                        <img src="../res/icons/search.svg" alt="Search">
+                    </button>
                     <div id="search-box-container">
                         <input type="search" id="search-box" placeholder="Scrivi la tua ricerca">
                         <button id="send-search" class="btn submit">Cerca</button>
