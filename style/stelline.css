@@ -12,9 +12,9 @@
 
 .star {
     font-size: 24px;
-    cursor: pointer;
     margin: 5px;
     transition: color 0.2s;
+    cursor: default;
 }
 
 .star.hovered,

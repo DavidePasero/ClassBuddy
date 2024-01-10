@@ -33,6 +33,9 @@ $user_profile_info = select_user_email($db, $user_profile);
 
 $tutor_email = $_GET["tutor_email"];
 $tutor_info = select_user_email($db, $tutor_email);
+$can_write_review = $user_profile_info["role"] == "studente" &&
+    hasSentMessageToStudent($db, $tutor_email, $_SESSION["email"]) &&
+    !hasStudentReviewedTutor($db, $_SESSION["email"], $tutor_email)
 ?>
 
 <!DOCTYPE html>
@@ -44,59 +47,65 @@ $tutor_info = select_user_email($db, $tutor_email);
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/stelline.css">
     <script src="../scripts/loadReview.js" defer></script>
-    <script src="../scripts/stelline.js" defer></script>
+    <?php if ($can_write_review)
+        echo "<script src=\"../scripts/stelline.js\" defer></script>";
+    ?>
     <meta charset="utf-8">
 </head>
 <body>
-    <?php echo print_header();?>
-    <h1>Recensioni</h1>
-    <div id="reviews">
-    <?php
-    if (isset($reviews) && !empty($reviews)) {
-        foreach ($reviews as $review) {
-            echo "<div class='review'>";
-            echo "<div class='parameter'>Valutazione</div>";
-            echo "<div class='rating'>";
-            for ($i = 0; $i < 5; $i++) {
-                if ($i < round($review['valutaz']))
-                    echo '<span class="star active">&#9733;</span>';
-                else
-                    echo '<span class="star">&#9733;</span>';
+    <main>
+        <?php echo print_header();?>
+        <h1>Recensioni</h1>
+        <div id="reviews-container">
+        <?php
+        if (isset($reviews) && !empty($reviews)) {
+            foreach ($reviews as $review) {
+                echo "<div class='review'>";
+                echo "<div class='parameter'>Valutazione</div>";
+                echo "<div class='rating'>";
+                for ($i = 0; $i < 5; $i++) {
+                    if ($i < round($review['valutaz']))
+                        echo '<span class="star active">&#9733;</span>';
+                    else
+                        echo '<span class="star">&#9733;</span>';
+                }
+                echo "</div>";
+                echo "<div class='parameter'>Commento</div><p>" . htmlentities($review['commento']) . "</p>";
+                echo "<div class='parameter'>Scritta da</div><p>" . $review['studente'] . "</p>";
+                echo "</div>";
             }
-            echo "</div>";
-            echo "<div class='parameter'>Commento</div><p>" . htmlentities($review['commento']) . "</p>";
-            echo "<div class='parameter'>Scritta da</div><p>" . $review['studente'] . "</p>";
-            echo "</div>";
+        } else {
+            echo "<p id=\"no-rev\">Nessuna recensione disponibile per questo tutor.</p>";
         }
-    } else {
-        echo "<p id=\"no-rev\">Nessuna recensione disponibile per questo tutor.</p>";
-    }
-    ?>
-    </div>
-
-    <?php
-    if ($user_profile_info["role"] == "studente" && hasSentMessageToStudent($db, $tutor_email, $_SESSION["email"]) && !hasStudentReviewedTutor($db, $_SESSION["email"], $tutor_email)) {
-        echo '<h2>Inserisci una valutazione</h2>';
-        echo '<form action="../backend/submit_review.php" name="valutazione" method="post">';
-        echo '<input type="hidden" name="tutor" value="' . htmlspecialchars($tutor_email) . '">';
-        echo '<input type="hidden" name="studente" value="' . htmlspecialchars($_SESSION["email"]) . '">';
-        echo <<<STELLINE
-        <div class="rating" id="rating">
-            <!-- Five stars for the rating system -->
-            <span class="star" data-value="1">&#9733;</span>
-            <span class="star" data-value="2">&#9733;</span>
-            <span class="star" data-value="3">&#9733;</span>
-            <span class="star" data-value="4">&#9733;</span>
-            <span class="star" data-value="5">&#9733;</span>
-            <input type="hidden" name="valutaz" id="valutaz" value="0">
+        ?>
         </div>
-        STELLINE;
-        echo '<label for="commento">Commento: </label>';
-        echo '<textarea id="commento" name="commento" required></textarea><br>';
-        echo '<input type="submit" value="Invia">';
-        echo '</form>';
-    }
-    ?>
+
+        <?php
+        if ($can_write_review) {
+            echo '<h2>Inserisci una valutazione</h2>';
+            echo '<form action="../backend/submit_review.php" name="valutazione" method="post">';
+            echo '<div class="form-content">';
+            echo '<input type="hidden" name="tutor" value="' . htmlspecialchars($tutor_email) . '">';
+            echo '<input type="hidden" name="studente" value="' . htmlspecialchars($_SESSION["email"]) . '">';
+            echo <<<STELLINE
+            <div class="rating" id="rating">
+                <!-- Five stars for the rating system -->
+                <span class="star active" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+                <input type="hidden" name="valutaz" id="valutaz" value="1">
+            </div>
+            STELLINE;
+            echo '<label for="commento">Commento: </label>';
+            echo '<textarea id="commento" name="commento" required></textarea><br>';
+            echo '<input type="submit" class="btn submit" value="Invia">';
+            echo '</div>';
+            echo '</form>';
+        }
+        ?>
+    </main>
 <?php echo print_footer();?>
 </body>
 </html>

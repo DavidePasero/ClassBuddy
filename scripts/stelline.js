@@ -1,5 +1,5 @@
-const stars = document.querySelectorAll('.star');
 const ratingContainer = document.getElementById('rating');
+const stars = ratingContainer.querySelectorAll('.star');
 const valutaz = document.getElementById('valutaz');
 
 ratingContainer.addEventListener('mouseleave', () => {

@@ -181,6 +181,7 @@ function loadChat(recipient, item) {
         let propic = item.querySelectorAll(".profile-pic")[0].getAttribute("src");
         let name = item.querySelectorAll(".user-name")[0].textContent;
         document.getElementById("chat-propic").setAttribute("src", propic);
+        document.getElementById("profile-link").href = "profile.php?email=" + recipient;
         document.getElementById("chat-username").textContent = name;
     }
     // Scrollo automaticamente la chat fino all'ultimo messaggio

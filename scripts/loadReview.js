@@ -17,13 +17,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: 'valutaz=' + encodeURIComponent(valutaz) +
                     '&commento=' + encodeURIComponent(commento) +
-                    '&tutor=' + encodeURIComponent(tutor) +
-                    '&studente=' + encodeURIComponent(studente)
-            })
+                    '&tutor=' + encodeURIComponent(tutor)
+                })
                 .then(response => response.json())
                 .then(newReview => {
+                    if (newReview.error) {
+                        alert(newReview.error);
+                        return;
+                    }
                     // Aggiornamento dinamico della pagina con la nuova recensione
-                    var reviewsContainer = document.getElementById('reviews');
+                    var reviewsContainer = document.getElementById('reviews-container');
 
                     var newReviewElement = document.createElement('div');
                     newReviewElement.classList.add('review');

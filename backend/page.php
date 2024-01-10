@@ -29,7 +29,7 @@
         if (isset($_SESSION ["authenticated"])) {
             $header .= <<<NAVBAR
                         <a href="profile.php">Account</a>
-                        <a href="../backend/logout.php">Log out</a>
+                        <a href="../backend/logout.php">Esci</a>
                         <a href="chat.php">Chat</a>
             NAVBAR;
         }

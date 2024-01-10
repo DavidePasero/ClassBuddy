@@ -18,7 +18,7 @@ fetch('../backend/tutor.php')
 
       // Create divs for each piece of information
       const nameDiv = createInfoDiv('name', `${tutor["firstname"]} ${tutor["lastname"]}`);
-      const emailDiv = createInfoDiv('email', tutor["email"]);
+      // const emailDiv = createInfoDiv('email', tutor["email"]);
       const cityDiv = createInfoDiv('city', tutor["citta"]);
       const onlineDiv = createInfoDiv('online', tutor["online"] ? 'Disponibile online' : ' ');
       const presenceDiv = createInfoDiv('presence', tutor["presenza"] ? 'Disponibile in presenza' : ' ');

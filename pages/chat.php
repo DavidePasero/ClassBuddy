@@ -71,7 +71,7 @@
                 ?>
                 <div class="user-item" data-recipient="<?php echo $user['email']; ?>">
                     <div>
-                        <img class="profile-pic" src="<?php echo $dataUri?>" alt="Profile Picture">
+                        <img class="profile-pic" src="<?php echo $dataUri?>" alt="Profile Picture">        
                     </div>
                     <div class="user-info">
                         <div class="user-name"><?php echo $user['firstname'] . ' ' . $user['lastname']; ?></div>
@@ -90,7 +90,9 @@
 
         <div id="chat" <?php if (is_null($get_user)) echo "hidden"?>>
             <div id="chat-user-info">
-                <img id="chat-propic" src="<?php if (!empty($get_user)) echo $get_user["propic"]?>" alt="Profile picture">
+                <a id="profile-link" href="profile.php?email=<?php if (!empty($get_user)) echo $get_user["email"]?>">
+                    <img id="chat-propic" src="<?php if (!empty($get_user)) echo $get_user["propic"]?>" alt="Profile picture">
+                </a>
                 <h4 id="chat-username"><?php if (!empty($get_user)) echo $get_user["firstname"] . " " . $get_user["lastname"]?></h4>
                 <div id="search-container">
                     <button id="search-button" class="btn only-icon-button">

@@ -1,13 +1,5 @@
 @import url('palette.css');
 
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    margin: 20px;
-}
-
 h1 {
     text-align: center;
     color: var(--color1);
@@ -18,9 +10,19 @@ h2 {
     color: var(--color1);
 }
 
+main {
+    margin-bottom: 10px;
+}
+
+#reviews-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .review {
-    border: 1px solid #ddd;
-    border-color: var(--color5);
+    border: 2px solid var(--color5);
     background-color: #fff;
     margin-bottom: 20px;
     padding: 10px;
@@ -29,7 +31,7 @@ h2 {
     height: 100%;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    margin-left: 20%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .parameter {
@@ -38,10 +40,11 @@ h2 {
 
 }
 
-form {
+.form-content {
     align-items: center;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 label {
@@ -50,7 +53,7 @@ label {
     font-weight: bold;
 }
 
-textarea {
+#commento {
     padding: 8px;
     margin-top: 5px;
     border: 1px solid var(--color3);
@@ -58,21 +61,8 @@ textarea {
     min-width: 60%;
     max-width: 60%;
     width: 60%;
-    min-height: 30px;
-    max-height: 30px;
     height: 30px;
-}
-
-input[type="submit"] {
-    background-color: var(--color2);
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-input[type="submit"]:hover {
-    background-color: var(--color4);
+    min-height: 30px;
+    max-height: 90px;
+    font-family: Arial, Helvetica, sans-serif;
 }
