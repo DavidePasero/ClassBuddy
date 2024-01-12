@@ -33,7 +33,7 @@
 					echo "<div class=\"error-message\">I dati inseriti non sono corretti</div> <br>";
 				}
 			?>
-			<form action="../backend/login.php" method="POST" name="registration" class="registration-form">
+			<form action="../backend/login.php" method="POST" name="registration" class="form">
 				<div id="email_div">
 					<input type="email" id="email" name="email" autocomplete="email" placeholder="Inserire email valida" class="form-element input-neutral">
 				</div>

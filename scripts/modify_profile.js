@@ -95,6 +95,7 @@ if (is_tutor) {
         let input_tariffa = document.createElement('input');
         input_tariffa.type = 'number';
         input_tariffa.min = 1;
+        input_tariffa.max = 1000;
         input_tariffa.name = 'tariffa[]';
         input_tariffa.placeholder = 'Tariffa oraria';
         input_tariffa.setAttribute('required', 'true');

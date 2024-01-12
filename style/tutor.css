@@ -42,6 +42,7 @@
 .online,
 .presence {
     margin-bottom: 5px;
+    color: var(--color1);
 }
 
 .insegnamentiDiv {

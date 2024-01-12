@@ -52,6 +52,7 @@ try {
         // and materia and tariffa are each elements of the arrays passed by POST
         $tutor = $_SESSION ["email"];
         for ($i = 0; $i < count ($_POST ["materia"]); $i++) {
+            $_POST["tariffa"][$i] = clamp ($_POST["tariffa"][$i], 1, 1000);
             // Check if materia is in $insegnamenti
             if (!in_array ($_POST ["materia"][$i], $insegnamenti)) {
                 $status = false;
@@ -88,5 +89,9 @@ if ($rule1 or $rule2 or $rule3 or $rule4 or $rule5) {
     $db->commit();
     $db->close();
     header ("Location: ../pages/profile.php?email={$_SESSION["email"]}");
+}
+
+function clamp ($val, $min, $max) {
+    return max ($min, min ($max, $val));
 }
 ?>

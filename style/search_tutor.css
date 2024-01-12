@@ -1,0 +1,46 @@
+#filter-form {
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+    /*border: 2px solid var(--color4);*/
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#parameters-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.parameter {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    color: var(--color1);
+    width: 30%;
+    box-sizing: border-box;
+}
+
+#submit-button {
+    margin: 10px;
+    width: 60px;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 900px) {
+    #parameters-container  {
+        flex-direction: column;
+    }
+
+    .parameter {
+        width: 90%;
+    }
+
+    #submit-button {
+        width: 90%;
+    }
+}

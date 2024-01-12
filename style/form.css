@@ -18,21 +18,20 @@
 
 .small-error-message {
   text-align: center;
-  color: white;
+  color: white !important;
   border-style: solid;
   border-width: 2px;
   border-color: var(--error-color);
   background-color: var(--bg-error-color);
-  font-size: 12px;
 }
 
-.registration-form {
+.form {
   width: 300px;
   margin: auto;
   margin-top: 20px;
   padding: 20px;
-  border: 2px solid var(--color4);
   border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-element {
@@ -42,6 +41,7 @@
   margin-bottom: 5px;
   border-radius: 5px;
   box-sizing: border-box;
+  font-size: 14px;
 }
   
 .registration-form label {
@@ -159,8 +159,8 @@ input[type="radio"] + label {
 
 .input-list {
   padding: 10px;
-  font-size: 16px;
-  border: 1px solid var(--color3); /* Blue color, you can change it */
+  font-size: 14px;
+  border: 1px solid var(--color3);
   border-radius: 5px;
 }
 

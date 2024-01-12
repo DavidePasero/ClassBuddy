@@ -28,8 +28,6 @@ LEFT JOIN
 $result = prepared_query($db, $query, []);
 $data = $result->fetch_all(MYSQLI_ASSOC);
 
-$tutors_data = array();
-
 /*
     * The following code is used to create a JSON object that contains all the
     * tutors' data. The structure of the JSON object is the following:
@@ -57,6 +55,8 @@ $tutors_data = array();
     * }
     *
 */
+
+$tutors_data = array();
 foreach ($data as $tutor) {
     $email = $tutor['email'];
 

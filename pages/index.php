@@ -27,7 +27,7 @@
     <main>
         <div id="page_title">Trova il tutor più adatto a te!</div>
         <div id="image-grid-container">
-            <div class="image-grid"></div>
+            <div id="image-grid"></div>
         </div>
     </main> 
     <?php echo print_footer()?>

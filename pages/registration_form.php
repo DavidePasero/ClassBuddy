@@ -34,7 +34,7 @@
 				echo "<div class=\"error-message\">I campi contrassegnati in rosso sono invalidi</div>";
 			}
 			?>
-			<form id="form" action="../backend/registration.php" method="POST" name="registration" class="registration-form">
+			<form id="form" action="../backend/registration.php" method="POST" name="registration" class="form">
 				<div id="firstname_div form-element">
 					<input type="text" id="firstname" name="firstname" autocomplete="given-name" placeholder="Nome" class=<?php if (isset($_SESSION["firstname"])) {echo "\"input-error\"";} else {echo "\"input-neutral form-element\"";}?> required>
 				</div>
