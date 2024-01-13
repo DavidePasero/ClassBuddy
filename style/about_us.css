@@ -39,3 +39,20 @@ main {
     overflow-wrap: break-word;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+#foto-div {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.foto {
+    width: 300px;
+    height: 300px;
+    border-radius: 10%;
+    margin-right: 10px;
+    margin-left: 10px;
+}
