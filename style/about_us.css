@@ -1,0 +1,41 @@
+h1 {
+    text-align: center;
+    color: var(--color1);
+    font-family: 'Helvetica', sans-serif;
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Helvetica', sans-serif;
+    color: var(--color3);
+}
+
+main {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 30px;
+}
+
+.autore {
+    font-weight: bold;
+    color: var(--color5);
+}
+
+.reviews-container {
+    align-items: center;
+    color: var(--color1);
+    display: flex;
+    flex-direction: column;
+}
+
+.review {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+    height: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
