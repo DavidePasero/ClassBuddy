@@ -1,3 +1,5 @@
+import { fill_tutor_grid } from "./utils.js";
+
 // Fill dropdown menu with cities
 let selectCity = document.getElementById("cittaDropdown");
 let cittaInput = document.getElementById("cittaInput");
@@ -45,60 +47,16 @@ document.getElementById('submit-button').addEventListener('click', function (e) 
     e.preventDefault();
     // Get form data
     var formData = new FormData(document.getElementById('filter-form'));
-
+    formData.append ('action', 'filter_tutors')
     // Make fetch API call to filter_tutors.php
-    fetch('../backend/filter_tutors.php', {
+    fetch('../backend/tutor.php', {
         method: 'POST',
         body: formData
     })
     .then(response => {
         return response.json();})
     .then(tutors => {
-        if (tutors.error != null) {
-            alert(tutors.error);
-            return;
-        }
-        const tutorGrid = document.getElementById('image-grid');
-        tutorGrid.innerHTML = '';
-
-        for (const [_, tutor] of Object.entries(tutors)) {
-        const div = document.createElement('div');
-        div.className = 'tutor';
-
-        // Create an img element for the profile picture
-        let link = document.createElement('a');
-        link.href = `profile.php?email=${tutor["email"]}`;
-        const img = document.createElement('img');
-        img.src = tutor["propic"];
-        img.alt = `${tutor["firstname"]} ${tutor["lastname"]}`;
-        img.className = 'profile-image';
-
-        // Create divs for each piece of information
-        const nameDiv = createInfoDiv('name', `${tutor["firstname"]} ${tutor["lastname"]}`);
-        // const emailDiv = createInfoDiv('email', tutor["email"]);
-        const cityDiv = createInfoDiv('city', tutor["citta"]);
-        const onlineDiv = createInfoDiv('online', tutor["online"] ? 'Disponibile online' : ' ');
-        const presenceDiv = createInfoDiv('presence', tutor["presenza"] ? 'Disponibile in presenza' : ' ');
-        const insegnamentoDiv = createInfoDiv ("insegnamento", `${tutor["materia"]}: ${tutor["tariffa"]}€/ora`);
-
-        link.appendChild(img);
-        div.appendChild(link);
-        div.appendChild(nameDiv);
-        div.appendChild(cityDiv);
-        div.appendChild(insegnamentoDiv);
-        div.appendChild(onlineDiv);
-        div.appendChild(presenceDiv);
-
-        tutorGrid.appendChild(div);
-    };
+        fill_tutor_grid(tutors);
     })
     .catch(error => console.error('Error:', error));
 });
-
-function createInfoDiv(className, textContent) {
-    const infoDiv = document.createElement('div');
-    infoDiv.className = className;
-    const textNode = document.createTextNode(textContent);
-    infoDiv.appendChild(textNode);
-    return infoDiv;
-}
