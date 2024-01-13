@@ -7,7 +7,6 @@ if (!isset ($_SESSION ["authenticated"])) {
     header ("Location: login.php");
 }
 
-// Include the database configuration file  
 require_once 'db.php'; 
 $db = connect_to_db ();
 
@@ -20,47 +19,50 @@ $insegnamenti = explode ("\n", file_get_contents("../res/insegnamenti.txt"));
 try {
     if (isset ($_POST ["remove_insegnamento"])) {
         for ($i = 0; $i < count ($_POST ["remove_insegnamento"]); $i++) {
-            // Delete all the tuples (tutor, materia, tariffa) where tutor is the current user
-            prepared_query ($db, "DELETE FROM S5204959.insegnamento WHERE tutor=? AND materia=?;", [$_SESSION["email"], $_POST ["remove_insegnamento"][$i]]);
+            // Elimina tutte le tuple (tutor, materia, tariffa) dove tutor è l'utente corrente
+           $res = prepared_query ($db, "DELETE FROM S5204959.insegnamento WHERE tutor=? AND materia=?;", [$_SESSION["email"], $_POST ["remove_insegnamento"][$i]]);
+           if (!$res)
+                echo_back_json_data (create_error_msg ("Errore durante l'eliminazione dell'insegnamento."));
         }
     }
 
     if (isset($_FILES["propic"]) and $_FILES["propic"]["error"] == UPLOAD_ERR_OK) {
-        // Get file info
+        // Recupera le info del file
         $propic = $_FILES["propic"];
         $propicTmpName = $propic["tmp_name"];
-        // Read the file content
+        // Legge il contenuto del file
         $propicContent = file_get_contents($propicTmpName);
-        // Get the file extension
+        // Recupera l'estensione del file
         $fileExtension = pathinfo($propic["name"], PATHINFO_EXTENSION);
-        // Allow certain file formats
+        // Controlla che l'estensione sia tra quelle consentite
         if ($fileExtension !== "jpg" and $fileExtension !== "jpeg" and $fileExtension !== "png" and $fileExtension !== "gif") {
             header ("Location: ../pages/error.php?error_type=invalid_file_extension");
         }
         
-        // Insert image content into database 
-        prepared_query ($db, "UPDATE S5204959.utente SET propic=?, propic_type=? WHERE email=?;", [$propicContent, $fileExtension, $_SESSION["email"]]); 
+        $res = prepared_query ($db, "UPDATE S5204959.utente SET propic=?, propic_type=? WHERE email=?;", [$propicContent, $fileExtension, $_SESSION["email"]]);
+        if (!$res)
+            echo_back_json_data (create_error_msg ("Errore durante l'aggiornamento della foto profilo."));
     }
 
-    // Check if insegnamento array and tariffa array are passed by POST
     if (
             $_SESSION ["role"] === "tutor" and 
             isset ($_POST ["materia"]) and isset ($_POST ["tariffa"]) and
             count ($_POST ["materia"]) == count ($_POST ["tariffa"])
         ) {
-        // Insert into insegnamento table all the tuples (tutor, materia, tariffa) where tutor is the current user
-        // and materia and tariffa are each elements of the arrays passed by POST
+        // Aggiunge le tuple (tutor, materia, tariffa) dove tutor è l'utente corrente
         $tutor = $_SESSION ["email"];
         for ($i = 0; $i < count ($_POST ["materia"]); $i++) {
             $_POST["tariffa"][$i] = clamp ($_POST["tariffa"][$i], 1, 1000);
-            // Check if materia is in $insegnamenti
+            // Cotrolla che la materia sia tra quelle consentite
             if (!in_array ($_POST ["materia"][$i], $insegnamenti)) {
                 $status = false;
                 break;
             }
-            prepared_query ($db,
-                "INSERT INTO S5204959.insegnamento (tutor, materia, tariffa) VALUES (?, ?, ?);",
-                [$tutor, $_POST ["materia"][$i], $_POST ["tariffa"][$i]]);
+            $res = prepared_query ($db,
+                    "INSERT INTO S5204959.insegnamento (tutor, materia, tariffa) VALUES (?, ?, ?);",
+                    [$tutor, $_POST ["materia"][$i], $_POST ["tariffa"][$i]]);
+            if (!$res)
+                echo_back_json_data (create_error_msg ("Errore durante l'aggiunta dell'insegnamento."));
         }
     }
 } catch (mysqli_sql_exception $exception) {
@@ -68,12 +70,13 @@ try {
 }
 
 /* 
-    Error cases:
-    1. no image received and no insegnamento array and tariffa array passed by POST
-    2. materia passed but not tariffa or viceversa
-    3. materia and tariffa passed but with different lengths
-    4. image received but with error
-    5. $status = false -> Queries not successful or materia not in $insegnamenti
+    Casi di errore:
+    1. non viene ricevuta nessuna immagine e non vengono passati insegnamenti e tariffe
+    2. viene passata solo materia o solo tariffa
+    3. viene passata sia materia che tariffa ma con lunghezze diverse
+    4. viene ricevuta un'immagine ma con errore
+    5. $status = false -> Query non andate a buon fine o materia non presente in $insegnamenti
+    
 */
 $rule1 = (!isset($_FILES["propic"]) and !isset ($_POST ["materia"]) and !isset ($_POST ["tariffa"]));
 $rule2 = (isset ($_POST ["materia"]) xor (isset ($_POST ["tariffa"])));
@@ -82,7 +85,7 @@ $rule4 = (isset($_FILES["propic"]) and $_FILES["propic"]["error"] != UPLOAD_ERR_
 $rule5 = !$status;
 
 if ($rule1 or $rule2 or $rule3 or $rule4 or $rule5) {
-    // Profile doesn't get modified if there are errors
+    // Il profilo non viene modificato se si verifica uno dei casi di errore
     $db->rollback();
     header ("Location: ../pages/error.php?error_type=generic_modify_profile_error");
 } else {

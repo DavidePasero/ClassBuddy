@@ -34,7 +34,7 @@
         return $result === false ? $success : $result;
     }
 
-    # Restituisce tutte le informazioni di un utente data la sua email
+    // Restituisce tutte le informazioni di un utente data la sua email
     function select_user_email ($db, $email) {
         return prepared_query ($db,
             "SELECT * FROM S5204959.utente WHERE email=?",
@@ -46,7 +46,7 @@
         return isset ($result_assoc ["email"]);
     }
 
-    # Restituisce true se la password inserita e quella salvata coincidono
+    // Restituisce true se la password inserita e quella salvata coincidono
     function verify_login ($db, $email, $pass) {
         $result_assoc = select_user_email ($db, $email);
         return password_verify ($pass, $result_assoc ["pass"]);
@@ -57,7 +57,7 @@
         $res = prepared_query ($db,
             "SELECT * FROM S5204959.utente WHERE cookie_id=?",
             [$login_hash]);
-        if ($res->num_rows > 0) {throw new Exception ("Login code already used");}
+        return $res->num_rows == 0; 
     }
 
     function getAverageRating($db, $userEmail) {

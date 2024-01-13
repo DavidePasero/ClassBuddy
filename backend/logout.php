@@ -10,7 +10,9 @@
         if (isset ($_COOKIE ["rememberme"])) {
             setcookie("rememberme", "", time()-1);
             $db = connect_to_db ();
-            prepared_query ($db, "UPDATE S5204959.utente SET cookie_id=NULL, cookie_expire=NULL WHERE email=?;", [$_SESSION ["email"]]);
+            $res = prepared_query ($db, "UPDATE S5204959.utente SET cookie_id=NULL, cookie_expire=NULL WHERE email=?;", [$_SESSION ["email"]]);
+            if (!$res)
+                echo_back_json_data (create_error_msg ("Errore nell'eliminazione del cookie."));
             unset ($_COOKIE ["rememberme"]);
         }
 

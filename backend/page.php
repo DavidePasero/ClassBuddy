@@ -6,7 +6,6 @@
 
     function get_data_uri ($image, $image_type) {
         if ($image !== NULL) {
-            // Create a data URI for the image
             $imageData = base64_encode($image);
             $imageType = $image_type;
             return "data:image/{$imageType};base64,{$imageData}";
@@ -56,14 +55,12 @@
                         <li><a href="about_us.php#mission">La nostra missione</a></li>
                         <li><a href="about_us.php#team">Team</a></li>
                         <li><a href="about_us.php#testimonials">Dicono di noi</a></li>
-                        <!-- Add more links as needed -->
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Join Us</h3>
                     <ul>
                         <li><a href="#">Lavora con noi</a></li>
-                        <!-- Add more links as needed -->
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -71,7 +68,6 @@
                     <ul>
                         <li><a href="#">Supportaci</a></li>
                         <li><a href="#">FAQs</a></li>
-                        <!-- Add more links as needed -->
                     </ul>
                 </div>
             </div>
