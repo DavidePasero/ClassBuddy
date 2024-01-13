@@ -13,7 +13,7 @@
 		echo "Devi inserire un destinatario e un messaggio";
 		exit();
 	}
-	// Check if the chat is valid (Tutor to Student or Student to Tutor)
+	// Controlla se la chat è valida (Tutor a Studente o Studente a Tutor)
 	$recipient = select_user_email ($db, $_POST ["recipient"]);
 
 	if ($recipient === NULL) {
@@ -25,10 +25,7 @@
 		exit();
 	}
 	
-	// Check if the recipient has a different role as the sender
 	if ($recipient["role"] !== $_SESSION ["role"]) {
-		// Send message receive the following data: sender, recipient, message.
-		// The sender is the user that is logged in, the recipient is the user that the sender is chatting with.
 		$insert_msg = prepared_query ($db, 
 		"INSERT INTO S5204959.messaggio (mittente, destinatario, timestamp, testo) VALUES (?, ?, ?, ?)",
 		[$_SESSION ["email"], $_POST ["recipient"], date("Y-m-d H:i:s"), $_POST ["message"]]);

@@ -8,15 +8,14 @@ require "review.php";
 $db = connect_to_db();
 
 if (
-    $_SERVER["REQUEST_METHOD"] == "POST" and
-    isset($_SESSION["authenticated"]) and
-    $_SESSION["authenticated"] and
+    isset($_SESSION["authenticated"]) &&
+    $_SESSION["authenticated"] &&
     isset($_SESSION["email"]))
     {
     if (isset($_POST["valutaz"]) && isset($_POST["commento"]) && isset($_POST["tutor"])) {
         $valutaz = trim($_POST["valutaz"]);
         $valutaz = intval($valutaz);
-        // Check if valutaz is an integer between 1 and 5, if not return an error
+    
         if ($valutaz < 1 || $valutaz > 5) {
             header('Content-Type: application/json');
             echo json_encode(array("error" => "La valutazione deve essere un numero intero compreso tra 1 e 5."));

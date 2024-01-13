@@ -28,7 +28,7 @@
         return $result === false ? $success : $result;
     }
 
-    # Restituisce tutte le informazioni di un utente data la sua email
+    // Restituisce tutte le informazioni di un utente data la sua email
     function select_user_email ($db, $email) {
         return prepared_query ($db,
             "SELECT * FROM S5204959.utente WHERE email=?",
@@ -40,7 +40,7 @@
         return isset ($result_assoc ["email"]);
     }
 
-    # Restituisce true se la password inserita e quella salvata coincidono
+    // Restituisce true se la password inserita e quella salvata coincidono
     function verify_login ($db, $email, $pass) {
         $result_assoc = select_user_email ($db, $email);
         return password_verify ($pass, $result_assoc ["pass"]);
@@ -55,9 +55,9 @@
     }
 
     /*
-        Function that filters the table "tutor" which contains the following columns: (email, citta)
-        joined with table "insegnamento" which contains the following columns: (tutor, materia)
-        through the parameters citta and materia
+        Funzione che filtra la tabella "utente" che contiene le seguenti colonne: (email, citta)
+        in join con la tabella "insegnamento" che contiene le seguenti colonne: (tutor, materia)
+        attraverso i parametri citta e materia
     */
     function filter_tutor ($db, $citta, $materia) {
         $query = "SELECT DISTINCT tutor.email FROM S5204959.tutor JOIN S5204959.insegnamento ON tutor.email = insegnamento.tutor WHERE tutor.citta = ? AND insegnamento.materia = ?";
@@ -65,10 +65,11 @@
         return $result->fetch_all (MYSQLI_ASSOC);
     }
 
-    function getAverageRating($db, $userEmail) {
+    // Funzione che restituisce la media delle valutazioni di un tutor, visibile nella pagina del tutor
+    function getAverageRating($db, $tutorEmail) {
         $avg = prepared_query ($db,
         "SELECT AVG(valutaz) as average FROM recensione WHERE tutor = ?",
-        [$userEmail])->fetch_assoc() ["average"];
+        [$tutorEmail])->fetch_assoc() ["average"];
 
         return $avg;
     }

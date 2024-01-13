@@ -1,8 +1,6 @@
 <?php
-    // This script is called by chat.js via fetch call to retrieve the messages from recipient
-    // after a certain timestamp (the timestamp of the last message received by the client).
-
-    // Check if the user is authenticated
+    // Questo script è chiamato da chat.js tramite fetch per recuperare i messaggi dopo un certo timestamp (il timestamp dell'ultimo messaggio ricevuto dal client).
+    
     session_start ();
     require 'db.php';
     $db = connect_to_db ();
@@ -11,7 +9,6 @@
         exit();
     }
 
-    // Check if the recipient is specified in the GET parameters
     if (!isset($_POST["recipient"])) {
         header ("Location: ../pages/error.php?error_type=missing_recipient");
     }

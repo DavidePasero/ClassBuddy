@@ -31,8 +31,9 @@ $data = $result->fetch_all(MYSQLI_ASSOC);
 $tutors_data = array();
 
 /*
-    * The following code is used to create a JSON object that contains all the
-    * tutors' data. The structure of the JSON object is the following:
+    * Il codice seguente serve a creare un oggetto JSON che contiene tutte le informazioni dei tutor.
+    * La struttura dell'oggetto JSON è:
+    *
     * {
     *     "email": {
     *         "email": "email",
@@ -57,19 +58,20 @@ $tutors_data = array();
     * }
     *
 */
+
 foreach ($data as $tutor) {
     $email = $tutor['email'];
 
     if (!isset($tutors_data[$email])) {
 
         if ($tutor["propic"] !== NULL) {
-            // Create a data URI for the image
+            // Crea un data URI per la propic
             $imageData = base64_encode($tutor["propic"]);
             $imageType = $tutor["propic_type"];
             $dataUri = "data:image/{$imageType};base64,{$imageData}";
             $tutor["propic"] = $dataUri;
         } else {
-            // Use a default image if propic is NULL
+            // Se la propic è NULL, usa quella di default
             $tutor["propic"] = "../img/defaultUser.jpg";
         }
 

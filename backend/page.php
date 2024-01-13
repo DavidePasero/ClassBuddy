@@ -55,17 +55,15 @@
                 <div class="footer-column">
                     <h3>About us</h3>
                     <ul>
-                        <li><a href="#">La nostra missione</a></li>
-                        <li><a href="#">Team</a></li>
-                        <li><a href="#">Testimonials</a></li>
-                        <!-- Add more links as needed -->
+                        <li><a href="about_us.php#mission">La nostra missione</a></li>
+                        <li><a href="about_us.php#team">Il nostro team</a></li>
+                        <li><a href="about_us.php#testimonials">Dicono di noi</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Join Us</h3>
                     <ul>
                         <li><a href="#">Lavora con noi</a></li>
-                        <!-- Add more links as needed -->
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -73,7 +71,6 @@
                     <ul>
                         <li><a href="#">Supportaci</a></li>
                         <li><a href="#">FAQs</a></li>
-                        <!-- Add more links as needed -->
                     </ul>
                 </div>
             </div>

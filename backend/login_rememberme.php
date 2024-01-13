@@ -2,7 +2,7 @@
 	if (session_status() === PHP_SESSION_NONE) {
 		session_start();
 	}
-	# Prevede che una sessione sia già stata startata
+	// Prevede che una sessione sia già stata startata
 	function login_with_rememberme ($db) {
 		if (isset ($_COOKIE ["rememberme"])) {
 			$hash_cookie_id = hash ("sha256", $_COOKIE ["rememberme"]);

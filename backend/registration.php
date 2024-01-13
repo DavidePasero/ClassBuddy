@@ -38,9 +38,9 @@
 		$valid_data = false;
 	}
 
-	// Check city and online_presenza only if the user is a tutor
+	// Controlla citta e online_presenza solo se l'utente è un tutor
 	if ($_POST ["role"] == "tutor") {
-		// Checks if $_POST["citta"] is a city in the file ../res/citta.txt
+		// Controlla se $_POST["citta"] è una città nel file ../res/citta.txt
 		$valid_citta = false;
 		if ($valid_data) {
 			$file = fopen("../res/citta.txt", "r");
@@ -52,39 +52,42 @@
 				}
 			}
 		}
-		// If city isn't valid, form isn't valid
+	
 		if (!$valid_citta) {
 			$_SESSION["citta"] = true;
 			$valid_data = false;
 		}
 
-		// Check if at least one of the checkboxes is checked
 		if (!isset ($_POST ["online"]) and !isset ($_POST ["presenza"])) {
 			$_SESSION["online_presenza"] = true;
 			$valid_data = false;
 		}
 	}
 
-	// If the form is valid, we can insert the user in the database
 	if ($valid_data) {
-		// Trim of all the fields passed with POST
+		// Faccio la trim di tutti i campi passati in POST
 		foreach ($_POST as $key => $value) {
 			$_POST [$key] = trim ($value);
 		}
 
-		// Insert user in utente table
-		prepared_query ($db,
-			"INSERT INTO S5204959.utente (firstname, lastname, email, pass, role) VALUES (?, ?, ?, ?, ?)",
-			[$_POST ["firstname"], $_POST ["lastname"], $_POST ["email"], password_hash ($_POST ["pass"], PASSWORD_DEFAULT), $_POST ["role"]]);
+		if (!prepared_query ($db,
+				"INSERT INTO S5204959.utente (firstname, lastname, email, pass, role) VALUES (?, ?, ?, ?, ?)",
+				[$_POST ["firstname"], $_POST ["lastname"], $_POST ["email"], password_hash ($_POST ["pass"], PASSWORD_DEFAULT), $_POST ["role"]])){
 
-		// If user is a tutor, then inserts the tutor in the tutor table
+				header ("Location: ../pages/error.php?error_type=user_insertion_failed");
+
+			}
+
 		if ($_POST ["role"] == "tutor") {
-			// If the checkbox was checked, then the value is set to true, otherwise it's set to false
 			$_POST ["online"] = isset ($_POST ["online"]) ? 1 : 0;
 			$_POST ["presenza"] = isset ($_POST ["presenza"]) ? 1 : 0;
-			prepared_query ($db,
-				"INSERT INTO S5204959.tutor (email, citta, online, presenza) VALUES (?, ?, ?, ?)",
-				[$_POST ["email"], $_POST ["citta"], $_POST ["online"], $_POST ["presenza"]]);
+			if (!prepared_query ($db,
+					"INSERT INTO S5204959.tutor (email, citta, online, presenza) VALUES (?, ?, ?, ?)",
+					[$_POST ["email"], $_POST ["citta"], $_POST ["online"], $_POST ["presenza"]])){
+
+					header ("Location: ../pages/error.php?error_type=tutor_insertion_failed");
+
+				}
 		}
 		header ("Location: ../pages/login_form.php");
 	}
