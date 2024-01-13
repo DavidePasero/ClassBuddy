@@ -53,9 +53,9 @@
                 <div class="footer-column">
                     <h3>About us</h3>
                     <ul>
-                        <li><a href="#">La nostra missione</a></li>
-                        <li><a href="#">Team</a></li>
-                        <li><a href="#">Testimonials</a></li>
+                        <li><a href="about_us.php#mission">La nostra missione</a></li>
+                        <li><a href="about_us.php#team">Team</a></li>
+                        <li><a href="about_us.php#testimonials">Dicono di noi</a></li>
                         <!-- Add more links as needed -->
                     </ul>
                 </div>
