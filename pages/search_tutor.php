@@ -12,14 +12,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/home.css">
     <link rel="stylesheet" type="text/css" href="../style/tutor.css">
     <link rel="stylesheet" type="text/css" href="../style/search_tutor.css">
     <link rel="stylesheet" type="text/css" href="../style/form.css">
-    <script type="module" src="../scripts/filter_tutor.js" defer></script>
+    <script src="../scripts/filter_tutor.js" defer></script>
     <title>ClassBuddy</title>
 </head>
 <body>
@@ -29,7 +28,6 @@
             <div id="parameters-container">
                 <input list="cittaDropdown" class="parameter" id="cittaInput" name="luogo" placeholder="Filtra per luogo" required>
                 
-                <!-- Datalist (list of all the cities in Italy and Online option) -->
                 <datalist id="cittaDropdown">
                     <option value="Online">Online</option>
                 </datalist>

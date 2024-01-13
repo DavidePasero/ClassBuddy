@@ -8,7 +8,6 @@
     $db = connect_to_db ();
     cookie_check ($db);
 
-    // Check if the user is authenticated
     if (!isset($_SESSION["authenticated"]) || !$_SESSION["authenticated"]) {
         header("Location: login_form.php");
         exit();
@@ -16,7 +15,7 @@
 
     $get_user = null;
 
-    // Check se c'è un destinatario passato come GET, se è valido bene altrimenti redirect a chat.php
+    // Controlla se c'è un destinatario passato come GET, se è valido bene altrimenti redirect a chat.php
     if (isset($_GET["recipient"])) {
         $get_user = select_user_email ($db, $_GET["recipient"]);
         if (!$get_user or $get_user["email"] == $_SESSION["email"] or $get_user["role"] == $_SESSION["role"]) {
@@ -29,7 +28,7 @@
 
     $this_user = select_user_email ($db, $_SESSION['email']);
 
-    // Query that retrieves the last message in all the conversations the user is involved in
+    // Query che recupera l'ultimo messaggio per ogni conversazione in cui è coinvolto l'utente
     $conversations = prepared_query($db,
     "SELECT m1.mittente, m1.destinatario, m1.testo, m1.timestamp
     FROM messaggio m1
@@ -54,7 +53,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatBuddy</title>
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/chat.css">
@@ -71,7 +69,7 @@
                 ?>
                 <div class="user-item" data-recipient="<?php echo $user['email']; ?>">
                     <div>
-                        <img class="profile-pic" src="<?php echo $dataUri?>" alt="Profile Picture">        
+                        <img class="profile-pic" src="<?php echo $dataUri?>" alt="Foto profilo">        
                     </div>
                     <div class="user-info">
                         <div class="user-name"><?php echo $user['firstname'] . ' ' . $user['lastname']; ?></div>
@@ -84,7 +82,7 @@
         </div>
         
         <div id="no-recipient-selected" <?php if (!is_null($get_user)) echo "hidden"?>>
-            <img src="../res/icons/chat.svg" alt="No recipient selected">
+            <img src="../res/icons/chat.svg" alt="Nessun destinatario selezionato">
             <p>Seleziona un utente per iniziare a scrivere</p>
         </div>
 

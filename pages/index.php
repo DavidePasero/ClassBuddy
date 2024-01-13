@@ -19,8 +19,7 @@
     <link rel="stylesheet" type="text/css" href="../style/tutor.css">
     <link rel="stylesheet" type="text/css" href="../style/home.css">
     <link rel="stylesheet" type="text/css" href="../style/page.css">
-    <meta charset="utf-8" name="viewport" content="width=device-width", initial-scale="1.0">
-    <script type="module" src="../scripts/loadTutors.js" defer></script>
+    <script src="../scripts/loadTutors.js" defer></script>
 </head>
 <body>
     <?php echo print_header();?>

@@ -15,14 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["tutor_email"])) {
     $tutorEmail = $_GET["tutor_email"];
 
     // Recupera tutte le recensioni per il tutor specificato
-    $query = "SELECT * FROM recensione WHERE tutor = ?";
-    $stmt = $db->prepare($query);
-    $stmt->bind_param("s", $tutorEmail);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $reviews = $result->fetch_all(MYSQLI_ASSOC);
+    $reviews = prepared_query($db, "SELECT * FROM recensione WHERE tutor = ?", [$tutorEmail])->fetch_all(MYSQLI_ASSOC);
 
-    $stmt->close();
 } else {
     echo "Nessun tutor specificato.";
     exit();
@@ -33,6 +27,7 @@ $user_profile_info = select_user_email($db, $user_profile);
 
 $tutor_email = $_GET["tutor_email"];
 $tutor_info = select_user_email($db, $tutor_email);
+// Uno studente può scrivere una recensione ad un tutor solo se il tutor gli ha inviato almeno un messaggio e se lo studente non gli ha ancora scritto una recensione
 $can_write_review = $user_profile_info["role"] == "studente" &&
     hasSentMessageToStudent($db, $tutor_email, $_SESSION["email"]) &&
     !hasStudentReviewedTutor($db, $_SESSION["email"], $tutor_email)
