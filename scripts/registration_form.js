@@ -25,14 +25,18 @@ function create_small_error_message (text) {
     return p;
 }
 
-// Get the list of cities from the file
-// reads the file cities.txt which is a list of all the cities in Italy separated by a newline an puts them in an array
+// Legge il file citta.txt che contiene la lista di tutte le città italiane
 let cities = [];
 fetch('../res/citta.txt')
-  .then(response => response.text())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error: status ${response.status}`);
+    }
+    return response.text ();
+  })
   .then(data => {
     cities = data.split('\n');
-    // Insert the list of cities into the dropdown menu
+    // Inserisce le città in un dropdown menu
     cities.forEach(function(city) {
         var option = document.createElement("option");
         option.text = city;
@@ -80,22 +84,20 @@ form.addEventListener ("input", function (event) {
 submit.addEventListener ("click", check_submit);
 
 
-// Add an event listener for the data list
 cittaInput.addEventListener("input", function(event) {
-    // Get the user's input
     var input = event.target.value;
 
-    // Filter the list of cities based on the user's input
+    // Filtra le città che contengono la stringa inserita dall'utente
     var filteredCities = cities.filter(function(city) {
         return city.toLowerCase().indexOf(input.toLowerCase()) !== -1;
     });
 
-    // Clear the dropdown menu
+    // Pulisce il dropdown menu
     while (selectCity.firstChild) {
         selectCity.removeChild(selectCity.firstChild);
     }
 
-    // Insert the filtered list of cities into the dropdown menu
+    // Inserisce la lista filtrata di città nel dropdown menu
     filteredCities.forEach(function(city) {
         var option = document.createElement("option");
         option.text = city;
@@ -105,16 +107,11 @@ cittaInput.addEventListener("input", function(event) {
 });
 
 
-/* 
-    getCurrentLocationButton listens to the click event and uses the geolocation API 
-    to get current location of the user
-*/
 getCurrentLocationButton.addEventListener ("click", function (event) {
-    // Check if the Geolocation API is supported
+    // Controlla se il browser supporta la geolocalizzazione
     if (navigator.geolocation) {
-        // Get the current position
         navigator.geolocation.getCurrentPosition(function(position) {
-        // Use the latitude and longitude to get the city name
+        // Usa latitudine e longitudine per ottenere la città
         var lat = position.coords.latitude;
         var lon = position.coords.longitude;
         var url = "https://nominatim.openstreetmap.org/reverse?lat=" + lat + "&lon=" + lon + "&format=json&accept-language=it";
@@ -124,7 +121,6 @@ getCurrentLocationButton.addEventListener ("click", function (event) {
             })
             .then(function(data) {
                 let city;
-                // Check if city is defined, if not checks if town is defined, if not checks if village is defined, then extracts the name
                 if (data.address.city != undefined) {
                     city = data.address.city;
                 }
@@ -137,7 +133,6 @@ getCurrentLocationButton.addEventListener ("click", function (event) {
 
                 //city = (data.address.city != undefined) ? data.address.city : (data.address.town != undefined) ? data.address.town : data.address.village;
                 
-                // Set the value of the input field
                 cittaInput.value = city;
             });
         },
@@ -179,7 +174,6 @@ function check_lastname () {
 
 
 // Check email
-// I need the global variable for the fetch function
 let email_ok = false;
 
 function check_email () {
@@ -198,7 +192,7 @@ function check_email () {
     last_div_elem = email_div.lastElementChild;
 
     if (email_ok) {
-        // Checks if email is already in the database
+        // Controlla se l'email è già nel database
         fetch ("../backend/email_exists.php",
         {
             method: "POST",
@@ -206,7 +200,12 @@ function check_email () {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             }
-        }).then(response => response.text())
+        }).then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error: status ${response.status}`);
+            }
+            return response.text ();
+          })
         .then(data => {
             // Mutuamente esclusivi: una email non valida non può essere già nel database
             if (data == "true" && last_div_elem.className.indexOf ("small-error-message") === -1) {
@@ -276,7 +275,7 @@ function check_role () {
 }
 
 
-// Check if at least one of the two checkboxes is checked
+// Controlla se almeno uno tra online e presenza è selezionato
 function check_online_presenza () {
     let online = document.getElementById ("online");
     let presenza = document.getElementById ("presenza");
@@ -303,7 +302,6 @@ function check_city () {
     let last_div_elem = location_div.lastElementChild;
 
     if (cities.includes (city.value)) {
-        // Remove the error message if it's there
         if (last_div_elem.className.indexOf ("small-error-message") !== -1)
             location_div.removeChild (last_div_elem);
         return true;
@@ -315,11 +313,10 @@ function check_city () {
 }
 
 
-// Checks the entire form to see if it's ready to be submitted
 function check_submit (event) {
     let div = document.getElementById ("submit_div");
     let tutor = document.getElementById ("tutor");
-    // Check everything if the tutor checkbox is checked, else check only the student fields (no online/presenza and no citta)
+    // Controllo che tutti i campi siano validi
     if (!(check_firstname () && check_lastname () && email_ok && check_pass () && check_role () &&
         (!tutor.checked || (check_online_presenza () && check_city ())))) {
         event.preventDefault();

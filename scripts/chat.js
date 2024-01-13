@@ -47,10 +47,9 @@ function send_msg (event) {
 
 var latestTimestamp = getFormattedTimestamp();
 
-// Function to fetch new messages from the server
+// Funzione che fa la fetch dei nuovi messaggi
 function fetchNewMessages() {
 
-    // Fetch new messages from the server
     fetch("../backend/chat_backend.php", {
         method: "POST",
         headers: {
@@ -64,8 +63,7 @@ function fetchNewMessages() {
             alert(data.error);
             return;
         }
-        // Process the new messages and update the chat UI
-        // For simplicity, this example appends the new messages to the chat container
+        // Elabora i nuovi messaggi e aggiorna l'interfaccia della chat
         data.forEach(message => {
             var newMessage = document.createElement("div");
             newMessage.classList.add("message");
@@ -75,7 +73,7 @@ function fetchNewMessages() {
             chatMessages.appendChild(newMessage);
         });
 
-        // Update the latest timestamp for the next fetch
+        // Aggiorna il timestamp dell'ultimo messaggio ricevuto
         if (data.length > 0) {
             latestTimestamp = data[data.length - 1]["timestamp"];
             chat.scrollTop = chat.scrollHeight;
@@ -84,22 +82,20 @@ function fetchNewMessages() {
     .catch(error => console.error("Error fetching new messages:", error));
 }
 
-// Set up an interval to fetch new messages every 5 seconds
+// Setta un intervallo di 5 secondi per la fetch dei nuovi messaggi
 setInterval(fetchNewMessages, 5000);
 
 
 function getFormattedTimestamp() {
     const currentDate = new Date();
 
-    // Extract components of the date
     const year = currentDate.getFullYear();
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // +1 perché gennaio è 0
     const day = currentDate.getDate().toString().padStart(2, '0');
     const hours = currentDate.getHours().toString().padStart(2, '0');
     const minutes = currentDate.getMinutes().toString().padStart(2, '0');
     const seconds = currentDate.getSeconds().toString().padStart(2, '0');
 
-    // Create the formatted timestamp
     const formattedTimestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
     return formattedTimestamp;
@@ -164,7 +160,7 @@ userItems.forEach((item) => {
 });
 
 function loadChat(recipient, item) {
-    // Fetch chat messages based on the selected recipient
+    // Fetch dei messaggi della chat con il destinatario selezionato
     fetch("../backend/chat_backend.php", {
         method: "POST",
         headers: {
@@ -178,9 +174,8 @@ function loadChat(recipient, item) {
             alert(data.error);
             return;
         }
-        // Clear existing chat messages
         chatMessages.innerHTML = "";
-        // Display the fetched chat messages
+        // Display dei messaggi
         data.forEach(message => {
             const newMessage = document.createElement("div");
             newMessage.classList.add("message");
