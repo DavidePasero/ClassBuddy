@@ -171,16 +171,17 @@
     font-family: Verdana, Arial, sans-serif;
     font-size: 14px;
     color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .sent {
-    background-color: #99c876;
+    background-color: var(--chat-color-sent);
     align-self: flex-end;
     border-radius: 10px 10px 0px 10px;
 }
 
 .received {
-    background-color: #c89776;
+    background-color: var(--chat-color-received);
     align-self: flex-start;
     border-radius: 10px 10px 10px 0px;
 }

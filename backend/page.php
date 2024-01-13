@@ -1,10 +1,7 @@
 <?php
-    // Controlla il cookie rememberme e esegue il login automaticamente
+    // login.php esegue automaticamente il controllo del cookie
     function cookie_check ($db) {
-        require 'login_rememberme.php';
-
-        if (!(isset ($_SESSION ["authenticated"])) and isset ($_COOKIE ["rememberme"]))
-            login_with_rememberme ($db);
+        require 'login.php';
     }
 
     function get_data_uri ($image, $image_type) {

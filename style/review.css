@@ -22,7 +22,6 @@ main {
 }
 
 .review {
-    border: 2px solid var(--color5);
     background-color: #fff;
     margin-bottom: 20px;
     padding: 10px;

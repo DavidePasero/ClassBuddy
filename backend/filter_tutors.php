@@ -29,7 +29,7 @@ $online = $luogo === "online" ? $luogo : null;
 $materia = strtolower(trim($_POST["materia"]));
 //! 1000 = max tariffa
 if (isset($_POST["prezzo"]) and $_POST["prezzo"] !== "")
-    $prezzo = max (1, min ($_POST["prezzo"]), 1000);
+    $prezzo = max (1, min ($_POST["prezzo"], 1000));
 else
     $prezzo = 1000;
 

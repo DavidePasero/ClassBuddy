@@ -9,4 +9,6 @@
     --dark-color2: #43A047;
     --error-color: #FF5C5C;
     --bg-error-color: #F99898;
+    --chat-color-sent: var(--dark-color2);
+    --chat-color-received: #C47B36;
 }

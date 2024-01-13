@@ -21,7 +21,13 @@
     // Esegue la query parametrica specificata
     function prepared_query ($db, $parametrized_query, $parameters) {
         $query = $db->prepare ($parametrized_query);
+        if ($query === false)
+            return false;
+
         $success = $query->execute ($parameters);
+        if ($success === false)
+            return false;
+
         $result = $query->get_result ();
         // Se la query era di tipo SELECT, SHOW, DESCRIBE o EXPLAIN, allora get_result restituisce un oggetto mysqli_result
         // Altrimenti restituisce true se la query è andata a buon fine, false altrimenti

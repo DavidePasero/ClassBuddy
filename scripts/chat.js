@@ -10,32 +10,39 @@ function send_msg (event) {
     event.preventDefault();
     var testo_msg = msg.value;
     let recipient = document.getElementById("recipient").value;
-    if (testo_msg !== "" && recipient !== "") {
-        msg.value = "";
-        // Inserisco immediatamente il messaggio inviato dall'utente nella chat
-        var new_msg = document.createElement("div");
-        new_msg.classList.add("message");
-        new_msg.classList.add("sent");
-        var txt = document.createTextNode(testo_msg);
-        new_msg.appendChild(txt);
-        chat.scrollTop = chat.scrollHeight;
-        chatMessages.appendChild(new_msg);
-
-        // Invio il messaggio al server che lo inserisce nel database in modo asincrono
-        fetch("../backend/send_message.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: "message=" + testo_msg + "&recipient=" + recipient
-        }).then (response => response.text ())
-        .then (response_txt => {
-            if (response_txt !== "OK")
-                alert (response_txt);
-        });
-    } else {
-        alert ("Inserisci un messaggio e seleziona un destinatario!");
+    if (recipient === "") {
+        alert("Seleziona un destinatario");
+        return;
     }
+    if (testo_msg === "") {
+        alert("Inserisci un messaggio");
+        return;
+    }
+    
+    msg.value = "";
+    // Inserisco immediatamente il messaggio inviato dall'utente nella chat
+    var new_msg = document.createElement("div");
+    new_msg.classList.add("message");
+    new_msg.classList.add("sent");
+    var txt = document.createTextNode(testo_msg);
+    new_msg.appendChild(txt);
+    chat.scrollTop = chat.scrollHeight;
+    chatMessages.appendChild(new_msg);
+
+    // Invio il messaggio al server che lo inserisce nel database in modo asincrono
+    fetch("../backend/chat_backend.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "action=send_msg&message=" + testo_msg + "&recipient=" + recipient
+    }).then (response => response.json ())
+    .then (response_json => {
+        if (response_json.error) {
+            alert (response_json.error);
+            return;
+        }
+    });
 }
 
 var latestTimestamp = getFormattedTimestamp();
@@ -44,16 +51,19 @@ var latestTimestamp = getFormattedTimestamp();
 function fetchNewMessages() {
 
     // Fetch new messages from the server
-    fetch("../backend/fetch_messages.php", {
+    fetch("../backend/chat_backend.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: "timestamp=" + latestTimestamp + "&recipient=" + document.getElementById("recipient").value
+        body: "action=new_msgs&timestamp=" + latestTimestamp + "&recipient=" + document.getElementById("recipient").value
     })
     .then(response => response.json())
     .then(data => {
-        // data = JSON.parse(data);
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
         // Process the new messages and update the chat UI
         // For simplicity, this example appends the new messages to the chat container
         data.forEach(message => {
@@ -107,15 +117,20 @@ let sendSearch = document.getElementById("send-search");
 
 sendSearch.addEventListener("click", function () {
     let search = document.getElementById("search-box").value;
-    fetch("../backend/search_messages.php", {
+    fetch("../backend/chat_backend.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: "ricerca=" + search + "&recipient=" + document.getElementById("recipient").value
+        body: "action=search_msgs&ricerca=" + search + "&recipient=" + document.getElementById("recipient").value
     })
     .then(response => response.json())
     .then(data => {
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+
         // Rimuovo tutti i messaggi dalla chat
         while (chatMessages.firstChild) {
             chatMessages.removeChild(chatMessages.firstChild);
@@ -150,15 +165,19 @@ userItems.forEach((item) => {
 
 function loadChat(recipient, item) {
     // Fetch chat messages based on the selected recipient
-    fetch("../backend/fetch_chat.php", {
+    fetch("../backend/chat_backend.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: "timestamp=0&recipient=" + recipient
+        body: "action=fetch_chat&recipient=" + recipient
     })
     .then(response => response.json())
     .then(data => {
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
         // Clear existing chat messages
         chatMessages.innerHTML = "";
         // Display the fetched chat messages
