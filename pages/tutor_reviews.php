@@ -11,7 +11,7 @@ require __DIR__ . '/../backend/review.php';
 
 $db = connect_to_db();
 
-if (isset($_GET["tutor_email"])) {
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["tutor_email"])) {
     $tutorEmail = $_GET["tutor_email"];
 
     // Recupera tutte le recensioni per il tutor specificato
