@@ -55,7 +55,6 @@
 					<input type="password" id="confirm" name="confirm" autocomplete="new-password" placeholder="Re-inserisci la password" class=<?php if (isset($_SESSION["confirm"])) {echo "\"input-error form-element\"";} else {echo "\"input-neutral form-element\"";}?> required>
 				</div>
 
-				<!-- Create a div for two radio buttons with the options "Studente" and "Tutor"-->
 				<div id="role_div" class="radiobutton">
 					<input type="radio" id="student" name="role" value="studente" checked>
 					<label for="student">Studente</label>
@@ -63,7 +62,6 @@
 					<label for="tutor">Tutor</label>
 				</div>
 				
-				<!-- Create a div for two checkboxes with the options "Online" and "In presenza"-->
 				<div id="online_presenza_div" class="radiobutton">
 					<input type="checkbox" id="online" name="online" value="online" checked>
 					<label for="online">Online</label>
@@ -71,12 +69,8 @@
 					<label for="presenza">In presenza</label>
 				</div>
 
-				<!-- Create a div with a button named getCurrentLocation-->
 				<div id="location_div">
-					<!-- Text input for typing -->
 					<input list="cittaDropdown" class="form-element input-list" id="cittaInput" name="citta" placeholder="Digita o seleziona una città">
-
-					<!-- Datalist (list of all the cities in italy) -->
 					<datalist id="cittaDropdown" class="data-list">
 					</datalist>
 
