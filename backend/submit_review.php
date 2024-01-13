@@ -8,6 +8,7 @@ require "review.php";
 $db = connect_to_db();
 
 if (
+    $_SERVER["REQUEST_METHOD"] == "POST" &&
     isset($_SESSION["authenticated"]) &&
     $_SESSION["authenticated"] &&
     isset($_SESSION["email"]))
