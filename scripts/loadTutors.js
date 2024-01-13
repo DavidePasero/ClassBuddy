@@ -1,14 +1,20 @@
 fetch('../backend/tutor.php')
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error: status ${response.status}`);
+    }
+    return response.json();
+  })
   .then(tutors => {
     const tutorGrid = document.querySelector('.image-grid');
     tutorGrid.innerHTML = '';
 
-    for (const [_, tutor] of Object.entries(tutors)) {
+    // Object.values(tutors) restituisce un array contenente un oggetto con le informazioni di ogni tutor in "tutors"
+    for (const tutor of Object.values(tutors)) { 
       const div = document.createElement('div');
       div.className = 'tutor';
 
-      // Create an img element for the profile picture
+      // Crea un elemento img per la foto profilo e un link alla pagina del tutor
       let link = document.createElement('a');
       link.href = `profile.php?email=${tutor["email"]}`;
       const img = document.createElement('img');
@@ -16,9 +22,8 @@ fetch('../backend/tutor.php')
       img.alt = `${tutor["firstname"]} ${tutor["lastname"]}`;
       img.className = 'profile-image';
 
-      // Create divs for each piece of information
+      // Crea un div per ogni informazione del tutor
       const nameDiv = createInfoDiv('name', `${tutor["firstname"]} ${tutor["lastname"]}`);
-      // const emailDiv = createInfoDiv('email', tutor["email"]);
       const cityDiv = createInfoDiv('city', tutor["citta"]);
       const onlineDiv = createInfoDiv('online', tutor["online"] ? 'Disponibile online' : ' ');
       const presenceDiv = createInfoDiv('presence', tutor["presenza"] ? 'Disponibile in presenza' : ' ');
@@ -27,7 +32,8 @@ fetch('../backend/tutor.php')
       div.appendChild(link);
       div.appendChild(nameDiv);
       div.appendChild(cityDiv);
-      // For each (materia, tariffa) create a div
+
+      // Crea un div per ogni materia e relativa tariffa del tutor
       for (i = 0; i < tutor["materia"].length && i < 3; i++) {
         let insegnamentoDiv = createInfoDiv ("insegnamento", `${tutor["materia"][i]}: ${tutor["tariffa"][i]}€/ora`);
         div.appendChild(insegnamentoDiv);
@@ -44,10 +50,9 @@ fetch('../backend/tutor.php')
     };
   })
   .catch(error => {
-    console.error('Error loading tutors:', error);
+    console.error('Errore nel caricamento dei tutor:', error);
   });
 
-// Helper function to create an info div
 function createInfoDiv(className, textContent) {
     const infoDiv = document.createElement('div');
     infoDiv.className = className;

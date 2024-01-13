@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var tutor = document.querySelector('input[name="tutor"]').value;
             var studente = document.querySelector('input[name="studente"]').value;
 
-            // Invio della richiesta al backend utilizzando Fetch API
             fetch('../backend/submit_review.php', {
                 method: 'POST',
                 headers: {
@@ -19,7 +18,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     '&commento=' + encodeURIComponent(commento) +
                     '&tutor=' + encodeURIComponent(tutor)
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                      throw new Error(`HTTP error: status ${response.status}`);
+                    }
+                    return response.json();
+                  })
                 .then(newReview => {
                     if (newReview.error) {
                         alert(newReview.error);

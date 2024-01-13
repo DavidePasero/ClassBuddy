@@ -28,7 +28,12 @@ function send_msg (event) {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             body: "message=" + testo_msg + "&recipient=" + recipient
-        }).then (response => response.text ())
+        }).then (response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error: status ${response.status}`);
+            }
+            return response.text ();
+          })
         .then (response_txt => {
             if (response_txt !== "OK")
                 alert (response_txt);
@@ -40,10 +45,9 @@ function send_msg (event) {
 
 var latestTimestamp = getFormattedTimestamp();
 
-// Function to fetch new messages from the server
+// Funzione che recupera i nuovi messaggi dal server
 function fetchNewMessages() {
 
-    // Fetch new messages from the server
     fetch("../backend/fetch_messages.php", {
         method: "POST",
         headers: {
@@ -51,11 +55,14 @@ function fetchNewMessages() {
         },
         body: "timestamp=" + latestTimestamp + "&recipient=" + document.getElementById("recipient").value
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: status ${response.status}`);
+        }
+        return response.json();
+      })
     .then(data => {
-        // data = JSON.parse(data);
-        // Process the new messages and update the chat UI
-        // For simplicity, this example appends the new messages to the chat container
+        // Elabora i nuovi messaggi e gestisce la UI
         data.forEach(message => {
             var newMessage = document.createElement("div");
             newMessage.classList.add("message");
@@ -65,7 +72,7 @@ function fetchNewMessages() {
             chatMessages.appendChild(newMessage);
         });
 
-        // Update the latest timestamp for the next fetch
+        // Aggiorna il timestamp più recente per il prossimo fetch
         if (data.length > 0) {
             latestTimestamp = data[data.length - 1]["timestamp"];
             chat.scrollTop = chat.scrollHeight;
@@ -74,22 +81,21 @@ function fetchNewMessages() {
     .catch(error => console.error("Error fetching new messages:", error));
 }
 
-// Set up an interval to fetch new messages every 5 seconds
+// Imposta un intervallo di 5 secondi per il fetch dei nuovi messaggi
 setInterval(fetchNewMessages, 5000);
 
 
 function getFormattedTimestamp() {
     const currentDate = new Date();
 
-    // Extract components of the date
     const year = currentDate.getFullYear();
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // +1 perchè gennaio è 0
     const day = currentDate.getDate().toString().padStart(2, '0');
     const hours = currentDate.getHours().toString().padStart(2, '0');
     const minutes = currentDate.getMinutes().toString().padStart(2, '0');
     const seconds = currentDate.getSeconds().toString().padStart(2, '0');
 
-    // Create the formatted timestamp
+    // Crea la stringa del timestamp nel formato "yyyy-mm-dd hh:mm:ss"
     const formattedTimestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
     return formattedTimestamp;
@@ -114,7 +120,12 @@ sendSearch.addEventListener("click", function () {
         },
         body: "ricerca=" + search + "&recipient=" + document.getElementById("recipient").value
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: status ${response.status}`);
+        }
+        return response.json();
+      })
     .then(data => {
         // Rimuovo tutti i messaggi dalla chat
         while (chatMessages.firstChild) {
@@ -149,7 +160,7 @@ userItems.forEach((item) => {
 });
 
 function loadChat(recipient, item) {
-    // Fetch chat messages based on the selected recipient
+    // Fa il fetch dei messaggi del recipient selezionato
     fetch("../backend/fetch_chat.php", {
         method: "POST",
         headers: {
@@ -157,11 +168,15 @@ function loadChat(recipient, item) {
         },
         body: "timestamp=0&recipient=" + recipient
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error: status ${response.status}`);
+        }
+        return response.json();
+      })
     .then(data => {
-        // Clear existing chat messages
         chatMessages.innerHTML = "";
-        // Display the fetched chat messages
+        // Mostra i messaggi
         data.forEach(message => {
             const newMessage = document.createElement("div");
             newMessage.classList.add("message");

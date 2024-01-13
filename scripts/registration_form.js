@@ -25,14 +25,14 @@ function create_small_error_message (text) {
     return p;
 }
 
-// Get the list of cities from the file
-// reads the file cities.txt which is a list of all the cities in Italy separated by a newline an puts them in an array
+// Recupera la lista di città dal file
+// Legge il file citta.txt che è una lista di tutte le città italiane separate da un newline e le mette in un array
 let cities = [];
 fetch('../res/citta.txt')
   .then(response => response.text())
   .then(data => {
     cities = data.split('\n');
-    // Insert the list of cities into the dropdown menu
+    // Inserisce la lista delle città nel dropdown menu
     cities.forEach(function(city) {
         var option = document.createElement("option");
         option.text = city;
@@ -80,22 +80,18 @@ form.addEventListener ("input", function (event) {
 submit.addEventListener ("click", check_submit);
 
 
-// Add an event listener for the data list
 cittaInput.addEventListener("input", function(event) {
-    // Get the user's input
+
     var input = event.target.value;
 
-    // Filter the list of cities based on the user's input
     var filteredCities = cities.filter(function(city) {
         return city.toLowerCase().indexOf(input.toLowerCase()) !== -1;
     });
 
-    // Clear the dropdown menu
     while (selectCity.firstChild) {
         selectCity.removeChild(selectCity.firstChild);
     }
 
-    // Insert the filtered list of cities into the dropdown menu
     filteredCities.forEach(function(city) {
         var option = document.createElement("option");
         option.text = city;
@@ -104,17 +100,14 @@ cittaInput.addEventListener("input", function(event) {
     });
 });
 
-
-/* 
-    getCurrentLocationButton listens to the click event and uses the geolocation API 
-    to get current location of the user
-*/
+ 
+// getCurrentLocationButton sente l'evento click e usa la geolocation API per ottenere la posizione corrente dell'utente
 getCurrentLocationButton.addEventListener ("click", function (event) {
-    // Check if the Geolocation API is supported
+    // Controlla se Geolocation API è supportato
     if (navigator.geolocation) {
         // Get the current position
         navigator.geolocation.getCurrentPosition(function(position) {
-        // Use the latitude and longitude to get the city name
+        // Usa latitudine e longitudine per ottenere la città
         var lat = position.coords.latitude;
         var lon = position.coords.longitude;
         var url = "https://nominatim.openstreetmap.org/reverse?lat=" + lat + "&lon=" + lon + "&format=json&accept-language=it";
@@ -124,7 +117,7 @@ getCurrentLocationButton.addEventListener ("click", function (event) {
             })
             .then(function(data) {
                 let city;
-                // Check if city is defined, if not checks if town is defined, if not checks if village is defined, then extracts the name
+                // controlla se è definito "city", se non lo è controlla se è definito "town", se non lo è controlla se è definito "village", poi estrae il nome
                 if (data.address.city != undefined) {
                     city = data.address.city;
                 }
@@ -137,7 +130,6 @@ getCurrentLocationButton.addEventListener ("click", function (event) {
 
                 //city = (data.address.city != undefined) ? data.address.city : (data.address.town != undefined) ? data.address.town : data.address.village;
                 
-                // Set the value of the input field
                 cittaInput.value = city;
             });
         },
