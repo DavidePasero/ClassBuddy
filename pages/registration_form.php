@@ -35,7 +35,7 @@
 			}
 			?>
 			<form id="form" action="../backend/registration.php" method="POST" name="registration" class="form">
-				<div id="firstname_div form-element">
+				<div id="firstname_div">
 					<input type="text" id="firstname" name="firstname" autocomplete="given-name" placeholder="Nome" class=<?php if (isset($_SESSION["firstname"])) {echo "\"input-error\"";} else {echo "\"input-neutral form-element\"";}?> required>
 				</div>
 

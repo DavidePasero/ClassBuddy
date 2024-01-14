@@ -42,6 +42,7 @@ function send_msg (event) {
             alert (response_json.error);
             return;
         }
+        update_message_preview (testo_msg);
     });
 }
 
@@ -84,9 +85,9 @@ function fetchNewMessages() {
     .catch(error => console.error("Error fetching new messages:", error));
 }
 
-// Set up an interval to fetch new messages every 5 seconds
-setInterval(fetchNewMessages, 5000);
-
+if (document.getElementById("recipient").value !== "")
+    // Set up an interval to fetch new messages every 5 seconds
+    setInterval(fetchNewMessages, 5000);
 
 function getFormattedTimestamp() {
     const currentDate = new Date();
@@ -188,6 +189,9 @@ function loadChat(recipient, item) {
             newMessage.textContent = message.testo;
             chatMessages.appendChild(newMessage);
         });
+
+        clearInterval(fetchNewMessages);
+        setInterval(fetchNewMessages, 5000);
     })
     .catch(error => console.error("Error fetching chat:", error));
 
@@ -209,3 +213,10 @@ function loadChat(recipient, item) {
 
 if (document.getElementById("recipient").value !== "")
     loadChat(document.getElementById("recipient").value);
+
+function update_message_preview (message) {
+    let preview = document.querySelector(`#sidebar .user-item[data-recipient='${document.getElementById("recipient").value}'] .last-message`);
+    preview.textContent = message;
+    if (message.length > 13)
+        preview.textContent = preview.textContent.substring(0, 13) + "...";
+}

@@ -130,5 +130,5 @@ function encode_propic (&$tutor) {
     return $tutor;
 }
 
-echo json_encode($tutors_data);
+echo_back_json_data ($tutors_data);
 ?>

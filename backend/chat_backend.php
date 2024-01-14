@@ -65,8 +65,7 @@ function filter_messages ($db, $query, $params) {
     $messages = prepared_query ($db, $query, $params)->fetch_all (MYSQLI_ASSOC);
     if ($messages === false)
         echo_back_json_data (create_error_msg ("Errore nel recupero dei messaggi"));
-    echo json_encode($messages);
-    exit();
+    echo_back_json_data ($messages);
 }
 
 // Invia un messaggio
@@ -92,7 +91,7 @@ function send_msg ($db) {
         if (!$insert_msg)
             echo_back_json_data (create_error_msg ("Invio fallito, aggiona la pagina e riprova"));
         else
-            echo_back_json_data (json_encode(["status" => "OK"]));
+            echo_back_json_data (["status" => "OK"]);
     }
     else
     echo_back_json_data (create_error_msg ("I messaggi possono essere inviati solo tra tutor e studenti"));

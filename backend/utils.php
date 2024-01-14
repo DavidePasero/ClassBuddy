@@ -1,8 +1,6 @@
 <?php
 function create_error_msg ($error) {
-    $error_msg = array ();
-    $error_msg ["error"] = $error;
-    return json_encode ($error_msg);
+    return ["error" => $error];
 }
 
 function clamp ($min, $max, $value) {

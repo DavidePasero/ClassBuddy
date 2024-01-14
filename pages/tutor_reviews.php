@@ -98,8 +98,7 @@ $can_write_review = $user_profile_info["role"] == "studente" &&
                 <input type="hidden" name="valutaz" id="valutaz" value="1">
             </div>
             STELLINE;
-            echo '<label for="commento">Commento: </label>';
-            echo '<textarea id="commento" name="commento" required></textarea><br>';
+            echo '<textarea id="commento" name="commento" placeholder="Inserisci un commento alla tua recensione..." required></textarea><br>';
             echo '<input type="submit" class="btn submit" value="Invia">';
             echo '</div>';
             echo '</form>';
