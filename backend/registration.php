@@ -10,7 +10,7 @@
 	$valid_data = TRUE;
 
 	// unset di tutte le variabili di sessione
-	$_SESSION = [];
+	$_SESSION = array ();
 
 	if (!isset ($_POST ["firstname"]) or strlen (trim ($_POST["firstname"])) <= 0) {
 		$_SESSION["firstname"] = true; // true = errore

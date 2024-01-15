@@ -15,7 +15,7 @@
 	}
 	// Controllo le credenziali inserite dall'utente
 	if ($_SERVER["REQUEST_METHOD"] === "POST" and !isset($_SESSION["authenticated"])) {
-		session_unset ();
+		$_SESSION = array ();
 		check_credentials ($db);
 	}
 	
