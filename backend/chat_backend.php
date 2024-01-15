@@ -41,7 +41,7 @@ else {
 // Prende tutti i messaggi della chat
 function fetch_chat($db) {
     filter_messages ($db, 
-        "SELECT mittente, testo FROM S5204959.messaggio WHERE (mittente = ? AND destinatario = ?) OR (mittente = ? AND destinatario = ?) ORDER BY timestamp ASC",
+        "SELECT mittente, testo, timestamp FROM S5204959.messaggio WHERE (mittente = ? AND destinatario = ?) OR (mittente = ? AND destinatario = ?) ORDER BY timestamp ASC",
         [$_POST["recipient"], $_SESSION["email"], $_SESSION["email"], $_POST["recipient"]]);
 }
 
