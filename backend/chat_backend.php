@@ -19,16 +19,19 @@ if (!isset($_POST["action"]) or empty($_POST["action"]))
 else {
     switch ($_POST["action"]) {
         case "fetch_chat":
-            fetch_chat($db);
+            fetch_chat ($db);
             break;
         case "new_msgs":
-            new_msgs($db);
+            new_msgs ($db);
             break;
         case "search_msgs":
-            search_msgs($db);
+            search_msgs ($db);
             break;
         case "send_msg":
-            send_msg($db);
+            send_msg ($db);
+            break;
+        case "get_convos":
+            get_convos ($db);
             break;
         default:
             echo_back_json_data (create_error_msg ("Azione non riconosciuta"));
@@ -63,9 +66,43 @@ function search_msgs ($db) {
 function filter_messages ($db, $query, $params) {
     check_destinatario();
     $messages = prepared_query ($db, $query, $params)->fetch_all (MYSQLI_ASSOC);
-    if ($messages === false)
-        echo_back_json_data (create_error_msg ("Errore nel recupero dei messaggi"));
+    check_query ($messages);
     echo_back_json_data ($messages);
+}
+
+// Recupera tutte le conversazioni dell'utente con l'ultimo messaggio
+function get_convos ($db) {
+    $conversations = prepared_query($db,
+    "SELECT m1.mittente, m1.destinatario, m1.testo, m1.timestamp
+    FROM messaggio m1
+    INNER JOIN (
+        SELECT
+            LEAST(mittente, destinatario) AS user1,
+            GREATEST(mittente, destinatario) AS user2,
+            MAX(timestamp) AS latest_timestamp
+        FROM messaggio
+        WHERE mittente = ? OR destinatario = ?
+        GROUP BY user1, user2
+    ) m2 ON
+        (m1.mittente = m2.user1 AND m1.destinatario = m2.user2 AND m1.timestamp = m2.latest_timestamp)
+        OR
+        (m1.mittente = m2.user2 AND m1.destinatario = m2.user1 AND m1.timestamp = m2.latest_timestamp)
+    ORDER BY m1.timestamp DESC;",
+    [$_SESSION['email'], $_SESSION['email']]
+    )->fetch_all(MYSQLI_ASSOC);
+    check_query ($conversations);
+    
+    // Prende la propic e la codifica come un data uri e setta il recipient
+    for ($i = 0; $i < count($conversations); $i++) {
+        // Aggiungo alcuni dati del recipient
+        $conversations [$i] ["recipient"] = ($conversations[$i]['mittente'] == $_SESSION['email']) ? $conversations[$i]['destinatario'] : $conversations[$i]['mittente'];
+        $recipient = select_user_email ($db, $conversations[$i]["recipient"]);
+        $conversations[$i] ["firstname"] = $recipient["firstname"];
+        $conversations[$i] ["lastname"] = $recipient["lastname"];
+        $conversations[$i] ["propic"] = get_data_uri ($recipient["propic"], $recipient["propic_type"]);
+    }
+
+    echo_back_json_data ($conversations);
 }
 
 // Invia un messaggio
@@ -100,5 +137,10 @@ function send_msg ($db) {
 function check_destinatario () {
     if (!isset($_POST["recipient"]) or empty($_POST["recipient"]))
         echo_back_json_data (create_error_msg ("Devi specificare un destinatario"));
+}
+
+function check_query ($query) {
+    if ($query === false)
+        echo_back_json_data (create_error_msg ("Errore del database, invitiamo a riprovare più tardi"));
 }
 ?>  

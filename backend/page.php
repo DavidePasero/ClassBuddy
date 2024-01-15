@@ -4,16 +4,6 @@
         require 'login.php';
     }
 
-    function get_data_uri ($image, $image_type) {
-        if ($image !== NULL) {
-            // Create a data URI for the image
-            $imageData = base64_encode($image);
-            $imageType = $image_type;
-            return "data:image/{$imageType};base64,{$imageData}";
-        }
-        return "../img/defaultUser.jpg";
-    }
-
     function print_header () {
         $header = <<<HEADER
             <header>

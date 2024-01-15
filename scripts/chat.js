@@ -6,6 +6,9 @@ let submit = document.getElementById("send-button");
 
 submit.addEventListener("click", send_msg);
 
+var interval_fetch_messages = 0;
+var interval_get_convos = 0;
+
 function send_msg (event) {
     event.preventDefault();
     var testo_msg = msg.value;
@@ -46,7 +49,12 @@ function send_msg (event) {
     });
 }
 
-var latestTimestamp = getFormattedTimestamp();
+// Setto l'interval do fetchNewMessages solo se c'è un destinatario selezionato
+if (document.getElementById("recipient").value !== "") {
+    // Set up an interval to fetch new messages every 5 seconds
+    interval_fetch_messages = setInterval(fetchNewMessages, 5000);
+    var latestTimestamp = getFormattedTimestamp();
+}
 
 // Function to fetch new messages from the server
 function fetchNewMessages() {
@@ -84,10 +92,6 @@ function fetchNewMessages() {
     })
     .catch(error => console.error("Error fetching new messages:", error));
 }
-
-if (document.getElementById("recipient").value !== "")
-    // Set up an interval to fetch new messages every 5 seconds
-    setInterval(fetchNewMessages, 5000);
 
 function getFormattedTimestamp() {
     const currentDate = new Date();
@@ -153,17 +157,6 @@ sendSearch.addEventListener("click", function () {
 });
 
 // SIDEBAR
-const userItems = document.querySelectorAll(".user-item");
-
-userItems.forEach((item) => {
-    item.addEventListener("click", () => {
-        document.querySelectorAll(".selected").forEach((item) => {item.classList.remove("selected")});
-        item.classList.add("selected");
-        const recipient = item.getAttribute("data-recipient");
-        loadChat(recipient, item);
-    });
-});
-
 function loadChat(recipient, item) {
     // Fetch chat messages based on the selected recipient
     fetch("../backend/chat_backend.php", {
@@ -190,8 +183,9 @@ function loadChat(recipient, item) {
             chatMessages.appendChild(newMessage);
         });
 
-        clearInterval(fetchNewMessages);
-        setInterval(fetchNewMessages, 5000);
+        clearInterval(interval_fetch_messages);
+        latestTimestamp = data[data.length - 1]["timestamp"];
+        interval_fetch_messages = setInterval(fetchNewMessages, 5000);
     })
     .catch(error => console.error("Error fetching chat:", error));
 
@@ -220,3 +214,81 @@ function update_message_preview (message) {
     if (message.length > 13)
         preview.textContent = preview.textContent.substring(0, 13) + "...";
 }
+
+let last_messages_timestamp = [];
+const sidebar = document.getElementById("sidebar");
+// Aggiornamento dinamico delle conversazioni
+function get_convos () {
+    fetch ("../backend/chat_backend.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "action=get_convos"
+    }).then (response => response.json ())
+    .then (response_json => {
+        if (response_json.error) {
+            alert (response_json.error);
+            return;
+        }
+        
+        // Aggiungo le nuove conversazioni
+        response_json.forEach (convo => {
+            let convo_item = sidebar.querySelector (`.user-item[data-recipient='${convo.recipient}']`);
+            // Controllo se la conversazione è già presente nella sidebar e se sono arrivati nuovi messaggi
+            if (convo_item) {
+                if (convo.timestamp > last_messages_timestamp[convo.recipient]){ 
+                    // Se c'è un nuovo messaggio, aggiorno l'ultimo messaggio e metto in cima la conversazione
+                    convo_item.querySelector (".last-message").textContent = convo.testo;
+                    last_messages_timestamp[convo.recipient] = convo.timestamp;
+                    sidebar.insertBefore (convo_item, sidebar.firstChild);
+                }
+                return; // Skip alla prossima iterazione
+            }
+
+            let new_convo = document.createElement ("div");
+            new_convo.classList.add ("user-item");
+            new_convo.setAttribute ("data-recipient", convo.recipient);
+
+            // Propic dell'utente
+            let propic_div = document.createElement ("div");
+            let propic = document.createElement ("img");
+            propic.classList.add ("profile-pic");
+            propic.setAttribute ("src", convo.propic);
+            propic.setAttribute ("alt", convo.firstname + " " + convo.lastname);
+            propic_div.appendChild (propic);
+
+            // User info: nome e ultimo messaggio della conversazione
+            let user_info = document.createElement ("div");
+            user_info.classList.add ("user-info");
+            let user_name = document.createElement ("div");
+            user_name.classList.add ("user-name");
+            user_name.textContent = convo.firstname + " " + convo.lastname;
+            let last_message = document.createElement ("div");
+            last_message.classList.add ("last-message");
+            last_message.textContent = convo.testo;
+            if (convo.testo.length > 13)
+                last_message.textContent = last_message.textContent.substring (0, 13) + "...";
+
+            user_info.appendChild (user_name);
+            user_info.appendChild (last_message);
+
+            new_convo.appendChild (propic_div);
+            new_convo.appendChild (user_info);
+
+            new_convo.addEventListener ("click", () => {
+                document.querySelectorAll(".selected").forEach((item) => {item.classList.remove("selected")});
+                new_convo.classList.add("selected");
+                loadChat(convo.recipient, new_convo);
+            });
+            document.getElementById ("sidebar").appendChild (new_convo);
+
+            // Aggiorno l'ultimo timestamp della conversazione
+            last_messages_timestamp[convo.recipient] = convo.timestamp;
+        });
+    });
+}
+
+get_convos ();
+// Every 10 seconds, get the list of conversations with the last message
+interval_get_convos = setInterval (get_convos, 10000);

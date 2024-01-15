@@ -4,6 +4,7 @@
     session_start ();
     require __DIR__ . '/../backend/page.php';
     require __DIR__ . '/../backend/db.php';
+    require __DIR__ . '/../backend/utils.php';
     
     $db = connect_to_db ();
     cookie_check ($db);
@@ -28,26 +29,6 @@
     }
 
     $this_user = select_user_email ($db, $_SESSION['email']);
-
-    // Query that retrieves the last message in all the conversations the user is involved in
-    $conversations = prepared_query($db,
-    "SELECT m1.mittente, m1.destinatario, m1.testo, m1.timestamp
-    FROM messaggio m1
-    INNER JOIN (
-        SELECT
-            LEAST(mittente, destinatario) AS user1,
-            GREATEST(mittente, destinatario) AS user2,
-            MAX(timestamp) AS latest_timestamp
-        FROM messaggio
-        WHERE mittente = ? OR destinatario = ?
-        GROUP BY user1, user2
-    ) m2 ON
-        (m1.mittente = m2.user1 AND m1.destinatario = m2.user2 AND m1.timestamp = m2.latest_timestamp)
-        OR
-        (m1.mittente = m2.user2 AND m1.destinatario = m2.user1 AND m1.timestamp = m2.latest_timestamp)
-    ORDER BY m1.timestamp DESC;",
-    [$_SESSION['email'], $_SESSION['email']]
-    )->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -64,23 +45,7 @@
     <?php echo print_header();?>
     <main id="page-content">
         <div id="sidebar">
-            <?php foreach ($conversations as $conv):
-                $recipient = ($conv['mittente'] == $_SESSION['email']) ? $conv['destinatario'] : $conv['mittente'];
-                $user = select_user_email($db, $recipient);
-                $dataUri = get_data_uri($user["propic"], $user["propic_type"]);
-                ?>
-                <div class="user-item" data-recipient="<?php echo $user['email']; ?>">
-                    <div>
-                        <img class="profile-pic" src="<?php echo $dataUri?>" alt="Profile Picture">        
-                    </div>
-                    <div class="user-info">
-                        <div class="user-name"><?php echo $user['firstname'] . ' ' . $user['lastname']; ?></div>
-                        <div class="last-message">
-                            <?php echo strlen($conv["testo"]) < 13 ? $conv["testo"] : substr($conv["testo"], 0, 12) . "..."; ?>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+            
         </div>
         
         <div id="no-recipient-selected" <?php if (!is_null($get_user)) echo "hidden"?>>

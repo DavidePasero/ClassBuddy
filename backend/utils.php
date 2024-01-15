@@ -12,4 +12,14 @@ function echo_back_json_data ($data) {
     echo json_encode ($data);
     exit();
 }
+
+function get_data_uri ($image, $image_type) {
+    if ($image !== NULL) {
+        // Create a data URI for the image
+        $imageData = base64_encode($image);
+        $imageType = $image_type;
+        return "data:image/{$imageType};base64,{$imageData}";
+    }
+    return "../img/defaultUser.jpg";
+}
 ?>
