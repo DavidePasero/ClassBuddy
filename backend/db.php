@@ -1,7 +1,10 @@
 <?php
-    function connect_to_db ($hostname='localhost', $user='S5204959', $password='c4c4p1p1', $database='S5204959') {
+    $config_info = require ("config.php");
+    function connect_to_db () {
+        global $config_info;
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        $db = new mysqli($hostname, $user, $password, $database);
+
+        $db = new mysqli($config_info["hostname"], $config_info["user"], $config_info["password"], $config_info["database"]);
 
         // Controllo se ci siamo connessi con successo
         if ($db->connect_errno) {
