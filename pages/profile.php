@@ -22,6 +22,12 @@
     $user_profile = isset($_GET["email"]) ? $_GET["email"] : $_SESSION["email"];
     $user_profile_info = select_user_email($db, $user_profile);
 
+    // Se l'utente non esiste, allora lo reindirizzo alla pagina principale
+    if ($user_profile_info === null) {
+        $db->close ();
+        header ("Location: index.php");
+    }
+
     $dataUri = get_data_uri($user_profile_info["propic"], $user_profile_info["propic_type"]);
 
     $myprofile = $user_profile_info["email"] === $_SESSION["email"];

@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="../style/home.css">
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <meta charset="utf-8">
-    <script type="module" src="../scripts/loadTutors.js" defer></script>
+    <script type="module" src="../scripts/load_tutors.js" defer></script>
 </head>
 <body>
     <?php echo print_header();?>

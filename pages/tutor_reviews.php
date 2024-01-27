@@ -13,7 +13,6 @@ $db = connect_to_db();
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["tutor_email"])) {
     $tutorEmail = $_GET["tutor_email"];
-
     // Recupera tutte le recensioni per il tutor specificato
     $reviews = prepared_query($db, "SELECT * FROM recensione WHERE tutor = ?", [$tutorEmail])->fetch_all(MYSQLI_ASSOC);
 } else {
@@ -21,11 +20,18 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["tutor_email"])) {
     exit();
 }
 
-$user_profile = isset($_GET["email"]) ? $_GET["email"] : $_SESSION["email"];
+$user_profile = $_SESSION["email"];
 $user_profile_info = select_user_email($db, $user_profile);
 
 $tutor_email = $_GET["tutor_email"];
 $tutor_info = select_user_email($db, $tutor_email);
+
+// Se l'utente non esiste, allora lo reindirizzo alla pagina principale
+if ($tutor_info === null) {
+    $db->close ();
+    header ("Location: index.php");
+}
+
 // Uno studente può scrivere una recensione ad un tutor solo se il tutor gli ha inviato almeno un messaggio e se lo studente non gli ha ancora scritto una recensione
 $can_write_review = $user_profile_info["role"] == "studente" &&
     hasSentMessageToStudent($db, $tutor_email, $_SESSION["email"]) &&
@@ -40,7 +46,7 @@ $can_write_review = $user_profile_info["role"] == "studente" &&
     <link rel="stylesheet" type="text/css" href="../style/review.css">
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/stelline.css">
-    <script type="module" src="../scripts/loadReview.js" defer></script>
+    <script type="module" src="../scripts/reviews.js" defer></script>
     <?php if ($can_write_review)
         echo "<script src=\"../scripts/stelline.js\" defer></script>";
     ?>
@@ -74,30 +80,25 @@ $can_write_review = $user_profile_info["role"] == "studente" &&
         ?>
         </div>
 
-        <?php
-        if ($can_write_review) {
-            echo '<h2>Inserisci una valutazione</h2>';
-            echo '<form action="../backend/submit_review.php" name="valutazione" method="post">';
-            echo '<div class="form-content">';
-            echo '<input type="hidden" name="tutor" value="' . htmlentities($tutor_email) . '">';
-            echo '<input type="hidden" name="studente" value="' . htmlentities($_SESSION["email"]) . '">';
-            echo <<<STELLINE
-            <div class="rating" id="rating">
-                <!-- 5 stelle disponibili per votare-->
-                <span class="star active" data-value="1">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="5">&#9733;</span>
-                <input type="hidden" name="valutaz" id="valutaz" value="1">
-            </div>
-            STELLINE;
-            echo '<textarea id="commento" name="commento" placeholder="Inserisci un commento alla tua recensione..." required></textarea><br>';
-            echo '<input type="submit" class="btn submit" value="Invia">';
-            echo '</div>';
-            echo '</form>';
-        }
-        ?>
+        <?php if ($can_write_review): ?>
+            <h2>Inserisci una valutazione</h2>
+            <form action="../backend/submit_review.php" name="valutazione" method="post">
+                <div class="form-content">
+                    <input type="hidden" name="tutor" value=<?php echo $tutor_email;?>>
+                    <div class="rating" id="rating">
+                        <!-- 5 stelle disponibili per votare-->
+                        <span class="star active" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                        <input type="hidden" name="valutaz" id="valutaz" value="1">
+                    </div>
+                    <textarea id="commento" name="commento" placeholder="Inserisci un commento alla tua recensione..." required></textarea><br>
+                    <input type="submit" class="btn submit" value="Invia">
+                </div>
+            </form>
+        <?php endif; ?>
     </main>
 <?php echo print_footer();?>
 </body>
