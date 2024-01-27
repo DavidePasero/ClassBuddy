@@ -10,10 +10,9 @@
     $db->close ();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/home.css">
     <link rel="stylesheet" type="text/css" href="../style/tutor.css">
@@ -29,7 +28,6 @@
             <div id="parameters-container">
                 <input list="cittaDropdown" class="parameter" id="cittaInput" name="luogo" placeholder="Filtra per luogo" required>
                 
-                <!-- Datalist (list of all the cities in Italy and Online option) -->
                 <datalist id="cittaDropdown">
                     <option value="Online">Online</option>
                 </datalist>

@@ -9,7 +9,6 @@
     $db = connect_to_db ();
     cookie_check ($db);
 
-    // Check if the user is authenticated
     if (!isset($_SESSION["authenticated"]) || !$_SESSION["authenticated"]) {
         header("Location: login_form.php");
         exit();
@@ -17,7 +16,7 @@
 
     $get_user = null;
 
-    // Check se c'è un destinatario passato come GET, se è valido bene altrimenti redirect a chat.php
+    // Controlla se c'è un destinatario passato come GET, se è valido bene altrimenti redirect a chat.php
     if (isset($_GET["recipient"])) {
         $get_user = select_user_email ($db, $_GET["recipient"]);
         if (!$get_user or $get_user["email"] == $_SESSION["email"] or $get_user["role"] == $_SESSION["role"]) {
@@ -32,10 +31,9 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatBuddy</title>
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/chat.css">
@@ -45,18 +43,17 @@
     <?php echo print_header();?>
     <main id="page-content">
         <div id="sidebar">
-            
         </div>
         
         <div id="no-recipient-selected" <?php if (!is_null($get_user)) echo "hidden"?>>
-            <img src="../res/icons/chat.svg" alt="No recipient selected">
+            <img src="../res/icons/chat.svg" alt="Nessun destinatario selezionato">
             <p>Seleziona un utente per iniziare a scrivere</p>
         </div>
 
         <div id="chat" <?php if (is_null($get_user)) echo "hidden"?>>
             <div id="chat-user-info">
                 <a id="profile-link" href="profile.php?email=<?php if (!empty($get_user)) echo $get_user["email"]?>">
-                    <img id="chat-propic" src="<?php if (!empty($get_user)) echo $get_user["propic"]?>" alt="Profile picture">
+                    <img id="chat-propic" src="<?php if (!empty($get_user)) echo $get_user["propic"]?>" alt="Foto profilo">
                 </a>
                 <h4 id="chat-username"><?php if (!empty($get_user)) echo htmlentities ($get_user["firstname"] . " " . $get_user["lastname"])?></h4>
                 <div id="search-container">
