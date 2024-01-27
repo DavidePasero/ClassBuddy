@@ -35,17 +35,16 @@ try {
         // Recupera l'estensione del file
         $fileExtension = pathinfo($propic["name"], PATHINFO_EXTENSION);
         // Controlla che l'estensione sia tra quelle consentite
-        if ($fileExtension !== "jpg" and $fileExtension !== "jpeg" and $fileExtension !== "png" and $fileExtension !== "gif") {
-            header ("Location: ../pages/error.php?error_type=invalid_file_extension");
-        }
-        
-        prepared_query ($db, "UPDATE S5204959.utente SET propic=?, propic_type=? WHERE email=?;", [$propicContent, $fileExtension, $_SESSION["email"]]); 
+        if ($fileExtension !== "jpg" and $fileExtension !== "jpeg" and $fileExtension !== "png" and $fileExtension !== "gif")
+            $status = false;
+        else
+            prepared_query ($db, "UPDATE S5204959.utente SET propic=?, propic_type=? WHERE email=?;", [$propicContent, $fileExtension, $_SESSION["email"]]);
     }
 
     if (
-            $_SESSION ["role"] === "tutor" and 
-            isset ($_POST ["materia"]) and isset ($_POST ["tariffa"]) and
-            count ($_POST ["materia"]) == count ($_POST ["tariffa"])
+        $_SESSION ["role"] === "tutor" and 
+        isset ($_POST ["materia"]) and isset ($_POST ["tariffa"]) and
+        count ($_POST ["materia"]) == count ($_POST ["tariffa"])
         ) {
         // Aggiunge le tuple (tutor, materia, tariffa) dove tutor è l'utente corrente
         $tutor = $_SESSION ["email"];
@@ -82,11 +81,11 @@ $rule5 = !$status;
 if ($rule1 or $rule2 or $rule3 or $rule4 or $rule5) {
     // Il profilo non viene modificato se si verifica uno dei casi di errore
     $db->rollback();
-    header ("Location: ../pages/error.php?error_type=generic_modify_profile_error");
+    echo_back_json_data (create_error_msg ("Errore durante la modifica del profilo"));
 } else {
     $db->commit();
     $db->close();
-    header ("Location: ../pages/profile.php?email={$_SESSION["email"]}");
+    echo_back_json_data (["status" => "Modifiche avvenute con successo"]);
 }
 
 ?>

@@ -1,3 +1,5 @@
+import { showPopup } from "./utils.js";
+
 let chat = document.getElementById("chat-container");
 let chatMessages = document.getElementById("chat-messages");
 
@@ -14,16 +16,16 @@ function send_msg (event) {
     var testo_msg = msg.value;
     let recipient = document.getElementById("recipient").value;
     if (recipient === "") {
-        alert("Seleziona un destinatario");
+        showPopup("Seleziona un destinatario", true);
         return;
     }
     if (testo_msg === "") {
-        alert("Inserisci un messaggio");
+        showPopup("Il messaggio non può essere vuoto", true);
         return;
     }
     
     msg.value = "";
-    // Inserisco immediatamente il messaggio inviato dall'utente nella chat
+    // Inserisco immediatamente il messaggio inviato dall'utente nella chat per una risposta più veloce
     var new_msg = document.createElement("div");
     new_msg.classList.add("message");
     new_msg.classList.add("sent");
@@ -42,9 +44,11 @@ function send_msg (event) {
     }).then (response => response.json ())
     .then (response_json => {
         if (response_json.error) {
-            alert (response_json.error);
+            showPopup (response_json.error, true);
+            new_msg.remove (); // In caso di errore, rimuovo il messaggio dalla chat
             return;
         }
+        // Aggiorno l'ultimo messaggio nella sidebar
         update_message_preview (testo_msg);
     });
 }
@@ -70,7 +74,7 @@ function fetchNewMessages() {
     .then(response => response.json())
     .then(data => {
         if (data.error) {
-            alert(data.error);
+            showPopup(data.error, true);
             return;
         }
         // Process the new messages and update the chat UI
@@ -132,7 +136,7 @@ sendSearch.addEventListener("click", function () {
     .then(response => response.json())
     .then(data => {
         if (data.error) {
-            alert(data.error);
+            showPopup(data.error, true);
             return;
         }
 
@@ -169,7 +173,7 @@ function loadChat(recipient, item) {
     .then(response => response.json())
     .then(data => {
         if (data.error) {
-            alert(data.error);
+            showPopup(data.error, true);
             return;
         }
         // Clear existing chat messages
@@ -228,7 +232,7 @@ function get_convos () {
     }).then (response => response.json ())
     .then (response_json => {
         if (response_json.error) {
-            alert (response_json.error);
+            showPopup (response_json.error, true);
             return;
         }
         

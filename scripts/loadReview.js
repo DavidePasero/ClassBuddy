@@ -1,3 +1,5 @@
+import { showPopup } from "./utils.js";
+
 var form = document.querySelector('form[name="valutazione"]');
 if (form) {
     form.addEventListener('submit', function (event) {
@@ -8,7 +10,7 @@ if (form) {
         var tutor = document.querySelector('input[name="tutor"]').value;
 
         if (commento.length == 0) {
-            alert('Inserisci un commento');
+            showPopup('Il commento non può essere vuoto', true);
             return;
         }
 
@@ -25,7 +27,7 @@ if (form) {
             .then(response => response.json())
             .then(newReview => {
                 if (newReview.error) {
-                    alert(newReview.error);
+                    showPopup(newReview.error, true);
                     return;
                 }
                 // Aggiornamento dinamico della pagina con la nuova recensione
@@ -80,6 +82,9 @@ if (form) {
                 const no_rev = document.getElementById('no-rev');
                 if (no_rev)
                     no_rev.remove();
+
+                // Mostra un popup di successo
+                showPopup('Recensione inviata con successo!', false);
             })
             .catch(error => {
                 console.error('Errore durante la richiesta al server:', error);

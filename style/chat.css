@@ -131,6 +131,7 @@
     border-radius: 10px;
     width: 400px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
 }
 
 #chat-container {
@@ -207,8 +208,6 @@ button. I want these two elements to be on the same line
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline; /* Align items along the baseline */
-
-    /*! SISTEMA BOX SIZING*/
 }
 
 input[type="text"] {

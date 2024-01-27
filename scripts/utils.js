@@ -1,7 +1,7 @@
 export function fill_tutor_grid (tutors) {
     // Error handling
     if (tutors.error) {
-        alert(tutors.error);
+        showPopup(tutors.error, true);
         return;
     }
 
@@ -50,11 +50,41 @@ export function fill_tutor_grid (tutors) {
     };
 }
 
-// Helper function to create an info div
+// Funzione per creare un div con una classe e un testo
 function createInfoDiv(className, textContent) {
     const infoDiv = document.createElement('div');
     infoDiv.className = className;
     const textNode = document.createTextNode(textContent);
     infoDiv.appendChild(textNode);
     return infoDiv;
+}
+
+// Funzione per mostrare un popup
+export function showPopup(message_text, is_error) {
+  document.getElementById('popup')?.remove(); // Rimuove il popup se già presente
+  const popup = document.createElement('div');
+  popup.id = 'popup';
+  popup.className = `${is_error ? 'error' : 'success'}`;
+  
+  const closeBtn = document.createElement('span');
+  closeBtn.className = 'close-btn';
+  closeBtn.innerHTML = '&times;'; // simbolo "×" per chiudere il popup
+  closeBtn.addEventListener ("click", function() {
+      popup.style.opacity = '0'; // Setto l'opacità a 0 per una scomparsa graduale
+            setTimeout(() => {
+                document.body.removeChild(popup);
+            }, 300);
+  });
+
+  const message = document.createElement('p');
+  message.textContent = message_text;
+
+  popup.appendChild(closeBtn);
+  popup.appendChild(message);
+
+  document.body.appendChild(popup);
+  popup.style.display = 'block'; // Mostro il popup
+  setTimeout(() => {
+      popup.style.opacity = '1'; // Setto l'opacità a 1
+  }, 10); // Aspetto 10ms prima di settare l'opacità a 1
 }

@@ -37,7 +37,7 @@
     <title>ChatBuddy</title>
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/chat.css">
-    <script src="../scripts/chat.js" defer></script>
+    <script type="module" src="../scripts/chat.js" defer></script>
 </head>
 <body>
     <?php echo print_header();?>

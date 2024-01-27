@@ -1,3 +1,5 @@
+import { showPopup } from "./utils.js";
+
 let editButton = document.getElementById('edit-button');
 let fileInput = document.getElementById('propic');
 
@@ -140,7 +142,7 @@ if (is_tutor) {
 }
 
 // The submit button executes a fetch call to the server to update the profile
-let submitButton = document.getElementById('submit');
+let submitButton = document.getElementById('submit_button');
 if (submitButton != null) {
     submitButton.addEventListener('click', function (event) {
         event.preventDefault();
@@ -150,15 +152,11 @@ if (submitButton != null) {
         let inputs = form.querySelectorAll('input[type="text"], input[type="number"], select');
         let compiled = true;
         inputs.forEach(element => {
-            if (element.value == "") {
+            if (element.value == "")
                 compiled = false;
-            }
         });
 
         if (compiled) {
-            // Create FormData object to gather form data
-            var formData = new FormData(form);
-            
             if (is_tutor) {
                 // Make materia e tariffa elements to be <span> elements
                 // Get all the input elements
@@ -172,7 +170,7 @@ if (submitButton != null) {
                         span.textContent = elems[i].value + " ";
                         // Add €/h if the input element is the tariffa input
                         if (elems[i].name == 'tariffa[]') {
-                            span.textContent += '€/h';
+                            span.textContent += '€/ora';
                         }
                         // Replace the input element with the span element
                         elems[i].parentElement.replaceChild(span, elems[i]);
@@ -182,16 +180,26 @@ if (submitButton != null) {
                 replaceWithSpan(materie);
                 replaceWithSpan(tariffe);
             }
-        
+            
+            // Create FormData object to gather form data
+            var formData = new FormData(form);
+
             // Send form data to the server using fetch
             fetch('../backend/modify_profile.php', {
                 method: 'POST',
                 body: formData
+            }).then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    showPopup(data.error, true);
+                    return;
+                }
+                showPopup(data.status, false);
             })
             .catch(err => console.error(err));
         }
         else {
-            alert('Compila tutti i campi');
+            showPopup('Compila tutti i campi', true);
         }
     });
 }
