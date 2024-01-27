@@ -30,8 +30,8 @@ function send_msg (event) {
     new_msg.classList.add("sent");
     var txt = document.createTextNode(testo_msg);
     new_msg.appendChild(txt);
-    chat.scrollTop = chat.scrollHeight;
     chatMessages.appendChild(new_msg);
+    chat.scrollTop = chat.scrollHeight;
 
     // Invio il messaggio al server che lo inserisce nel database in modo asincrono
     fetch("../backend/chat_backend.php", {
@@ -48,7 +48,7 @@ function send_msg (event) {
             return;
         }
         // Aggiorno l'ultimo messaggio nella sidebar
-        update_message_preview (testo_msg);
+        update_message_preview (testo_msg, document.getElementById("recipient").value);
     });
 }
 
@@ -79,6 +79,7 @@ function fetchNewMessages() {
 
         // Aggiorno l'ultimo timestamp
         if (data.length > 0) {
+            update_message_preview (data[data.length - 1]["testo"], document.getElementById("recipient").value);
             latestTimestamp = data[data.length - 1]["timestamp"];
             chat.scrollTop = chat.scrollHeight;
         }
@@ -141,6 +142,8 @@ function loadChat(recipient, item) {
         // Rimuovo tutti i messaggi dalla chat
         chatMessages.innerHTML = "";
         addMessagesToChat (data);
+        // Scrollo automaticamente la chat fino all'ultimo messaggio
+        chat.scrollTop = chat.scrollHeight;
 
         clearInterval(interval_fetch_messages);
         latestTimestamp = data[data.length - 1]["timestamp"];
@@ -160,20 +163,10 @@ function loadChat(recipient, item) {
         document.getElementById("profile-link").href = "profile.php?email=" + recipient;
         document.getElementById("chat-username").textContent = name;
     }
-    // Scrollo automaticamente la chat fino all'ultimo messaggio
-    chat.scrollTop = chat.scrollHeight;
 }
 
 if (document.getElementById("recipient").value !== "")
     loadChat(document.getElementById("recipient").value);
-
-// Funzione che aggiorna l'ultimo messaggio nella sidebar
-function update_message_preview (message) {
-    let preview = document.querySelector(`#sidebar .user-item[data-recipient='${document.getElementById("recipient").value}'] .last-message`);
-    preview.textContent = message;
-    if (message.length > 13)
-        preview.textContent = preview.textContent.substring(0, 13) + "...";
-}
 
 let last_messages_timestamp = [];
 const sidebar = document.getElementById("sidebar");
@@ -199,7 +192,7 @@ function get_convos () {
             if (convo_item) {
                 if (convo.timestamp > last_messages_timestamp[convo.recipient]){ 
                     // Se c'è un nuovo messaggio, aggiorno l'ultimo messaggio e metto in cima la conversazione
-                    convo_item.querySelector (".last-message").textContent = convo.testo;
+                    update_message_preview (convo.testo, convo.recipient);
                     last_messages_timestamp[convo.recipient] = convo.timestamp;
                     sidebar.insertBefore (convo_item, sidebar.firstChild);
                 }
@@ -226,9 +219,6 @@ function get_convos () {
             user_name.textContent = convo.firstname + " " + convo.lastname;
             let last_message = document.createElement ("div");
             last_message.classList.add ("last-message");
-            last_message.textContent = convo.testo;
-            if (convo.testo.length > 13)
-                last_message.textContent = last_message.textContent.substring (0, 13) + "...";
 
             user_info.appendChild (user_name);
             user_info.appendChild (last_message);
@@ -243,6 +233,7 @@ function get_convos () {
             });
             document.getElementById ("sidebar").appendChild (new_convo);
 
+            update_message_preview (convo.testo, convo.recipient);
             // Aggiorno l'ultimo timestamp della conversazione
             last_messages_timestamp[convo.recipient] = convo.timestamp;
         });
@@ -278,4 +269,12 @@ function addMessagesToChat(messages) {
         newMessage.textContent = message.testo;
         chatMessages.appendChild(newMessage);
     });
+}
+
+// Funzione che aggiorna l'ultimo messaggio nella sidebar
+function update_message_preview (message, recipient) {
+    let preview = document.querySelector(`#sidebar .user-item[data-recipient='${recipient}'] .last-message`);
+    preview.textContent = message;
+    if (message.length > 13)
+        preview.textContent = preview.textContent.substring(0, 13) + "...";
 }
