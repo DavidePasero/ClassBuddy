@@ -6,11 +6,10 @@ const cittaInput = document.getElementById("cittaInput");
 
 // Recupera l'elenco delle città dal file
 // legge il file cities.txt che è un elenco di tutte le città italiane separate da un a capo e le inserisce in un array
-const cities = [];
 fetch('../res/citta.txt')
   .then(response => response.text())
   .then(data => {
-    cities = data.split('\n');
+    const cities = data.split('\n');
     // Inserisce l'elenco delle città nel menu a discesa
     cities.forEach(city => {
       const option = document.createElement("option");
@@ -28,12 +27,11 @@ selectCity.addEventListener("change", function() {
 
 // Riempie il dropdown menu di materia
 const materia = document.getElementById("materia");
-const insegnamenti = [];
 // Recupera l'elenco degli insegnamenti
 fetch('../res/insegnamenti.txt')
   .then(response => response.text())
   .then(data => {
-    insegnamenti = data.split('\n');
+    const insegnamenti = data.split('\n');
     insegnamenti.forEach(insegnamento => {
       const option = document.createElement("option");
       option.textContent = insegnamento;
