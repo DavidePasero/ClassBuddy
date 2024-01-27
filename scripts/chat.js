@@ -9,7 +9,6 @@ let submit = document.getElementById("send-button");
 submit.addEventListener("click", send_msg);
 
 var interval_fetch_messages = 0;
-var interval_get_convos = 0;
 
 function send_msg (event) {
     event.preventDefault();
@@ -55,15 +54,13 @@ function send_msg (event) {
 
 // Setto l'interval do fetchNewMessages solo se c'è un destinatario selezionato
 if (document.getElementById("recipient").value !== "") {
-    // Set up an interval to fetch new messages every 5 seconds
     interval_fetch_messages = setInterval(fetchNewMessages, 5000);
     var latestTimestamp = getFormattedTimestamp();
 }
 
-// Function to fetch new messages from the server
+// Funzione che recupera i nuovi messaggi dal server della conversazione aperta
 function fetchNewMessages() {
 
-    // Fetch new messages from the server
     fetch("../backend/chat_backend.php", {
         method: "POST",
         headers: {
@@ -77,41 +74,16 @@ function fetchNewMessages() {
             showPopup(data.error, true);
             return;
         }
-        // Process the new messages and update the chat UI
-        // For simplicity, this example appends the new messages to the chat container
-        data.forEach(message => {
-            var newMessage = document.createElement("div");
-            newMessage.classList.add("message");
-            newMessage.classList.add("received");
-            var textNode = document.createTextNode(message["testo"]);
-            newMessage.appendChild(textNode);
-            chatMessages.appendChild(newMessage);
-        });
 
-        // Update the latest timestamp for the next fetch
+        addMessagesToChat (data);
+
+        // Aggiorno l'ultimo timestamp
         if (data.length > 0) {
             latestTimestamp = data[data.length - 1]["timestamp"];
             chat.scrollTop = chat.scrollHeight;
         }
     })
     .catch(error => console.error("Error fetching new messages:", error));
-}
-
-function getFormattedTimestamp() {
-    const currentDate = new Date();
-
-    // Extract components of the date
-    const year = currentDate.getFullYear();
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-    const day = currentDate.getDate().toString().padStart(2, '0');
-    const hours = currentDate.getHours().toString().padStart(2, '0');
-    const minutes = currentDate.getMinutes().toString().padStart(2, '0');
-    const seconds = currentDate.getSeconds().toString().padStart(2, '0');
-
-    // Create the formatted timestamp
-    const formattedTimestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-    return formattedTimestamp;
 }
 
 // Search box
@@ -145,24 +117,14 @@ sendSearch.addEventListener("click", function () {
             chatMessages.removeChild(chatMessages.firstChild);
         }
         // Inserisco i messaggi che rispondono alla query dell'utente nella chat
-        data.forEach(message => {
-            var newMessage = document.createElement("div");
-            newMessage.classList.add("message");
-            if (message["mittente"] == document.getElementById("recipient").value)
-                newMessage.classList.add("received");
-            else
-                newMessage.classList.add("sent");
-            var textNode = document.createTextNode(message["testo"]);
-            newMessage.appendChild(textNode);
-            chatMessages.appendChild(newMessage);
-        });
+        addMessagesToChat (data);
     })
     .catch(error => console.error("Error fetching new messages:", error));
 });
 
 // SIDEBAR
 function loadChat(recipient, item) {
-    // Fetch chat messages based on the selected recipient
+    // Recupero tutti i messaggi della conversazione dal server
     fetch("../backend/chat_backend.php", {
         method: "POST",
         headers: {
@@ -176,16 +138,9 @@ function loadChat(recipient, item) {
             showPopup(data.error, true);
             return;
         }
-        // Clear existing chat messages
+        // Rimuovo tutti i messaggi dalla chat
         chatMessages.innerHTML = "";
-        // Display the fetched chat messages
-        data.forEach(message => {
-            const newMessage = document.createElement("div");
-            newMessage.classList.add("message");
-            newMessage.classList.add(message.mittente === recipient ? "received" : "sent");
-            newMessage.textContent = message.testo;
-            chatMessages.appendChild(newMessage);
-        });
+        addMessagesToChat (data);
 
         clearInterval(interval_fetch_messages);
         latestTimestamp = data[data.length - 1]["timestamp"];
@@ -212,6 +167,7 @@ function loadChat(recipient, item) {
 if (document.getElementById("recipient").value !== "")
     loadChat(document.getElementById("recipient").value);
 
+// Funzione che aggiorna l'ultimo messaggio nella sidebar
 function update_message_preview (message) {
     let preview = document.querySelector(`#sidebar .user-item[data-recipient='${document.getElementById("recipient").value}'] .last-message`);
     preview.textContent = message;
@@ -295,4 +251,32 @@ function get_convos () {
 
 get_convos ();
 // Every 10 seconds, get the list of conversations with the last message
-interval_get_convos = setInterval (get_convos, 10000);
+setInterval (get_convos, 10000);
+
+// Funzione che restituisce la data e l'ora attuale nel formato "yyyy-mm-dd hh:mm:ss"
+function getFormattedTimestamp() {
+    const currentDate = new Date();
+
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const hours = currentDate.getHours().toString().padStart(2, '0');
+    const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+    const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+    // Create the formatted timestamp
+    const formattedTimestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+    return formattedTimestamp;
+}
+
+// Per ogni nuovo (possibile) messaggio, creo gli elementi del dom che li costituiscono e li aggiungo alla chat
+function addMessagesToChat(messages) {
+    messages.forEach(message => {
+        const newMessage = document.createElement("div");
+        newMessage.classList.add("message");
+        newMessage.classList.add(message.mittente === document.getElementById("recipient").value ? "received" : "sent");
+        newMessage.textContent = message.testo;
+        chatMessages.appendChild(newMessage);
+    });
+}
