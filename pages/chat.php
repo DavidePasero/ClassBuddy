@@ -58,7 +58,7 @@
                 <a id="profile-link" href="profile.php?email=<?php if (!empty($get_user)) echo $get_user["email"]?>">
                     <img id="chat-propic" src="<?php if (!empty($get_user)) echo $get_user["propic"]?>" alt="Profile picture">
                 </a>
-                <h4 id="chat-username"><?php if (!empty($get_user)) echo $get_user["firstname"] . " " . $get_user["lastname"]?></h4>
+                <h4 id="chat-username"><?php if (!empty($get_user)) echo htmlentities ($get_user["firstname"] . " " . $get_user["lastname"])?></h4>
                 <div id="search-container">
                     <button id="search-button" class="btn only-icon-button">
                         <img src="../res/icons/search.svg" alt="Search">
@@ -76,7 +76,6 @@
             <form id="scrivi_messaggio" method="post" action="../backend/send_message.php">
                 <input type="text" id="message" name="message" placeholder="Scrivi un messaggio..." required>
                 <!-- Uso il valore del sender nel js-->
-                <input type="hidden" name="sender" id="sender" value="<?php echo $this_user["email"]?>">
                 <input type="hidden" name="recipient" id="recipient" value="<?php echo isset($_GET["recipient"]) ? $_GET["recipient"] : ""?>">
                 <button type="submit" id="send-button" class="btn submit">Invia</button>
             </form>

@@ -71,7 +71,7 @@ $can_write_review = $user_profile_info["role"] == "studente" &&
                 }
                 echo "</div>";
                 echo "<div class='parameter'>Commento</div><p>" . htmlentities($review['commento']) . "</p>";
-                echo "<div class='parameter'>Scritta da</div><p>" . $review['studente'] . "</p>";
+                echo "<div class='parameter'>Scritta da</div><p>" . htmlentities($review['studente']) . "</p>";
                 echo "</div>";
             }
         } else {
@@ -85,8 +85,8 @@ $can_write_review = $user_profile_info["role"] == "studente" &&
             echo '<h2>Inserisci una valutazione</h2>';
             echo '<form action="../backend/submit_review.php" name="valutazione" method="post">';
             echo '<div class="form-content">';
-            echo '<input type="hidden" name="tutor" value="' . htmlspecialchars($tutor_email) . '">';
-            echo '<input type="hidden" name="studente" value="' . htmlspecialchars($_SESSION["email"]) . '">';
+            echo '<input type="hidden" name="tutor" value="' . htmlentities($tutor_email) . '">';
+            echo '<input type="hidden" name="studente" value="' . htmlentities($_SESSION["email"]) . '">';
             echo <<<STELLINE
             <div class="rating" id="rating">
                 <!-- Five stars for the rating system -->

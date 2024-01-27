@@ -97,7 +97,7 @@ if (is_tutor) {
         input_tariffa.min = 1;
         input_tariffa.max = 1000;
         input_tariffa.name = 'tariffa[]';
-        input_tariffa.placeholder = 'Tariffa oraria';
+        input_tariffa.placeholder = '€/ora';
         input_tariffa.setAttribute('required', 'true');
         input_tariffa.classList.add('input-box');
 

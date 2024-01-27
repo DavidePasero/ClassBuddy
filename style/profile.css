@@ -87,11 +87,3 @@ main {
 #action-container a {
     margin: 10px;
 }
-
-.input-box {
-    padding: 7px;
-    font-size: 16px;
-    border: 1px solid var(--color3); /* Blue color, you can change it */
-    border-radius: 5px;
-    margin-right: 5px;
-}
