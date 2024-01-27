@@ -15,14 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["tutor_email"])) {
     $tutorEmail = $_GET["tutor_email"];
 
     // Recupera tutte le recensioni per il tutor specificato
-    $query = "SELECT * FROM recensione WHERE tutor = ?";
-    $stmt = $db->prepare($query);
-    $stmt->bind_param("s", $tutorEmail);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $reviews = $result->fetch_all(MYSQLI_ASSOC);
-
-    $stmt->close();
+    $reviews = prepared_query($db, "SELECT * FROM recensione WHERE tutor = ?", [$tutorEmail])->fetch_all(MYSQLI_ASSOC);
 } else {
     echo "Nessun tutor specificato.";
     exit();
@@ -33,6 +26,7 @@ $user_profile_info = select_user_email($db, $user_profile);
 
 $tutor_email = $_GET["tutor_email"];
 $tutor_info = select_user_email($db, $tutor_email);
+// Uno studente può scrivere una recensione ad un tutor solo se il tutor gli ha inviato almeno un messaggio e se lo studente non gli ha ancora scritto una recensione
 $can_write_review = $user_profile_info["role"] == "studente" &&
     hasSentMessageToStudent($db, $tutor_email, $_SESSION["email"]) &&
     !hasStudentReviewedTutor($db, $_SESSION["email"], $tutor_email)
@@ -89,7 +83,7 @@ $can_write_review = $user_profile_info["role"] == "studente" &&
             echo '<input type="hidden" name="studente" value="' . htmlentities($_SESSION["email"]) . '">';
             echo <<<STELLINE
             <div class="rating" id="rating">
-                <!-- Five stars for the rating system -->
+                <!-- 5 stelle disponibili per votare-->
                 <span class="star active" data-value="1">&#9733;</span>
                 <span class="star" data-value="2">&#9733;</span>
                 <span class="star" data-value="3">&#9733;</span>

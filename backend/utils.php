@@ -15,7 +15,7 @@ function echo_back_json_data ($data) {
 
 function get_data_uri ($image, $image_type) {
     if ($image !== NULL) {
-        // Create a data URI for the image
+        // Crea un data uri per la propic
         $imageData = base64_encode($image);
         $imageType = $image_type;
         return "data:image/{$imageType};base64,{$imageData}";

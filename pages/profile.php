@@ -8,6 +8,7 @@
     require __DIR__ . '/../backend/page.php';
     require __DIR__ . '/../backend/db.php';
     require __DIR__ . '/../backend/review.php';
+    require __DIR__ . '/../backend/utils.php';
     
     $db = connect_to_db ();
     cookie_check ($db);
@@ -21,18 +22,11 @@
     $user_profile = isset($_GET["email"]) ? $_GET["email"] : $_SESSION["email"];
     $user_profile_info = select_user_email($db, $user_profile);
 
-    if ($user_profile_info["propic"] !== NULL) {
-        // Create a data URI for the image
-        $imageData = base64_encode($user_profile_info["propic"]);
-        $imageType = $user_profile_info["propic_type"];
-        $dataUri = "data:image/{$imageType};base64,{$imageData}";
-    } else {
-        $dataUri = "../img/defaultUser.jpg";
-    }
+    $dataUri = get_data_uri($user_profile_info["propic"], $user_profile_info["propic_type"]);
 
     $myprofile = $user_profile_info["email"] === $_SESSION["email"];
 
-    // Aggiunta: ottieni la media delle recensioni se l'utente è un tutor
+    // Media delle recensioni se l'utente è un tutor
     $averageRating = ($user_profile_info["role"] === "tutor") ? getAverageRating($db, $user_profile_info["email"]) : null;
 ?>
 <html lang="it">
@@ -54,7 +48,6 @@
     <div id="contact-card">
             <p id="name"><?php echo htmlentities($user_profile_info["firstname"] . " " . $user_profile_info["lastname"])?></p>
 
-            <!-- Aggiunta: mostra la media delle recensioni -->
             <?php 
             if ($user_profile_info["role"] === "tutor" && $averageRating !== null) {
                 echo '<div class="rating" id="rating">';
@@ -140,8 +133,8 @@
                     }?>
             </form>
 
-            <!-- Chat button that calls chat.php with the recipient's email as GET parameter only if
-                recipient is a tutor and I am a student-->
+            <!--Chat button che chiama chat.php con l'email del destinatario come parametro della GET
+                solo se il destinatario è un tutor e io sono uno studente-->
             <div id="action-container">
                 <?php
                     if ($user_profile_info ["role"] === "tutor" and $_SESSION ["role"] === "studente") {

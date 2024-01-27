@@ -16,7 +16,7 @@
 
 <html lang="it">
 <head>
-    <meta charset="utf-8" name="viewport" content="width=device-width", initial-scale="1.0">
+    <meta charset="utf-8">
     <title>Login</title>
 	<link rel="stylesheet" type="text/css" href="../style/form.css">
     <link rel="stylesheet" type="text/css" href="../style/page.css">

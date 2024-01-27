@@ -26,7 +26,7 @@ INNER JOIN
 LEFT JOIN
     S5204959.insegnamento ON tutor.email = insegnamento.tutor";
 
-// Se il method è POST
+// Controllo che il method sia valido 
 if ($_SERVER["REQUEST_METHOD"] !== "POST" or !isset($_POST["action"]) or empty($_POST["action"]))
     echo_back_json_data (create_error_msg ("Richiesta non valida"));
 
@@ -56,7 +56,7 @@ else if ($_POST["action"] === "filter_tutors") {
     if (isset($_POST["prezzo"]) and $_POST["prezzo"] !== "")
         $prezzo = clamp (1, 1000, intval(trim($_POST["prezzo"])));
     
-    // Filters the tutors based on the user's input
+    // Filtra i tutor in base ai parametri
     $filter_tutors_query = <<<QUERY
                 SELECT DISTINCT tutor.email FROM S5204959.tutor
                 JOIN S5204959.insegnamento ON tutor.email = insegnamento.tutor
@@ -117,16 +117,7 @@ foreach ($tutors as $tutor) {
 }
 
 function encode_propic (&$tutor) {
-    if ($tutor["propic"] !== NULL) {
-        // Create a data URI for the image
-        $imageData = base64_encode($tutor["propic"]);
-        $imageType = $tutor["propic_type"];
-        $dataUri = "data:image/{$imageType};base64,{$imageData}";
-        $tutor["propic"] = $dataUri;
-    } else {
-        // Use a default image if propic is NULL
-        $tutor["propic"] = "../img/defaultUser.jpg";
-    }
+    $tutor["propic"] = get_data_uri($tutor["propic"], $tutor["propic_type"]);
     return $tutor;
 }
 

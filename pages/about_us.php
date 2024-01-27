@@ -28,14 +28,18 @@
         </div>
 
         <h2 id="team">Il nostro team</h2>
+        <div id='foto-div'>
+            <img src="../img/davide.jpg" alt="Davide Pasero" class="foto"> 
+            <img src="../img/sara.jpg" alt="Sara Rosselli" class="foto">
+        </div>
         <div>
-            ClassBuddy è frutto di due studenti universitari, Davide e Sara, uniti dal desiderio di rendere l'apprendimento più accessibile ed efficace:
+            ClassBuddy è frutto di due studenti universitari, Davide e Sara, uniti dal desiderio di rendere l'apprendimento più accessibile ed efficace:<br><br>
         </div>
         <div>
             Davide è un brillante studente di Informatica presso l'Università degli Studi di Genova: è appassionato di programmazione e di tecnologia in generale,
             e ha deciso di mettere a frutto le sue competenze per creare un servizio che potesse aiutare gli studenti come lui a trovare un supporto in caso di difficoltà.
             Il suo impegno e la sua competenza hanno giocato un ruolo cruciale nella realizzazione del nostro sito, poichè la sua abilità nel tradurre idee complesse in
-            soluzioni pratiche ha reso il processo di sviluppo fluido ed efficiente.
+            soluzioni pratiche ha reso il processo di sviluppo fluido ed efficiente.<br><br>
         </div>
         <div>
             Anche Sara è una studentessa di Informatica presso l'Università degli Studi di Genova: fin da piccola ha dimostrato una predisposizione naturale
