@@ -20,7 +20,7 @@
 .insegnamento {
     display: flex;
     flex-direction: row;
-    justify-content: space-between; /* Added to position the elements at each end of the container */
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 5px;
 }

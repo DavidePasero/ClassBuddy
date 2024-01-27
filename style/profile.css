@@ -12,14 +12,14 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 800px; /* Adjust the width as needed */
+    max-width: 800px;
     width: 500px;
     margin: 20px;
     padding: 25px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px; /* Rounded corners */
-    transition: box-shadow 0.3s ease-in-out; /* Smooth box-shadow transition */
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease-in-out;
 }
 
 #contact-card:hover {

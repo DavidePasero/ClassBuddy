@@ -9,11 +9,11 @@ body {
 }
 
 header {
-    background-color: var(--color4); /* Blue color, you can change it */
+    background-color: var(--color4);
     color: #fff;
     padding: 15px 0;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 0px 0px 20px 20px; /* Rounded corners on the top */
+    border-radius: 0px 0px 20px 20px;
 }
 
 #header-container {
@@ -24,9 +24,9 @@ header {
 }
 
 #main_title {
-    font-size: 50px; /* Larger font size for the title */
+    font-size: 50px;
     font-weight: bold;
-    margin-bottom: 20px; /* Spacing between title and menu */
+    margin-bottom: 20px;/
 }
 
 #menu {
@@ -37,14 +37,14 @@ header {
 #menu a {
     color: #fff;
     text-decoration: none;
-    margin: 0 20px; /* Adjust the spacing between menu items */
-    font-size: 18px; /* Adjust the font size of menu items */
-    transition: color 0.2s ease-in-out; /* Smooth color transition on hover */
+    margin: 0 20px;
+    font-size: 18px;
+    transition: color 0.2s ease-in-out;
     font-weight: bold;
 }
 
 #menu a:hover {
-    color: var(--color5); /* Orange color, you can change it */
+    color: var(--color5);
 }
 
 #page_title {
@@ -57,26 +57,25 @@ header {
 }
 
 footer {
-    background-color: var(--color4); /* Blue color, same as header */
+    background-color: var(--color4);
     color: #fff;
     padding: 20px;
     margin-top: auto;
-    border-radius: 20px 20px 0 0; /* Rounded corners on the bottom */
+    border-radius: 20px 20px 0 0;
 }
 
-/* Add the following styles to center the columns in the footer */
 
 #footer-container {
     display: flex;
-    justify-content: center; /* Center the columns horizontally */
-    flex-wrap: wrap; /* Allow columns to wrap to the next line if needed */
+    justify-content: center;
+    flex-wrap: wrap; /* Le colonne si wrappano andando a capo in caso non ci fosse più spazio */
 }
 
 .footer-column {
     flex: 1;
-    margin: 0 10px; /* Adjust spacing between columns */
-    max-width: 300px; /* Set a maximum width for each column */
-    text-align: center; /* Center the content within each column */
+    margin: 0 10px;
+    max-width: 300px; 
+    text-align: center;
 }
 
 .footer-column ul {
@@ -91,14 +90,12 @@ footer {
 .footer-column a {
     color: #fff;
     text-decoration: none;
-    transition: color 0.3s ease-in-out; /* Smooth color transition on hover */
+    transition: color 0.3s ease-in-out;
 }
 
 .footer-column a:hover {
-    color: var(--color5); /* Orange color, you can change it */
+    color: var(--color5);
 }
-
-/* End of additional styles for centering columns in the footer */
 
 #copyright-row {
     text-align: center;

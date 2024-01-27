@@ -18,6 +18,7 @@ stars.forEach(star => {
     });
 });
 
+// Funzione che colora le stelle in base a quella selezionata
 function highlightStars(value, classname) {
     stars.forEach(star => {
         const starValue = parseInt(star.getAttribute('data-value'));

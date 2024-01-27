@@ -4,14 +4,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px; /* Adjust the width as needed */
+    width: 300px;
     height: 350px;
     margin: 20px;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px; /* Rounded corners */
-    transition: box-shadow 0.3s ease-in-out; /* Smooth box-shadow transition */
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease-in-out;
 }
 
 .tutor:hover {
@@ -19,16 +19,16 @@
 }
 
 .profile-image {
-    width: 150px; /* Adjust the width as needed */
-    height: 150px; /* Adjust the height as needed */
+    width: 150px;
+    height: 150px;
     border: 2px solid var(--color5);
     border-radius: 50%;
     margin-bottom: 10px;
-    transition: transform 0.3s ease-in-out; /* Smooth transformation on hover */
+    transition: transform 0.3s ease-in-out;
 }
 
 .profile-image:hover {
-    transform: scale(1.2); /* Enlargement animation on hover */
+    transform: scale(1.2);
 }
 
 .name {
@@ -53,6 +53,6 @@
 
 .insegnamento {
     font-weight: bold;
-    color: #3498db; /* Blue color, you can change it */
+    color: var(--color3);
     margin-bottom: 5px;
 }

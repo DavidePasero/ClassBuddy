@@ -250,7 +250,7 @@ function get_convos () {
 }
 
 get_convos ();
-// Every 10 seconds, get the list of conversations with the last message
+// Aggiorno le conversazioni ogni 10 secondi
 setInterval (get_convos, 10000);
 
 // Funzione che restituisce la data e l'ora attuale nel formato "yyyy-mm-dd hh:mm:ss"
@@ -264,7 +264,6 @@ function getFormattedTimestamp() {
     const minutes = currentDate.getMinutes().toString().padStart(2, '0');
     const seconds = currentDate.getSeconds().toString().padStart(2, '0');
 
-    // Create the formatted timestamp
     const formattedTimestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
     return formattedTimestamp;

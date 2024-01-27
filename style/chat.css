@@ -192,11 +192,6 @@
     border-radius: 10px 10px 10px 0px;
 }
 
-/*
-#scrivi_messaggio is a form that contains two visible input:
-the textbox on which the user writes the message and the send
-button. I want these two elements to be on the same line
-*/
 #scrivi_messaggio {
     height: 10%;
     margin: auto;
