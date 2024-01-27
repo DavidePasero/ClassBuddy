@@ -58,7 +58,7 @@
         $res = prepared_query ($db,
             "SELECT * FROM S5204959.utente WHERE cookie_id=?",
             [$login_hash]);
-        if ($res->num_rows > 0) {throw new Exception ("Login code already used");}
+        return $res->num_rows > 0;
     }
 
     function getAverageRating($db, $userEmail) {

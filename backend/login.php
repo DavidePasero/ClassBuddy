@@ -54,7 +54,7 @@
 		do {
 			$cookie_id = hash ("sha256", $res ["pass"] . time ());
 			$hash_cookie_id = hash ("sha256", $cookie_id); // hash del cookie_id per motivi di sicurezza
-		} while (!check_login_code ($db, $hash_cookie_id));
+		} while (check_login_code ($db, $hash_cookie_id));
 
 		// Scade in 15 giorni
 		$expiration = time()+60*60*24*15;
