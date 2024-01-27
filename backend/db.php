@@ -7,16 +7,14 @@
         $db = new mysqli($config_info["hostname"], $config_info["user"], $config_info["password"], $config_info["database"]);
 
         // Controllo se ci siamo connessi con successo
-        if ($db->connect_errno) {
+        if ($db->connect_errno)
             throw new RuntimeException('mysqli connection error: ' . $db->connect_error);
-        }
         
         // Impostiamo il charset da utilizzare con il database
         $db->set_charset('utf8mb4');
         // Controlliamo che set_charset sia andata a buon fine
-        if ($db->errno) {
+        if ($db->errno)
             throw new RuntimeException('mysqli error: ' . $db->error);
-        }
 
         return $db;
     }
