@@ -9,7 +9,6 @@
 
 	$valid_data = TRUE;
 
-	// unset di tutte le variabili di sessione
 	$_SESSION = array ();
 
 	if (!isset ($_POST ["firstname"]) or strlen (trim ($_POST["firstname"])) <= 0) {
@@ -38,9 +37,9 @@
 		$valid_data = false;
 	}
 
-	// Check city and online_presenza only if the user is a tutor
+	// Controlla città e online/presenza solo se il ruolo è tutor
 	if ($_POST ["role"] == "tutor") {
-		// Checks if $_POST["citta"] is a city in the file ../res/citta.txt
+		// Controlla se $_POST["citta"] è una città nel file ../res/citta.txt
 		$valid_citta = false;
 		if ($valid_data) {
 			$file = fopen("../res/citta.txt", "r");
@@ -52,39 +51,40 @@
 				}
 			}
 		}
-		// If city isn't valid, form isn't valid
+	
 		if (!$valid_citta) {
 			$_SESSION["citta"] = true;
 			$valid_data = false;
 		}
 
-		// Check if at least one of the checkboxes is checked
+		// Controlla se almeno uno dei due checkbox per lezioni online o in presenza è stato selezionato
 		if (!isset ($_POST ["online"]) and !isset ($_POST ["presenza"])) {
 			$_SESSION["online_presenza"] = true;
 			$valid_data = false;
 		}
 	}
 
-	// If the form is valid, we can insert the user in the database
 	if ($valid_data) {
-		// Trim of all the fields passed with POST
 		foreach ($_POST as $key => $value) {
 			$_POST [$key] = trim ($value);
 		}
 
-		// Insert user in utente table
-		prepared_query ($db,
-			"INSERT INTO S5204959.utente (firstname, lastname, email, pass, role) VALUES (?, ?, ?, ?, ?)",
-			[$_POST ["firstname"], $_POST ["lastname"], $_POST ["email"], password_hash ($_POST ["pass"], PASSWORD_DEFAULT), $_POST ["role"]]);
+		$res = prepared_query ($db,
+				"INSERT INTO S5204959.utente (firstname, lastname, email, pass, role) VALUES (?, ?, ?, ?, ?)",
+				[$_POST ["firstname"], $_POST ["lastname"], $_POST ["email"], password_hash ($_POST ["pass"], PASSWORD_DEFAULT), $_POST ["role"]]);
+		if (!$res)
+			echo_back_json_data (create_error_msg ("Errore durante la registrazione"));
 
-		// If user is a tutor, then inserts the tutor in the tutor table
+		// Se il ruolo è tutor, inserisce i dati nella tabella tutor
 		if ($_POST ["role"] == "tutor") {
-			// If the checkbox was checked, then the value is set to true, otherwise it's set to false
+			// Se la checkbox è selezionata, il valore è settato a true, altrimenti a false
 			$_POST ["online"] = isset ($_POST ["online"]) ? 1 : 0;
 			$_POST ["presenza"] = isset ($_POST ["presenza"]) ? 1 : 0;
-			prepared_query ($db,
-				"INSERT INTO S5204959.tutor (email, citta, online, presenza) VALUES (?, ?, ?, ?)",
-				[$_POST ["email"], $_POST ["citta"], $_POST ["online"], $_POST ["presenza"]]);
+			$res = prepared_query ($db,
+					"INSERT INTO S5204959.tutor (email, citta, online, presenza) VALUES (?, ?, ?, ?)",
+					[$_POST ["email"], $_POST ["citta"], $_POST ["online"], $_POST ["presenza"]]);
+			if (!$res)
+				echo_back_json_data (create_error_msg ("Errore durante la registrazione"));
 		}
 		header ("Location: ../pages/login_form.php");
 	}

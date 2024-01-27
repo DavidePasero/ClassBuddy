@@ -19,26 +19,16 @@ $user_profile_info = select_user_email($db, $user_profile);
 
 // Funzione per verificare se il tutor ha inviato almeno un messaggio allo studente
 function hasSentMessageToStudent($db, $tutorEmail, $studentEmail) {
-    $query = "SELECT COUNT(*) as count FROM messaggio WHERE mittente = ? AND destinatario = ? LIMIT 1";
-    $stmt = $db->prepare($query);
-    $stmt->bind_param("ss", $tutorEmail, $studentEmail);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $result = prepared_query($db, "SELECT COUNT(*) as count FROM messaggio WHERE mittente = ? AND destinatario = ? LIMIT 1", [$tutorEmail, $studentEmail]);
     $row = $result->fetch_assoc();
     $count = $row['count'];
-    $stmt->close();
 
     return $count > 0;
 }
 
 function getStudentReview($db, $tutorEmail, $studentEmail) {
-    $query = "SELECT valutaz, commento FROM recensione WHERE tutor = ? AND studente = ? LIMIT 1";
-    $stmt = $db->prepare($query);
-    $stmt->bind_param("ss", $tutorEmail, $studentEmail);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $result = prepared_query($db, "SELECT valutaz, commento FROM recensione WHERE tutor = ? AND studente = ? LIMIT 1", [$tutorEmail, $studentEmail]);
     $row = $result->fetch_assoc();
-    $stmt->close();
 
     return $row;
 }
