@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 session_start();
 
 require 'db.php';
+require 'utils.php';
 
 $db = connect_to_db();
 
@@ -33,7 +34,7 @@ if (isset($_POST["prezzo"]) and $_POST["prezzo"] !== "")
 else
     $prezzo = 1000;
 
-// Filters the tutors based on the user's input
+// Filtra i tutor in base ai parametri
 $query = <<<QUERY
             SELECT DISTINCT tutor.email FROM S5204959.tutor
             JOIN S5204959.insegnamento ON tutor.email = insegnamento.tutor
@@ -58,7 +59,7 @@ if ($filtered_tutors === false or count($filtered_tutors) === 0) {
     exit;
 }
 
-// Selects all the informations of the tutors that match the filters
+// Seleziona tutte le informazioni dei tutor filtrati
 $query = "SELECT
     tutor.email,
     tutor.citta,
@@ -87,19 +88,10 @@ if ($data === false) {
     exit;
 }
 
-// Encodes tutor propic in base64 and creates a data URI
+// Data uri di ogni immagine
 $tutors_data = array();
 foreach ($data as $tutor) {
-    if ($tutor["propic"] !== NULL) {
-        // Create a data URI for the image
-        $imageData = base64_encode($tutor["propic"]);
-        $imageType = $tutor["propic_type"];
-        $dataUri = "data:image/{$imageType};base64,{$imageData}";
-        $tutor["propic"] = $dataUri;
-    } else {
-        // Use a default image if propic is NULL
-        $tutor["propic"] = "../img/defaultUser.jpg";
-    }
+    $tutor["propic"] = get_data_uri ($tutor["propic"], $tutor["propic_type"]);
     $tutors_data[$tutor["email"]] = $tutor;
 }
 
