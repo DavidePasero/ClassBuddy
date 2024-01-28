@@ -178,6 +178,10 @@ if (submitButton !== null) {
         if (show_info.style.display === 'none') {
             document.getElementById('name-span').textContent = formData.get('firstname') + " " + formData.get('lastname');
             editInfoButton.click();
+        // Se le textbox non sono visibili rimuovo i campi nome e cognome dal form data: non sarebbe intuitivo inviarli lo stesso
+        } else {
+            formData.delete('firstname');
+            formData.delete('lastname');
         }
 
         if (is_tutor) {

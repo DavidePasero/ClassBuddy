@@ -80,7 +80,7 @@ main {
 }
 
 #image-div {
-    text-align: center;
+    display: flex;
     width: 300px;
     height: 300px;
     overflow: hidden;

@@ -3,6 +3,9 @@
 #edit-info-btn {
     position: relative;
     align-self: flex-end;
+    margin-bottom: 5px;
+    width: 30px;
+    height: 30px;
 }
 
 #edit_info {
@@ -12,7 +15,8 @@
 }
 
 #edit-button {
-    position: absolute;
+    position: sticky;
+    align-self: flex-end;
     bottom: 5px;
     right: 5px;
     width: 30px;
