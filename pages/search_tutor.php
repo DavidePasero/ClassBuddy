@@ -32,7 +32,7 @@
                     <option value="Online">Online</option>
                 </datalist>
 
-                <select id="materia" class="parameter" name="materia" placeholder="Filtra per materia" required>
+                <select id="materia" class="parameter" name="materia" required>
                 </select>
 
                 <input type="number" id="prezzo" class="parameter" name="prezzo" min=1 max=1000 placeholder="Tariffa oraria massima">

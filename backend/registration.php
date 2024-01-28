@@ -20,7 +20,7 @@
 		$valid_data = false;
 	}
 	// Valida in modo piuttosto buono le mail automaticamente
-	if (!isset ($_POST ["email"]) or !(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) or existing_email ($db, $_POST["email"])) {
+	if (!isset ($_POST ["email"]) or !(filter_var(trim($_POST["email"]), FILTER_VALIDATE_EMAIL)) or existing_email ($db, trim($_POST["email"]))) {
 		$_SESSION["email"] = true;
 		$valid_data = false;
 	}

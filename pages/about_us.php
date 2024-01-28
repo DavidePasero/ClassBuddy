@@ -7,12 +7,12 @@
 ?>
 <html lang="it">
 <head>
+    <meta charset="utf-8">
     <title>About Us - ClassBuddy</title>
     <link rel="icon" href="../img/image.x" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/about_us.css">
 </head>
-<meta charset="utf-8">
 <body>
     <?php echo print_header();?>
     <main>

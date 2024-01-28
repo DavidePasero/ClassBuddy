@@ -53,7 +53,7 @@
         <div id="chat" <?php if (is_null($get_user)) echo "hidden"?>>
             <div id="chat-user-info">
                 <a id="profile-link" href="profile.php?email=<?php if (!empty($get_user)) echo $get_user["email"]?>">
-                    <img id="chat-propic" src="<?php if (!empty($get_user)) echo $get_user["propic"]?>" alt="Foto profilo">
+                    <img id="chat-propic" src="<?php if (!empty($get_user)) echo $get_user["propic"]; else echo "#"?>" alt="Foto profilo">
                 </a>
                 <h4 id="chat-username"><?php if (!empty($get_user)) echo htmlentities ($get_user["firstname"] . " " . $get_user["lastname"])?></h4>
                 <div id="search-container">

@@ -92,7 +92,7 @@ if (is_tutor) {
         insegnamento.classList.add('insegnamento');
 
         // Rimuove gli insegnamenti presenti dall'elenco degli insegnamenti disponibili
-        let insegnamenti_presenti = Array.from(insegnamenti_list.querySelectorAll('[name="materia[]"]')).map(e => e.textContent);
+        let insegnamenti_presenti = Array.from(insegnamenti_list.querySelectorAll('.materia')).map(e => e.textContent);
         let insegnamenti_disponibili = insegnamenti.filter(e => !insegnamenti_presenti.includes(e));
         
         // Crea un dropdown menu con gli insegnamenti disponibili

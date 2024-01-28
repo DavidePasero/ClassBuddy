@@ -81,7 +81,7 @@
                 ?>
 
                 <div id="image_div">
-                    <img id="image-preview" src=<?php echo $dataUri;?> alt="Profile picture">
+                    <img id="image-preview" src="<?php echo $dataUri;?>" alt="Profile picture">
                     <?php
                         if ($myprofile) {
                             echo <<<MODIFY_PIC
@@ -113,7 +113,7 @@
                                 nella gestione delle eliminazioni*/
                                 echo <<<INSEGNAMENTI_PRESENTI
                                         <li class="insegnamento">
-                                            <span name="materia[]">{$insegnamento ["materia"]}</span>
+                                            <span class="materia">{$insegnamento ["materia"]}</span>
                                             <span>{$insegnamento ["tariffa"]}€/ora</span>
                                         INSEGNAMENTI_PRESENTI;
                                     if ($myprofile) {
