@@ -144,10 +144,11 @@ function loadChat(recipient, item) {
         addMessagesToChat (data);
         // Scrollo automaticamente la chat fino all'ultimo messaggio
         chat.scrollTop = chat.scrollHeight;
-
         clearInterval(interval_fetch_messages);
-        latestTimestamp = data[data.length - 1]["timestamp"];
         interval_fetch_messages = setInterval(fetchNewMessages, 5000);
+
+        if (data.length > 0)
+            latestTimestamp = data[data.length - 1]["timestamp"];
     })
     .catch(error => console.error("Error fetching chat:", error));
 
@@ -275,6 +276,4 @@ function addMessagesToChat(messages) {
 function update_message_preview (message, recipient) {
     let preview = document.querySelector(`#sidebar .user-item[data-recipient='${recipient}'] .last-message`);
     preview.textContent = message;
-    if (message.length > 13)
-        preview.textContent = preview.textContent.substring(0, 13) + "...";
 }

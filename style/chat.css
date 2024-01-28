@@ -53,8 +53,10 @@
 .last-message {
     font-size: 14px;
     color: #888;
-    word-wrap: break-word;
-    word-break:normal;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 16px);
 }
 
 #no-recipient-selected {

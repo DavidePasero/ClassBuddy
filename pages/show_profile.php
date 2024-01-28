@@ -80,7 +80,7 @@
                 }
                 ?>
 
-                <div id="image_div">
+                <div id="image-div">
                     <img id="image-preview" src="<?php echo $dataUri;?>" alt="Profile picture">
                     <?php
                         if ($myprofile) {

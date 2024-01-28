@@ -41,7 +41,7 @@ function previewImage() {
 }
 
 // Abilito drag and drop
-const imageDiv = document.getElementById('image_div');
+const imageDiv = document.getElementById('image-div');
 imageDiv.addEventListener('dragover', function (e) {
     e.preventDefault();
     if (!imageDiv.classList.contains('dragover')) {
