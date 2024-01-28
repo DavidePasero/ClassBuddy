@@ -20,7 +20,7 @@
     <title>Login</title>
 	<link rel="stylesheet" type="text/css" href="../style/form.css">
     <link rel="stylesheet" type="text/css" href="../style/page.css">
-	<script defer src="../scripts/login_form.js"></script>
+	<script src="../scripts/login_form.js" defer></script>
 </head>
 
 <body>

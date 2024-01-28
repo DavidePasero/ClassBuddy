@@ -46,7 +46,7 @@ $can_write_review = $user_profile_info["role"] == "studente" &&
     <link rel="stylesheet" type="text/css" href="../style/review.css">
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/stelline.css">
-    <script type="module" src="../scripts/reviews.js" defer></script>
+    <script type="module" src="../scripts/reviews.js"></script>
     <?php if ($can_write_review)
         echo "<script src=\"../scripts/stelline.js\" defer></script>";
     ?>

@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="../style/tutor.css">
     <link rel="stylesheet" type="text/css" href="../style/search_tutor.css">
     <link rel="stylesheet" type="text/css" href="../style/form.css">
-    <script type="module" src="../scripts/filter_tutor.js" defer></script>
+    <script type="module" src="../scripts/filter_tutor.js"></script>
     <title>ClassBuddy</title>
 </head>
 <body>

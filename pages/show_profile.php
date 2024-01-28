@@ -38,7 +38,7 @@
     <link rel="stylesheet" type="text/css" href="../style/update_profile.css">
     <link rel="stylesheet" type="text/css" href="../style/stelline.css">
     <?php if ($myprofile)
-        echo "<script type=\"module\" src=\"../scripts/update_profile.js\" defer></script>";
+        echo "<script type=\"module\" src=\"../scripts/update_profile.js\"></script>";
     ?>
     <meta charset="utf-8">
 </head>
