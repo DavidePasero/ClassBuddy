@@ -19,13 +19,7 @@ $db->begin_transaction();
 $insegnamenti = explode ("\n", file_get_contents("../res/insegnamenti.txt"));
 
 try {
-    if (isset ($_POST ["remove_insegnamento"])) {
-        for ($i = 0; $i < count ($_POST ["remove_insegnamento"]); $i++) {
-            // Elimina tutte le tuple (tutor, materia, tariffa) dove tutor è l'utente corrente
-            prepared_query ($db, "DELETE FROM S5204959.insegnamento WHERE tutor=? AND materia=?;", [$_SESSION["email"], $_POST ["remove_insegnamento"][$i]]);
-        }
-    }
-
+    // Modifica della foto profilo
     if (isset($_FILES["propic"]) and $_FILES["propic"]["error"] == UPLOAD_ERR_OK) {
         // Recupera le info del file
         $propic = $_FILES["propic"];
@@ -41,6 +35,15 @@ try {
             prepared_query ($db, "UPDATE S5204959.utente SET propic=?, propic_type=? WHERE email=?;", [$propicContent, $fileExtension, $_SESSION["email"]]);
     }
 
+    // Rimozione degli insegnamenti
+    if ($_SESSION ["role"] === "tutor" and isset ($_POST ["remove_insegnamento"])) {
+        for ($i = 0; $i < count ($_POST ["remove_insegnamento"]); $i++) {
+            // Elimina tutte le tuple (tutor, materia, tariffa) dove tutor è l'utente corrente
+            prepared_query ($db, "DELETE FROM S5204959.insegnamento WHERE tutor=? AND materia=?;", [$_SESSION["email"], $_POST ["remove_insegnamento"][$i]]);
+        }
+    }
+
+    // Aggiunta degli insegnamenti
     if (
         $_SESSION ["role"] === "tutor" and 
         isset ($_POST ["materia"]) and isset ($_POST ["tariffa"]) and

@@ -4,36 +4,7 @@ let editInfoButton = document.getElementById('edit-info');
 let editButton = document.getElementById('edit-button');
 let fileInput = document.getElementById('propic');
 
-editInfoButton.addEventListener('click', function (e) {
-    e.preventDefault();
-    // Recupera riferimenti di container e span
-    const infoContainer = document.getElementById('info-container');
-    const nameSpan = document.getElementById('name-span');
-    const emailSpan = document.getElementById('email-span');
 
-    // Create input elements
-    const firstNameInput = document.createElement('input');
-    firstNameInput.type = 'text';
-    firstNameInput.name = 'firstname';
-    firstNameInput.value = nameSpan.textContent.split(' ')[0]; // Extract first name
-
-    const lastNameInput = document.createElement('input');
-    lastNameInput.type = 'text';
-    lastNameInput.name = 'lastname';
-    lastNameInput.value = nameSpan.textContent.split(' ')[1]; // Extract last name
-
-    const emailInput = document.createElement('input');
-    emailInput.type = 'text';
-    emailInput.name = 'email';
-    emailInput.value = emailSpan.textContent;
-
-    // Replace spans with input elements
-    nameSpan.remove ();
-    emailSpan.remove ();
-    infoContainer.appendChild(firstNameInput);
-    infoContainer.appendChild(lastNameInput);
-    infoContainer.appendChild(emailInput);
-});
 
 editButton.addEventListener('click', openFileInput);
 fileInput.addEventListener('change', previewImage);
@@ -177,17 +148,20 @@ const submitButton = document.getElementById('submit_button');
 if (submitButton !== null) {
     submitButton.addEventListener('click', (event) => {
     event.preventDefault();
-    const form = document.forms.modify_profile;
+    const form = document.forms.update_profile;
 
-    // Verifica se tutti i campi non sono vuoti
-    const inputs = form.querySelectorAll('input[type="text"], input[type="number"], select');
+    // Verifica che nessun campo sia vuoto
+    let inputs = form.querySelectorAll('input[type="text"], input[type="number"], select');
     let compiled = true;
-
-    inputs.forEach((element) => {
-        if (element.value === "") compiled = false;
+    inputs.forEach(element => {
+        if (element.value == "")
+            compiled = false;
     });
 
     if (compiled) {
+        // Crea un oggetto FormData per raccogliere i dati del modulo
+        const formData = new FormData(form);
+        
         if (is_tutor) {
             // Converti gli elementi materia e tariffa in elementi <span>
             // Recupera tutti gli elementi di input
@@ -200,9 +174,9 @@ if (submitButton !== null) {
                 const span = document.createElement('span');
                 span.textContent = elems[i].value + " ";
                 // Aggiungi €/ora se l'elemento di input è l'elemento tariffa
-                if (elems[i].name === 'tariffa[]') {
+                if (elems[i].name === 'tariffa[]')
                     span.textContent += '€/ora';
-                }
+                
                 // Sostituisci l'elemento di input con l'elemento span
                 elems[i].parentElement.replaceChild(span, elems[i]);
             }
@@ -210,25 +184,22 @@ if (submitButton !== null) {
 
             replaceWithSpan(materie);
             replaceWithSpan(tariffe);
-      }
+        }
 
-      // Crea un oggetto FormData per raccogliere i dati del modulo
-      const formData = new FormData(form);
-
-      // Invia i dati del modulo al server tramite fetch
-      fetch('../backend/update_profile.php', {
-        method: 'POST',
-        body: formData
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.error) {
-            showPopup(data.error, true);
-            return;
-          }
-          showPopup(data.status, false);
+        // Invia i dati del modulo al server tramite fetch
+        fetch('../backend/update_profile.php', {
+            method: 'POST',
+            body: formData
         })
-        .catch((err) => console.error(err));
+            .then((response) => response.json())
+            .then((data) => {
+            if (data.error) {
+                showPopup(data.error, true);
+                return;
+            }
+            showPopup(data.status, false);
+            })
+            .catch((err) => console.error(err));
     } else {
       showPopup('Compila tutti i campi', true);
     }

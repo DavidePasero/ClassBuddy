@@ -9,7 +9,7 @@ require 'db.php';
 require 'utils.php';
 $db = connect_to_db ();
 
-// Questo script mette insieme tutti i pezzi della chat: fetch_chat, new_msgs, search_msgs, send_msg.
+// This script puts together all the pieces of the chat: fetch_chat, new_msgs, search_msgs, send_msg.
 if (!isset($_SESSION["authenticated"]) or $_SERVER["REQUEST_METHOD"] != "POST")
     echo_back_json_data (create_error_msg ("Devi essere autenticato per proseguire, inoltre, bad request"));
 
@@ -111,16 +111,16 @@ function send_msg ($db) {
     if (!isset ($_POST ["message"]) or empty ($_POST ["message"]))
         echo_back_json_data (create_error_msg ("Devi inserire un messaggio"));
 
-    // Controlla se la chat è valida (Tutor a Studente o Studente a Tutor)
+    // Check if the chat is valid (Tutor to Student or Student to Tutor)
     $recipient = select_user_email ($db, $_POST ["recipient"]);
 
     if (!$recipient)
         echo_back_json_data (create_error_msg ("Destinatario non trovato"));
     
-    // Controlla se il destinatario ha un ruolo diverso dal mittente
+    // Check if the recipient has a different role as the sender
     if ($recipient["role"] !== $_SESSION ["role"]) {
-        // Send message prende i seguenti dati: mittente, destinatario, messaggio.
-        // Il mittente è l'utente che è loggato, il destinatario è l'utente con cui il mittente sta chattando.
+        // Send message receive the following data: sender, recipient, message.
+        // The sender is the user that is logged in, the recipient is the user that the sender is chatting with.
         $insert_msg = prepared_query ($db, 
         "INSERT INTO S5204959.messaggio (mittente, destinatario, timestamp, testo) VALUES (?, ?, ?, ?)",
         [$_SESSION ["email"], $_POST ["recipient"], date("Y-m-d H:i:s"), $_POST ["message"]]);

@@ -22,12 +22,6 @@
     $user_profile = isset($_GET["email"]) ? $_GET["email"] : $_SESSION["email"];
     $user_profile_info = select_user_email($db, $user_profile);
 
-    // Se l'utente non esiste, allora lo reindirizzo alla pagina principale
-    if ($user_profile_info === null) {
-        $db->close ();
-        header ("Location: index.php");
-    }
-
     $dataUri = get_data_uri($user_profile_info["propic"], $user_profile_info["propic_type"]);
 
     $myprofile = $user_profile_info["email"] === $_SESSION["email"];
@@ -51,8 +45,8 @@
 <body>
     <?php echo print_header();?>
     <main>
-    <div id="contact-card">
-            <form id="modify-profile" action="../backend/update_profile.php" method="POST" name="update_profile" enctype="multipart/form-data">
+        <div id="contact-card">
+            <form id="update_profile" action="../backend/update_profile.php" method="POST" name="update_profile" enctype="multipart/form-data">
                 <div id="info-container">
                     <?php if ($myprofile): ?>
                         <button id="edit-info" class="btn only-icon-button">
@@ -63,7 +57,7 @@
                     <span id="name-span"><?php echo htmlentities($user_profile_info["firstname"] . " " . $user_profile_info["lastname"])?></span>
                     <span id="email-span"><?php echo htmlentities($user_profile_info["email"])?></span>
                 </div>
-                
+
                 <?php 
                 if ($user_profile_info["role"] === "tutor" && $averageRating !== null) {
                     echo '<div class="rating" id="rating">';
@@ -145,7 +139,7 @@
                                 <input class="btn submit" type="submit" id="submit_button" name="Submit" value="Salva modifiche">
                             </div>
                             SUBMIT_FORM;
-                    }?>
+                }?>
             </form>
 
             <!--Chat button che chiama chat.php con l'email del destinatario come parametro della GET
