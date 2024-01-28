@@ -105,6 +105,8 @@ footer {
 
 input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], select, input[list] {
     outline: 1px solid var(--light-color1);
+    padding: 10px;
+    border-radius: 10px;
     border-width: 0px;
 }
 

@@ -1,5 +1,10 @@
 @import url('palette.css');
 
+#edit-info {
+    position: relative;
+    align-self: flex-end;
+}
+
 #edit-button {
     position: absolute;
     bottom: 5px;

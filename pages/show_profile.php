@@ -41,10 +41,10 @@
     <link rel="icon" href="img/image.x" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="../style/page.css">
     <link rel="stylesheet" type="text/css" href="../style/profile.css">
-    <link rel="stylesheet" type="text/css" href="../style/modify_profile.css">
+    <link rel="stylesheet" type="text/css" href="../style/update_profile.css">
     <link rel="stylesheet" type="text/css" href="../style/stelline.css">
     <?php if ($myprofile)
-        echo "<script type=\"module\" src=\"../scripts/modify_profile.js\" defer></script>";
+        echo "<script type=\"module\" src=\"../scripts/update_profile.js\" defer></script>";
     ?>
     <meta charset="utf-8">
 </head>
@@ -52,24 +52,33 @@
     <?php echo print_header();?>
     <main>
     <div id="contact-card">
-            <p id="name"><?php echo htmlentities($user_profile_info["firstname"] . " " . $user_profile_info["lastname"])?></p>
+            <form id="modify-profile" action="../backend/update_profile.php" method="POST" name="update_profile" enctype="multipart/form-data">
+                <div id="info-container">
+                    <?php if ($myprofile): ?>
+                        <button id="edit-info" class="btn only-icon-button">
+                            <img src="../res/icons/edit.svg" alt="Edit icon">
+                        </button>
+                    <?php endif; ?>
 
-            <?php 
-            if ($user_profile_info["role"] === "tutor" && $averageRating !== null) {
-                echo '<div class="rating" id="rating">';
-                for ($i = 0; $i < 5; $i++) {
-                    if ($i < round($averageRating))
-                        echo '<span class="star active">&#9733;</span>';
-                    else
-                        echo '<span class="star">&#9733;</span>';
+                    <span id="name-span"><?php echo htmlentities($user_profile_info["firstname"] . " " . $user_profile_info["lastname"])?></span>
+                    <span id="email-span"><?php echo htmlentities($user_profile_info["email"])?></span>
+                </div>
+                
+                <?php 
+                if ($user_profile_info["role"] === "tutor" && $averageRating !== null) {
+                    echo '<div class="rating" id="rating">';
+                    for ($i = 0; $i < 5; $i++) {
+                        if ($i < round($averageRating))
+                            echo '<span class="star active">&#9733;</span>';
+                        else
+                            echo '<span class="star">&#9733;</span>';
+                    }
+                    $number = number_format($averageRating, 1, ",");
+                    echo '<span class=text>' . $number . ' su 5</span>';
+                    echo '</div>';
                 }
-                $number = number_format($averageRating, 1, ",");
-                echo '<span class=text>' . $number . ' su 5</span>';
-                echo '</div>';
-            }
-            ?>
+                ?>
 
-            <form id="modify-profile" action="../backend/modify_profile.php" method="POST" name="modify_profile" enctype="multipart/form-data">
                 <div id="image_div">
                     <img id="image-preview" src=<?php echo $dataUri;?> alt="Profile picture">
                     <?php

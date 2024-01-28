@@ -1,7 +1,39 @@
 import { showPopup } from "./utils.js";
 
+let editInfoButton = document.getElementById('edit-info');
 let editButton = document.getElementById('edit-button');
 let fileInput = document.getElementById('propic');
+
+editInfoButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    // Recupera riferimenti di container e span
+    const infoContainer = document.getElementById('info-container');
+    const nameSpan = document.getElementById('name-span');
+    const emailSpan = document.getElementById('email-span');
+
+    // Create input elements
+    const firstNameInput = document.createElement('input');
+    firstNameInput.type = 'text';
+    firstNameInput.name = 'firstname';
+    firstNameInput.value = nameSpan.textContent.split(' ')[0]; // Extract first name
+
+    const lastNameInput = document.createElement('input');
+    lastNameInput.type = 'text';
+    lastNameInput.name = 'lastname';
+    lastNameInput.value = nameSpan.textContent.split(' ')[1]; // Extract last name
+
+    const emailInput = document.createElement('input');
+    emailInput.type = 'text';
+    emailInput.name = 'email';
+    emailInput.value = emailSpan.textContent;
+
+    // Replace spans with input elements
+    nameSpan.remove ();
+    emailSpan.remove ();
+    infoContainer.appendChild(firstNameInput);
+    infoContainer.appendChild(lastNameInput);
+    infoContainer.appendChild(emailInput);
+});
 
 editButton.addEventListener('click', openFileInput);
 fileInput.addEventListener('change', previewImage);
@@ -184,7 +216,7 @@ if (submitButton !== null) {
       const formData = new FormData(form);
 
       // Invia i dati del modulo al server tramite fetch
-      fetch('../backend/modify_profile.php', {
+      fetch('../backend/update_profile.php', {
         method: 'POST',
         body: formData
       })
