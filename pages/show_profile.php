@@ -49,13 +49,20 @@
             <form id="update_profile" action="../backend/update_profile.php" method="POST" name="update_profile" enctype="multipart/form-data">
                 <div id="info-container">
                     <?php if ($myprofile): ?>
-                        <button id="edit-info" class="btn only-icon-button">
+                        <button id="edit-info-btn" class="btn only-icon-button">
                             <img src="../res/icons/edit.svg" alt="Edit icon">
                         </button>
                     <?php endif; ?>
 
-                    <span id="name-span"><?php echo htmlentities($user_profile_info["firstname"] . " " . $user_profile_info["lastname"])?></span>
-                    <span id="email-span"><?php echo htmlentities($user_profile_info["email"])?></span>
+                    <div id="show_info">
+                        <span id="name-span"><?php echo htmlentities($user_profile_info["firstname"] . " " . $user_profile_info["lastname"])?></span>
+                        <span id="email-span"><?php echo htmlentities($user_profile_info["email"])?></span>
+                    </div>
+
+                    <div id="edit_info">
+                        <input type="text" id="firstname" name="firstname" value="<?php echo htmlentities($user_profile_info["firstname"])?>">
+                        <input type="text" id="lastname" name="lastname" value="<?php echo htmlentities($user_profile_info["lastname"])?>">
+                    </div>
                 </div>
 
                 <?php 

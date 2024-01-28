@@ -1,8 +1,14 @@
 @import url('palette.css');
 
-#edit-info {
+#edit-info-btn {
     position: relative;
     align-self: flex-end;
+}
+
+#edit_info {
+    display: none;
+    flex-direction: column;
+    text-align: center;
 }
 
 #edit-button {

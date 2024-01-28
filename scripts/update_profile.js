@@ -1,10 +1,22 @@
 import { showPopup } from "./utils.js";
 
-let editInfoButton = document.getElementById('edit-info');
+let editInfoButton = document.getElementById('edit-info-btn');
 let editButton = document.getElementById('edit-button');
 let fileInput = document.getElementById('propic');
 
-
+let show_info = document.getElementById('show_info');
+let edit_info = document.getElementById('edit_info');
+editInfoButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    if (show_info.style.display === 'none') {
+        show_info.style.display = 'flex';
+        edit_info.style.display = 'none';
+    }
+    else {
+        show_info.style.display = 'none';
+        edit_info.style.display = 'flex';
+    }
+});
 
 editButton.addEventListener('click', openFileInput);
 fileInput.addEventListener('change', previewImage);
@@ -161,7 +173,13 @@ if (submitButton !== null) {
     if (compiled) {
         // Crea un oggetto FormData per raccogliere i dati del modulo
         const formData = new FormData(form);
-        
+
+        // Per il nome e cognome ricostruisco la span con i nuovi valori
+        if (show_info.style.display === 'none') {
+            document.getElementById('name-span').textContent = formData.get('firstname') + " " + formData.get('lastname');
+            editInfoButton.click();
+        }
+
         if (is_tutor) {
             // Converti gli elementi materia e tariffa in elementi <span>
             // Recupera tutti gli elementi di input
@@ -169,17 +187,17 @@ if (submitButton !== null) {
             const tariffe = insegnamenti_list.querySelectorAll('[name="tariffa[]"][type="number"]');
 
             function replaceWithSpan(elems) {
-            for (let i = 0; i < elems.length; i++) {
-                // Crea un elemento span con lo stesso contenuto dell'elemento di input
-                const span = document.createElement('span');
-                span.textContent = elems[i].value + " ";
-                // Aggiungi €/ora se l'elemento di input è l'elemento tariffa
-                if (elems[i].name === 'tariffa[]')
-                    span.textContent += '€/ora';
-                
-                // Sostituisci l'elemento di input con l'elemento span
-                elems[i].parentElement.replaceChild(span, elems[i]);
-            }
+                for (let i = 0; i < elems.length; i++) {
+                    // Crea un elemento span con lo stesso contenuto dell'elemento di input
+                    const span = document.createElement('span');
+                    span.textContent = elems[i].value + " ";
+                    // Aggiungi €/ora se l'elemento di input è l'elemento tariffa
+                    if (elems[i].name === 'tariffa[]')
+                        span.textContent += '€/ora';
+                    
+                    // Sostituisci l'elemento di input con l'elemento span
+                    elems[i].parentElement.replaceChild(span, elems[i]);
+                }
             }
 
             replaceWithSpan(materie);
