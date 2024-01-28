@@ -20,7 +20,7 @@ $insegnamenti = explode ("\n", file_get_contents("../res/insegnamenti.txt"));
 
 try {
     // Modifica di nome e cognome
-    if (isset ($_POST ["firstname"]) and isset ($_POST ["lastname"])) {
+    if (!empty ($_POST ["firstname"]) and !empty ($_POST ["lastname"])) {
         $_POST ["firstname"] = trim ($_POST ["firstname"]);
         $_POST ["lastname"] = trim ($_POST ["lastname"]);
         prepared_query ($db, "UPDATE S5204959.utente SET firstname=?, lastname=? WHERE email=?;", [$_POST ["firstname"], $_POST ["lastname"], $_SESSION ["email"]]);
@@ -82,7 +82,7 @@ try {
     4. viene ricevuta un'immagine ma con errore
     5. $status = false -> Query non andate a buon fine o materia non presente in $insegnamenti
 */
-$rule1 = (!isset($_FILES["propic"]) and !isset ($_POST ["materia"]) and !isset ($_POST ["tariffa"]));
+$rule1 = (!isset($_POST["firstname"]) and !isset($_POST["lastname"]) and !isset($_FILES["propic"]) and !isset ($_POST ["materia"]) and !isset ($_POST ["tariffa"]));
 $rule2 = (isset ($_POST ["materia"]) xor (isset ($_POST ["tariffa"])));
 $rule3 = (isset ($_POST["materia"]) and isset ($_POST ["tariffa"]) and count ($_POST ["materia"]) != count ($_POST ["tariffa"]));
 $rule4 = (isset($_FILES["propic"]) and $_FILES["propic"]["error"] != UPLOAD_ERR_OK and $_FILES["propic"]["error"] != UPLOAD_ERR_NO_FILE);
