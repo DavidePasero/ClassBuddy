@@ -174,7 +174,7 @@ if (submitButton !== null) {
         // Crea un oggetto FormData per raccogliere i dati del modulo
         const formData = new FormData(form);
 
-        // Per il nome e cognome ricostruisco la span con i nuovi valori
+        // Per il nome e cognome ricostruisco la span con i nuovi valori (simulo un click sul pulsante di modifica)
         if (show_info.style.display === 'none') {
             document.getElementById('name-span').textContent = formData.get('firstname') + " " + formData.get('lastname');
             editInfoButton.click();

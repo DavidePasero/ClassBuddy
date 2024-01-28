@@ -14,7 +14,7 @@ export function fill_tutor_grid (tutors) {
 
       // Create an img element for the profile picture
       let link = document.createElement('a');
-      link.href = `profile.php?email=${tutor["email"]}`;
+      link.href = `show_profile.php?email=${tutor["email"]}`;
       const img = document.createElement('img');
       img.src = tutor["propic"];
       img.alt = `${tutor["firstname"]} ${tutor["lastname"]}`;
