@@ -35,6 +35,12 @@ try {
             prepared_query ($db, "UPDATE S5204959.utente SET propic=?, propic_type=? WHERE email=?;", [$propicContent, $fileExtension, $_SESSION["email"]]);
     }
 
+    // Modifica di nome e cognome
+    if (isset ($_POST ["firstname"]) and isset ($_POST ["lastname"]))
+        $_POST ["firstname"] = trim ($_POST ["firstname"]);
+        $_POST ["lastname"] = trim ($_POST ["lastname"]);
+        prepared_query ($db, "UPDATE S5204959.utente SET firstname=?, lastname=? WHERE email=?;", [$_POST ["firstname"], $_POST ["lastname"], $_SESSION ["email"]]);
+
     // Rimozione degli insegnamenti
     if ($_SESSION ["role"] === "tutor" and isset ($_POST ["remove_insegnamento"])) {
         for ($i = 0; $i < count ($_POST ["remove_insegnamento"]); $i++) {
