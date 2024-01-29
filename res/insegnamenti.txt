@@ -12,4 +12,5 @@ Elettronica
 Latino
 Greco
 Filosofia
+Storia
 Musica
