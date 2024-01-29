@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST" or !isset($_POST["action"]) or empty($
 
 $tutors = array();
 
-$i = intval($_POST["i"]) * 4;
+$i = intval($_POST["i"]) * 3;
 
 // Se l'azione è quella di caricare tutti i tutor, eseguo $get_all_tutor_info_query
 if ($_POST["action"] === "get_all_tutor_info") {
@@ -124,7 +124,7 @@ function encode_propic (&$tutor) {
     return $tutor;
 }
 
-$tutors_data = array_slice($tutors_data, $i-4, 4);
+$tutors_data = array_slice($tutors_data, $i-3, 3);
 
 if (count($tutors_data) === 0)
     echo_back_json_data (create_error_msg ("Non ci sono tutor da caricare"));
