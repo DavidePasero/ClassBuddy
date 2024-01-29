@@ -114,6 +114,85 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
     outline: solid 2px var(--color4);
 }
 
+.checkbox-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--color1);
+}
+  
+/* Nascondo il default */
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+  
+.checkmark {
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    margin-right: 5px;
+}
+
+.checkmark.checkbox {
+    border-radius: 5px;
+}
+
+.checkmark.radio {
+    border-radius: 50%;
+}
+  
+/* Mouse over: aggiungo grigietto */
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+  
+/* Sfondo blue quando checked */
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--color3);
+}
+  
+/* Crea il simbolo del checkmark */
+.checkmark:after {
+    content: "";
+    display: none;
+}
+  
+/* Mostro il checkmark */
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+  
+/* Stile per il checkmark */
+.checkbox-container .checkmark.checkbox:after {
+    position: relative;
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.checkbox-container .checkmark.radio:after {
+    position: relative;
+    top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+
 /*Submit button*/
 .btn {
     align-items: center;

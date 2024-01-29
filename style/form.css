@@ -56,92 +56,12 @@
 .registration-form .input-error {
   border: 2px solid var(--error-color);
 }
-  
-/* Hide the default checkbox */
-.checkbox-container input {
-  position: absolute;
-  opacity: 0;
-}
 
-/* Style the custom checkbox container */
-.checkbox-container {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: small;
-  position: relative;
-  padding-left: 30px;
-  cursor: pointer;
-  display: inline-block;
-  line-height: 1.5;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.radiobutton {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: small;
-  position: relative;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  text-align: center;
-}
-
-/* Per le checkbox */
-input[type="checkbox"] + label {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-/* Per i radio button */
-input[type="radio"] + label {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-
-/* Style the custom checkmark */
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 20px;
-  width: 20px;
-  background-color: #eee; /* Background color when unchecked */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-/* On mouse-over, add a grey background color */
-.checkbox-container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
-
-/* Style the custom checkmark when checked */
-.checkbox-container input:checked + .checkmark {
-  background-color: var(--color3); /* Background color when checked */
-  border: 1px solid var(--dark-color3); /* Border color when checked */
-}
-
-/* Style the checkmark inside the container */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-/* Show the checkmark when checked */
-.checkbox-container input:checked + .checkmark:after {
-  display: block;
-}
-
-/* Style the checkmark icon */
-.checkbox-container .checkmark:after {
-  left: 7px;
-  top: 3px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+#role_div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 #online_presenza_div {
@@ -170,4 +90,8 @@ input[type="radio"] + label {
 
 #getCurrentLocation {
   margin-bottom: 5px;
+}
+
+#rememberme-container {
+  margin-left: 0px !important;
 }

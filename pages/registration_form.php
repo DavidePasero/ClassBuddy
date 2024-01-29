@@ -56,17 +56,31 @@
 				</div>
 
 				<div id="role_div" class="radiobutton">
-					<input type="radio" id="student" name="role" value="studente" checked>
-					<label for="student">Studente</label>
-					<input type="radio" id="tutor" name="role" value="tutor">
-					<label for="tutor">Tutor</label>
+					<label class="checkbox-container">
+						<input type="radio" id="student" name="role" value="studente" checked>
+						<span class="checkmark radio"></span>
+						Studente
+					</label>
+
+					<label class="checkbox-container">
+						<input type="radio" id="tutor" name="role" value="tutor">
+						<span class="checkmark radio"></span>
+						Tutor
+					</label>
 				</div>
 				
 				<div id="online_presenza_div" class="radiobutton">
-					<input type="checkbox" id="online" name="online" value="online" checked>
-					<label for="online">Online</label>
-					<input type="checkbox" id="presenza" name="presenza" value="presenza">
-					<label for="presenza">In presenza</label>
+					<label class="checkbox-container">
+						<input type="checkbox" id="online" name="online" value="online" checked>
+						<span class="checkmark checkbox"></span>
+						Online
+					</label>
+
+					<label class="checkbox-container">
+						<input type="checkbox" id="presenza" name="presenza" value="presenza">
+						<span class="checkmark checkbox"></span>
+						Presenza
+					</label>
 				</div>
 
 				<div id="location_div">

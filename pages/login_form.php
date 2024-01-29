@@ -40,9 +40,10 @@
 
 				<input type="password" id="pass" name="pass" autocomplete="current-password" placeholder="Almeno 8 caratteri" class="form-element input-neutral"> <br>
 				
-				<label class="checkbox-container">Remember me
+				<label class="checkbox-container" id="rememberme-container">
 					<input type="checkbox" id="rememberme" name="rememberme">
-					<span class="checkmark"></span>
+					<span class="checkmark checkbox"></span>
+					Remember me
 				</label>
 
 				<input class="btn submit form-element" type="submit" name="Submit" value="Invia">
