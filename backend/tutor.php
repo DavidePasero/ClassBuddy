@@ -27,10 +27,12 @@ LEFT JOIN
     S5204959.insegnamento ON tutor.email = insegnamento.tutor";
 
 // Controllo che il method sia valido 
-if ($_SERVER["REQUEST_METHOD"] !== "POST" or !isset($_POST["action"]) or empty($_POST["action"]))
+if ($_SERVER["REQUEST_METHOD"] !== "POST" or !isset($_POST["action"]) or empty($_POST["action"]) or empty($_POST["i"]))
     echo_back_json_data (create_error_msg ("Richiesta non valida"));
 
 $tutors = array();
+
+$i = intval($_POST["i"]) * 4;
 
 // Se l'azione è quella di caricare tutti i tutor, eseguo $get_all_tutor_info_query
 if ($_POST["action"] === "get_all_tutor_info") {
@@ -81,9 +83,10 @@ else if ($_POST["action"] === "filter_tutors") {
     // Eseguo una versione modificata di $get_info_and_filter_query per farla lavorare solo sui tutor che corrispondono al filtro
     $get_info_and_filter_query = $get_all_tutor_info_query . 
         "\nWHERE insegnamento.materia = ? AND insegnamento.tariffa <= ? AND
-        tutor.email IN (" . implode (", ", array_map (function ($tutor) {return "'" . $tutor["email"] . "'";}, $filtered_tutors)) . ")";
+        tutor.email IN (" . implode (", ", array_map (function ($tutor) {return "'" . $tutor["email"] . "'";}, $filtered_tutors)) . ")
+        LIMIT ?";
         
-    $tutors = prepared_query ($db, $get_info_and_filter_query, [$materia, $prezzo])->fetch_all (MYSQLI_ASSOC);
+    $tutors = prepared_query ($db, $get_info_and_filter_query, [$materia, $prezzo, $i])->fetch_all (MYSQLI_ASSOC);
 }
 else 
     echo_back_json_data (create_error_msg ("Richiesta non valida"));
@@ -121,5 +124,10 @@ function encode_propic (&$tutor) {
     return $tutor;
 }
 
-echo_back_json_data ($tutors_data);
+$tutors_data = array_slice($tutors_data, $i-4, 4);
+
+if (count($tutors_data) === 0)
+    echo_back_json_data (create_error_msg ("Non ci sono tutor da caricare"));
+else
+    echo_back_json_data ($tutors_data);
 ?>

@@ -1,4 +1,4 @@
-export function fill_tutor_grid (tutors) {
+export function fill_tutor_grid (tutors, append) {
     // Error handling
     if (tutors.error) {
         showPopup(tutors.error, true);
@@ -6,7 +6,8 @@ export function fill_tutor_grid (tutors) {
     }
 
     const tutorGrid = document.getElementById('image-grid');
-    tutorGrid.innerHTML = '';
+    if (append === false)
+      tutorGrid.innerHTML = '';
 
     for (const [_, tutor] of Object.entries(tutors)) {
       const div = document.createElement('div');

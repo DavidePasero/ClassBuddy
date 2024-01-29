@@ -41,11 +41,14 @@ fetch('../res/insegnamenti.txt')
   }).catch(err => console.error(err));
 
 
-document.getElementById('submit-button').addEventListener('click', function (e) {
-  e.preventDefault();
+let i = 0;
+
+function load () {
+  i++;
   // Recupera i dati del modulo
   const formData = new FormData(document.getElementById('filter-form'));
   formData.append("action", "filter_tutors");
+  formData.append("i", i);
   // Esegue la chiamata API fetch a filter_tutors.php
   fetch('../backend/tutor.php', {
     method: 'POST',
@@ -57,4 +60,12 @@ document.getElementById('submit-button').addEventListener('click', function (e) 
     fill_tutor_grid(tutors);
   })
   .catch(error => console.error('Errore:', error));
+}
+
+document.getElementById('submit-button').addEventListener('click', function (e) {
+  e.preventDefault();
+  i = 0;
+  load ();
 });
+
+document.getElementById('altri_tutor').addEventListener('click', load);

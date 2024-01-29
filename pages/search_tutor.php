@@ -43,6 +43,13 @@
         <div id="image-grid-container">
             <div id="image-grid"></div>
         </div>
+
+        <div id="altri_tutor_div">
+            <button type="button" class="btn icon-button form-element" id="altri_tutor">
+                Carica altri tutor
+                <img src="../res/icons/update.svg" alt="Carica">
+            </button>
+        </div>
     </main>
 
     <?php echo print_footer(); ?>

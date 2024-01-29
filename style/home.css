@@ -28,6 +28,15 @@ main {
     margin-top: 30px;
 }
 
+#altri_tutor_div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /* Responsive */
 @media screen and (max-width: 1000px) {
     #image-grid {
