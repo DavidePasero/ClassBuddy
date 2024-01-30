@@ -64,8 +64,13 @@
   justify-content: center;
 }
 
-#online_presenza_div {
+#online_presenza_div_container {
   display: none;
+  flex-direction: column;
+}
+
+#online_presenza_div {
+  display: flex;
   align-items: center;
   justify-content: center;
 }

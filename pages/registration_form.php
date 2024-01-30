@@ -55,7 +55,7 @@
 					<input type="password" id="confirm" name="confirm" autocomplete="new-password" placeholder="Re-inserisci la password" class=<?php if (isset($_SESSION["confirm"])) {echo "\"input-error form-element\"";} else {echo "\"input-neutral form-element\"";}?> required>
 				</div>
 
-				<div id="role_div" class="radiobutton">
+				<div id="role_div">
 					<label class="checkbox-container">
 						<input type="radio" id="student" name="role" value="studente" checked>
 						<span class="checkmark radio"></span>
@@ -69,18 +69,20 @@
 					</label>
 				</div>
 				
-				<div id="online_presenza_div" class="radiobutton">
-					<label class="checkbox-container">
-						<input type="checkbox" id="online" name="online" value="online" checked>
-						<span class="checkmark checkbox"></span>
-						Online
-					</label>
+				<div id="online_presenza_div_container">
+					<div id="online_presenza_div">
+						<label class="checkbox-container">
+							<input type="checkbox" id="online" name="online" value="online" checked>
+							<span class="checkmark checkbox"></span>
+							Online
+						</label>
 
-					<label class="checkbox-container">
-						<input type="checkbox" id="presenza" name="presenza" value="presenza">
-						<span class="checkmark checkbox"></span>
-						Presenza
-					</label>
+						<label class="checkbox-container">
+							<input type="checkbox" id="presenza" name="presenza" value="presenza">
+							<span class="checkmark checkbox"></span>
+							Presenza
+						</label>
+					</div>
 				</div>
 
 				<div id="location_div">
@@ -104,3 +106,7 @@
 	</main>
 </body>
 </html>
+<!-- Aggiornando la pagina non voglio più vedere le segnalazioni di errore.
+Il controllo serve per evitare che un utente autenticato che prova ad accedere
+alla pagina di login/registration perda la sessione-->
+<?php if(!isset ($_SESSION["authenticated"])) $_SESSION = array();?>

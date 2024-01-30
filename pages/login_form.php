@@ -50,6 +50,9 @@
 			</form>
 		</div>
 	</main>
-
 </body>
 </html>
+<!-- Aggiornando la pagina non voglio più vedere le segnalazioni di errore.
+Il controllo serve per evitare che un utente autenticato che prova ad accedere
+alla pagina di login/registration perda la sessione-->
+<?php if(!isset ($_SESSION["authenticated"])) $_SESSION = array();?>

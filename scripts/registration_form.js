@@ -240,7 +240,7 @@ function check_role() {
     let role_div = document.getElementById("role_div");
     let last_div_elem = role_div.lastElementChild;
 
-    let online_presenza_div = document.getElementById("online_presenza_div");
+    let online_presenza_div = document.getElementById("online_presenza_div_container");
     let location_div = document.getElementById("location_div");
 
     if (tutor.checked) {
@@ -266,7 +266,7 @@ function check_role() {
 function check_online_presenza() {
     let online = document.getElementById("online");
     let presenza = document.getElementById("presenza");
-    let online_presenza_div = document.getElementById("online_presenza_div");
+    let online_presenza_div = document.getElementById("online_presenza_div_container");
     let last_div_elem = online_presenza_div.lastElementChild;
 
     if (!online.checked && !presenza.checked) {
