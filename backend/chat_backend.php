@@ -1,9 +1,5 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors',1);
-
-if (session_status() === PHP_SESSION_NONE)
-    session_start ();
+session_start ();
 
 require 'db.php';
 require 'utils.php';
@@ -131,7 +127,7 @@ function send_msg ($db) {
             echo_back_json_data (["status" => "OK"]);
     }
     else
-    echo_back_json_data (create_error_msg ("I messaggi possono essere inviati solo tra tutor e studenti"));
+        echo_back_json_data (create_error_msg ("I messaggi possono essere inviati solo tra tutor e studenti"));
 }
 
 function check_destinatario () {

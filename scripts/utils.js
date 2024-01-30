@@ -13,7 +13,7 @@ export function fill_tutor_grid (tutors, append) {
       const div = document.createElement('div');
       div.className = 'tutor';
 
-      // Create an img element for the profile picture
+      // img per la foto profilo
       let link = document.createElement('a');
       link.href = `show_profile.php?email=${tutor["email"]}`;
       const img = document.createElement('img');
@@ -21,7 +21,7 @@ export function fill_tutor_grid (tutors, append) {
       img.alt = `${tutor["firstname"]} ${tutor["lastname"]}`;
       img.className = 'profile-image';
 
-      // Create divs for each piece of information
+      // Div per ogni info
       const nameDiv = createInfoDiv('name', `${tutor["firstname"]} ${tutor["lastname"]}`);
       //const emailDiv = createInfoDiv('email', tutor["email"]);
       const cityDiv = createInfoDiv('city', tutor["citta"]);
@@ -34,7 +34,7 @@ export function fill_tutor_grid (tutors, append) {
       div.appendChild(cityDiv);
 
       let i = 0;
-      // For each (materia, tariffa) create a div
+      // Per ogni (materia, tariffa) crea una div
       for (i = 0; i < tutor["materia"].length && i < 3; i++) {
         let insegnamentoDiv = createInfoDiv ("insegnamento", `${tutor["materia"][i]}: ${tutor["tariffa"][i]}€/ora`);
         div.appendChild(insegnamentoDiv);
