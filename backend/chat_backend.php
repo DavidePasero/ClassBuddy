@@ -1,9 +1,9 @@
 <?php
-if (PHP_SESSION_NONE == session_status())
+if (PHP_SESSION_NONE === session_status())
     session_start ();
 
-require 'db.php';
-require 'utils.php';
+require_once 'db.php';
+require_once 'utils.php';
 $db = connect_to_db ();
 
 // Questo script mette insieme tutti i pezzi della chat: fetch_chat, new_msgs, search_msgs, send_msg.

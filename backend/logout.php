@@ -1,6 +1,7 @@
 <?php
-	session_start ();
-    require 'db.php';
+	if (PHP_SESSION_NONE == session_status())
+        session_start ();
+    require_once 'db.php';
 
     if (isset ($_SESSION ["authenticated"])) {
         // Cancello il cookie dal client settando il suo valore a una stringa vuota e la sua expiry date nel passato

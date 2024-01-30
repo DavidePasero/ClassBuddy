@@ -1,7 +1,7 @@
 <?php
     // login.php esegue automaticamente il controllo del cookie
     function cookie_check ($db) {
-        require 'login.php';
+        require_once 'login.php';
     }
 
     function print_header () {

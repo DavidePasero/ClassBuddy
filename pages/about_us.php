@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
-    session_start ();
+    if (PHP_SESSION_NONE == session_status())
+        session_start ();
     require __DIR__ . '/../backend/page.php';
 ?>
 <html lang="it">

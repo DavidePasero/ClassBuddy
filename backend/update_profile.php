@@ -1,5 +1,6 @@
 <?php
-session_start ();
+if (PHP_SESSION_NONE == session_status())
+    session_start ();
 
 if (!isset ($_SESSION ["authenticated"]) or $_SERVER["REQUEST_METHOD"] != "POST") {
     header ("Location: login.php");

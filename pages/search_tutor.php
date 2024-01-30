@@ -1,7 +1,8 @@
 <?php 
-    session_start ();
-    require __DIR__ . '/../backend/page.php';
-    require __DIR__ . '/../backend/db.php';
+    if (PHP_SESSION_NONE == session_status())
+        session_start ();
+    require_once __DIR__ . '/../backend/page.php';
+    require_once __DIR__ . '/../backend/db.php';
 
     $db = connect_to_db ();
     cookie_check ($db);

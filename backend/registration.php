@@ -1,7 +1,8 @@
 <?php
-	session_start ();
+	if (PHP_SESSION_NONE == session_status())
+		session_start ();
 
-	require 'db.php';
+	require_once 'db.php';
 
 	$db = connect_to_db ();
 

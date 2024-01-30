@@ -4,8 +4,8 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 require_once __DIR__ . '/../backend/db.php';
-require __DIR__ . '/../backend/page.php';
-require __DIR__ . '/../backend/review.php';
+require_once __DIR__ . '/../backend/page.php';
+require_once __DIR__ . '/../backend/review.php';
 
 $db = connect_to_db();
 

@@ -1,5 +1,5 @@
 <?php
-    $config_info = require ("config.php");
+    $config_info = require("config.php");
     function connect_to_db () {
         global $config_info;
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);

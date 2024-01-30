@@ -1,9 +1,10 @@
 <?php
-session_start();
+if (PHP_SESSION_NONE == session_status())
+    session_start ();
 
-require "db.php";
-require "utils.php";
-require "review.php";
+require_once "db.php";
+require_once "utils.php";
+require_once "review.php";
 $db = connect_to_db();
 
 if (

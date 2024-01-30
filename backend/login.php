@@ -1,5 +1,6 @@
 <?php
-	session_start();
+	if (PHP_SESSION_NONE == session_status())
+		session_start ();
 
 	require_once 'db.php';
 	$db = connect_to_db ();
