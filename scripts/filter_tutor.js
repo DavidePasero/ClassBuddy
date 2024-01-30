@@ -57,7 +57,7 @@ function load () {
   .then(response => {
     return response.json();})
   .then(tutors => {
-    fill_tutor_grid(tutors);
+    fill_tutor_grid(tutors, false);
   })
   .catch(error => console.error('Errore:', error));
 }
