@@ -276,4 +276,7 @@ function addMessagesToChat(messages) {
 function update_message_preview (message, recipient) {
     let preview = document.querySelector(`#sidebar .user-item[data-recipient='${recipient}'] .last-message`);
     preview.textContent = message;
+    let i = preview.textContent.indexOf(' ');
+    if ((i == -1 || i > 15) && preview.textContent.length > 15)
+        preview.textContent = preview.textContent.substring(0, 15) + "…";
 }
