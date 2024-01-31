@@ -43,7 +43,7 @@ fetch('../res/insegnamenti.txt')
 
 let i = 0;
 
-function load () {
+function load (append) {
   i++;
   // Recupera i dati del modulo
   const formData = new FormData(document.getElementById('filter-form'));
@@ -57,7 +57,7 @@ function load () {
   .then(response => {
     return response.json();})
   .then(tutors => {
-    fill_tutor_grid(tutors, false);
+    fill_tutor_grid(tutors, append);
   })
   .catch(error => console.error('Errore:', error));
 }
@@ -65,7 +65,9 @@ function load () {
 document.getElementById('submit-button').addEventListener('click', function (e) {
   e.preventDefault();
   i = 0;
-  load ();
+  load (false);
 });
 
-document.getElementById('altri_tutor').addEventListener('click', load);
+document.getElementById('altri_tutor').addEventListener('click', function () {
+  load (true);
+});
