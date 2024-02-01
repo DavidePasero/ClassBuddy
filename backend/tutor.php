@@ -26,7 +26,7 @@ LEFT JOIN
     S5204959.insegnamento ON tutor.email = insegnamento.tutor";
 
 // Controllo che il method sia valido 
-if ($_SERVER["REQUEST_METHOD"] !== "POST" or !isset($_POST["action"]) or empty($_POST["action"]) or empty($_POST["i"]))
+if ($_SERVER["REQUEST_METHOD"] !== "POST" or empty($_POST["action"]) or empty($_POST["i"]))
     echo_back_json_data (create_error_msg ("Richiesta non valida"));
 
 $tutors = array();
@@ -43,8 +43,7 @@ if ($_POST["action"] === "get_all_tutor_info") {
 }
 // Se l'azione è il filtraggio, pulisco l'input e filtro i tutor
 else if ($_POST["action"] === "filter_tutors") {
-    if (!isset($_POST["luogo"]) or $_POST["luogo"] === "" or
-        !isset($_POST["materia"]) or $_POST["materia"] === "")
+    if (empty($_POST["luogo"]) or empty($_POST["materia"]))
         echo_back_json_data (create_error_msg ("Parametri mancanti"));
 
     // Input cleaning
@@ -52,7 +51,7 @@ else if ($_POST["action"] === "filter_tutors") {
     $citta = $luogo === "online" ? null : $luogo;
     $online = $luogo === "online" ? $luogo : null;
     $materia = strtolower(trim($_POST["materia"]));
-    $prezzo = 1000;
+    $prezzo = 1000; // Default
 
     if (isset($_POST["prezzo"]) and $_POST["prezzo"] !== "")
         $prezzo = clamp (1, 1000, intval(trim($_POST["prezzo"])));
@@ -97,8 +96,6 @@ foreach ($tutors as $tutor) {
     $email = $tutor["email"];
     if (!isset($tutors_data[$email])) {
 
-        encode_propic($tutor);
-
         $tutors_data[$email] = [
             'email' => $email,
             'citta' => $tutor['citta'],
@@ -106,7 +103,7 @@ foreach ($tutors as $tutor) {
             'presenza' => $tutor['presenza'],
             'firstname' => $tutor['firstname'],
             'lastname' => $tutor['lastname'],
-            'propic' => $tutor['propic'],
+            'propic' => get_data_uri($tutor["propic"], $tutor["propic_type"]),
             'materia' => [],
             'tariffa' => [],
         ];
@@ -116,11 +113,6 @@ foreach ($tutors as $tutor) {
         array_push($tutors_data[$email]["materia"], $tutor["materia"]);
         array_push($tutors_data[$email]["tariffa"], $tutor["tariffa"]);
     }
-}
-
-function encode_propic (&$tutor) {
-    $tutor["propic"] = get_data_uri($tutor["propic"], $tutor["propic_type"]);
-    return $tutor;
 }
 
 $tutors_data = array_slice($tutors_data, $i-3, 3);

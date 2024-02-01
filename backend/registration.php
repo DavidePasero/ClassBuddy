@@ -69,26 +69,35 @@
 			$_POST [$key] = trim ($value);
 		}
 
-		$res = prepared_query ($db,
+		$db->begin_transaction ();
+
+		try {
+			$res = prepared_query ($db,
 				"INSERT INTO S5204959.utente (firstname, lastname, email, pass, role) VALUES (?, ?, ?, ?, ?)",
 				[$_POST ["firstname"], $_POST ["lastname"], $_POST ["email"], password_hash ($_POST ["pass"], PASSWORD_DEFAULT), $role]);
-		if (!$res)
-			echo_back_json_data (create_error_msg ("Errore durante la registrazione"));
-
-		// Se il ruolo è tutor, inserisce i dati nella tabella tutor
-		if ($role == "tutor") {
-			// Se la checkbox è selezionata, il valore è settato a true, altrimenti a false
-			$_POST ["online"] = isset ($_POST ["online"]) ? 1 : 0;
-			$_POST ["presenza"] = isset ($_POST ["presenza"]) ? 1 : 0;
-			$res = prepared_query ($db,
-					"INSERT INTO S5204959.tutor (email, citta, online, presenza) VALUES (?, ?, ?, ?)",
-					[$_POST ["email"], $_POST ["citta"], $_POST ["online"], $_POST ["presenza"]]);
 			if (!$res)
-				echo_back_json_data (create_error_msg ("Errore durante la registrazione"));
+				throw new Exception ("Registrazione non andata a buon fine");
+
+			// Se il ruolo è tutor, inserisce i dati nella tabella tutor
+			if ($role == "tutor") {
+				// Se la checkbox è selezionata, il valore è settato a true, altrimenti a false
+				$_POST ["online"] = isset ($_POST ["online"]) ? 1 : 0;
+				$_POST ["presenza"] = isset ($_POST ["presenza"]) ? 1 : 0;
+				$res = prepared_query ($db,
+						"INSERT INTO S5204959.tutor (email, citta, online, presenza) VALUES (?, ?, ?, ?)",
+						[$_POST ["email"], $_POST ["citta"], $_POST ["online"], $_POST ["presenza"]]);
+				if (!$res)
+					throw new Exception ("Registrazione non andata a buon fine");
+			}
 		}
+		catch (Exception $e) {
+			$db->rollback ();
+			header ("Location: ../pages/registration_form.php");
+			exit ();
+		}
+		$db->commit ();
 		header ("Location: ../pages/login_form.php");
 	}
-	else {
+	else
 		header ("Location: ../pages/registration_form.php");
-	}
 ?>
