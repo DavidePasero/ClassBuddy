@@ -1,38 +1,32 @@
 # ClassBuddy
 
-## Descrizione del Progetto
+## Project Description
 
-ClassBuddy è una piattaforma online che facilita il collegamento tra studenti e docenti per le ripetizioni. Il nostro sito offre un ambiente dedicato dove gli studenti possono cercare, trovare e connettersi con docenti qualificati per ricevere supporto didattico personalizzato.
+ClassBuddy is an online platform designed to connect students with tutors for personalized learning. Our site provides a dedicated space where students can search for, find, and connect with qualified tutors to receive tailored academic support.
 
-## Caratteristiche Principali
+## Key Features
 
-- **Ricerca Facile:** Gli studenti possono cercare docenti in base a materia, livello di competenza, e disponibilità.
-  
-- **Profili Utente:** Sia gli studenti che i docenti possono creare profili dettagliati con informazioni personali, competenze, e recensioni.
+- Easy Search: Students can search for tutors based on subject, experience level, and availability.
 
-- **Messaggistica Integrata:** Comunicazione facile e diretta attraverso un sistema di messaggistica interno.
+- User Profiles: Both students and tutors can create detailed profiles with personal information, qualifications, and reviews.
 
-- DA RIVEDERE **Prenotazioni Online:** Gli studenti possono prenotare le lezioni direttamente attraverso la piattaforma, facilitando la gestione delle ripetizioni.
+- Integrated Messaging: Easy and direct communication through an internal messaging system.
 
-- **Recensioni e Valutazioni:** Gli utenti possono lasciare recensioni e valutazioni per condividere le loro esperienze e aiutare altri utenti a trovare i migliori docenti.
+- Reviews and Ratings: Users can leave reviews and ratings to share their experiences and help other users find the best tutors.
 
-## Come Iniziare
+## Getting Started
 
-1. **Iscrizione:**
-   - Gli studenti e i docenti devono registrarsi per creare un account.
+1. ### Sign Up:
+   Both students and tutors must register to create an account.
+
+2. ### Create a Profile:
+   Users must complete their profile with accurate and detailed information and a photo of themselves.
    
-2. **Creare un Profilo:**
-   - Gli utenti devono completare il loro profilo con informazioni accurate e dettagliate.
+3. ### Search and Connect:
+   Students can search for tutors and start connecting with those that best suit their needs.
+   
+4. ### Book Lessons:
+   Once connected, students can book lessons directly through the platform.
 
-3. **Ricerca e Connessione:**
-   - Gli studenti possono cercare docenti e iniziare a connettersi con quelli che meglio si adattano alle loro esigenze.
-
-4. **Prenotare Lezioni:**
-   - Una volta connessi, gli studenti possono prenotare lezioni direttamente attraverso la piattaforma.
-
-## Contatti
-
-Per domande, problemi o feedback, contattaci all'indirizzo email davide_pasero@icloud.com e sara.rosselli02@gmail.com
-
-Grazie per aver scelto ClassBuddy per le tue esigenze di apprendimento!
-
+## Online website link
+https://saw21.dibris.unige.it/~S5204959/ClassBuddy/pages/index.php
