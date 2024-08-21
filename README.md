@@ -25,8 +25,11 @@ ClassBuddy is an online platform designed to connect students with tutors for pe
 3. ### Search and Connect:
    Students can search for tutors and start connecting with those that best suit their needs.
    
-4. ### Book Lessons:
-   Once connected, students can book lessons directly through the platform.
+4. ### Chat:
+   Once connected, students can chat with their tutor with a live chat very similar to the ones you find on Instagram or Whatsapp.
+
+5. ### Review:
+   Once you exchanged a message with a tutor, you can write a review about them.
 
 ## Online website link
 https://saw21.dibris.unige.it/~S5204959/ClassBuddy/pages/index.php
